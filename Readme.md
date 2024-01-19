@@ -186,7 +186,7 @@
     > test_acc: 93.30%
     > test_error: 6.70%
     
-  - **MyResNet34_ImageNet_256_SGD** - [doing now]
+  - **MyResNet34_ImageNet_256_SGD** - [case1] [End at Jan 19]
     ```py
     batch = 256
     split_ratio = 0    
@@ -218,12 +218,19 @@
     )
     ``` 
     ``` 
-    [Epoch 12/1000] :
-    train: 100%|██████████| 5005/5005 [23:48<00:00,  3.50it/s]
-    Train Loss: 0.0006 | Train Acc: 44.76%
-    eval: 100%|██████████| 196/196 [01:19<00:00,  2.47it/s]
-    Valid Loss: 2.5680 | Valid Acc: 47.00%
-    updated best eval loss : 2.5679544417225584
+    58 epoch: train_loss=0.0003, train_acc=0.6573, valid_loss=1.3160, valid_acc=0.7199, lr=0.0010
+    59 epoch: train_loss=0.0003, train_acc=0.6224, valid_loss=1.3129, valid_acc=0.7204, lr=0.0010
+    60 epoch: train_loss=0.0003, train_acc=0.6853, valid_loss=1.3108, valid_acc=0.7221, lr=0.0010
+    61 epoch: train_loss=0.0003, train_acc=0.6993, valid_loss=1.2985, valid_acc=0.7242, lr=0.0010
+    ```
+  - **MyResNet34_ImageNet_256_SGD** - [case2]
+    - 모든 조건 동일하되, 학습시간 전체적으로 조금 더 늘려서 재시도.paper의 figure 4와 비슷하게 스케쥴링함.
+    ```
+    scheduler = ReduceLROnPlateau(patiance=5, factor=0.1, cooldown=25)
+    EarlyStopCounter = 50
+    ```
+    ```
+    
     ```
 # 3. Training Log
 - ImageNet2012

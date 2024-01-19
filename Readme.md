@@ -9,11 +9,6 @@
 - The Origin ResNet32 have 7.51% top-1 error rate in CIFAR-10 dataset.
 - The Origin ResNet34 have 21.53% top-1 error rate in ImageNet2012 dataset.
 ---
-### Todo : 
-- [ ] optimazer setting 재확인하기. 현재 Adam의 기본옵션임.
-- [ ] LR Schedualer 재확인하기. 현재 Adam 이용 중이라 적용하지 않고 있음.
-- [ ] Early Stopping 알고리즘 최적화. 현재 30회 valid loss 향상 없으면 마침.
----
 # 1. Usage
 ## 1.1. Requierments
   - ```Ubuntu 20.04 LTS```
@@ -24,11 +19,11 @@
   - ```/data/ImageNet2012/train```
   - ```/data/ImageNet2012/val```
 ## 1.2. How to run 
-  - Run ```create_resnet.ipynb```
+  - Run ```........ipynb```
   - Options
     - ```BATCH = 256```
     - ```DATASET = {"CIFAR10", "CIFAR100", "ImageNet2012"}```
-  - The trained model is ```models/Myresnet34.pth```
+  - The trained model is ```............pth```
 ## 1.3. The Manual from Original Paper
 ### 1.3.1. Implementation about training process :
   - [x] We initialize the weights as on **He initialization**

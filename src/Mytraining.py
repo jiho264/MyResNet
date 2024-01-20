@@ -97,7 +97,7 @@ class DoTraining:
             "logs": self.logs,
         }
 
-        torch.save(checkpoint, "logs/" + self.file_path + ".pth.tar")
+        torch.save(checkpoint, self.file_path + ".pth.tar")
         # print(f"Saved PyTorch Model State to [logs/{file_path}.pth.tar]")
 
         return

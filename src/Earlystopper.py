@@ -15,7 +15,7 @@ class EarlyStopper:
             self.best_eval_loss = eval_loss
             self.early_stop_counter = 0
             print("updated best eval loss :", self.best_eval_loss)
-            torch.save(self.model.state_dict(), "models/" + self.file_path + ".pth")
+            torch.save(self.model.state_dict(), self.file_path + ".pth")
             return False
         else:
             self.early_stop_counter += 1

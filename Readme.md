@@ -124,45 +124,14 @@
     > test_acc: 92.63%
     > test_error: 7.37%
 
-  - **MyResNet32_CIFAR_128_SGD_90** [End at Jan 18 00:13]
-    ```py
-    batch = 128
-    split_ratio = 0.9
-    optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)
-    scheduler = MultiStepLR(optimizer, milestones=[91, 137], gamma=0.1)
-    EarlyStopCounter = 500
-    train.transforms = Compose(
-        ToTensor()
-        Normalize(mean=[0.49139968, 0.48215827, 0.44653124], std=[1, 1, 1], inplace=True)
-        AutoAugment(interpolation=InterpolationMode.NEAREST, policy=AutoAugmentPolicy.CIFAR10)
-        RandomCrop(size=(32, 32), padding=[4, 4, 4, 4], pad_if_needed=False, fill=0, padding_mode=constant)
-        RandomHorizontalFlip(p=0.5)
-    ) 
-    valid.transforms = ToTensor() 
-    test.transforms = ToTensor() 
-    ```
-    ```
-    약 96.5k iter이라서 종료
-    [Epoch 269/500] :
-    100%|██████████| 352/352 [00:15<00:00, 23.21it/s]
-    Train Loss: 0.0006 | Train Acc: 95.83%
-    Valid Loss: 0.2015 | Valid Acc: 93.06%
-    Test  Loss: 0.3244 | Test Acc: 89.70%
-    updated best eval loss : 0.2015449077123776
-    ``` 
-    > test_loss: 0.32554739619357675
-    > test_acc: 89.70%
-    > test_error: 10.30%
 
-  - **MyResNet32_CIFAR_256_SGD** [End at Jan 17 21:10]
-    > The ResNet32's Error on CIFAR10 from Reference Paper is 7.51%.
-    > ReduceLROnPlateau()에서 test loss를 기반으로 했기 때문에, 잘못된 실험임.
+  - **MyResNet32_CIFAR_256_SGD** 
     ```py
     batch = 256
-    split_ratio = 0    
+    split_ratio = 0.95    
     optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)
-    scheduler = ReduceLROnPlateau(patiance=100, factor=0.1, cooldown=100)
-    EarlyStopCounter = 500
+    scheduler = ReduceLROnPlateau(patiance=50, factor=0.1, cooldown=50)
+    EarlyStopCounter = 150
     train.transforms = Compose(
         ToTensor()
         Normalize(mean=[0.49139968, 0.48215827, 0.44653124], std=[1, 1, 1], inplace=True)

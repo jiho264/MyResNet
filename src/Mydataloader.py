@@ -128,7 +128,7 @@ class LoadDataset:
             #######################################################
 
         elif self.dataset_name == "ImageNet2012":
-            self.ImageNetRoot = "data/" + self.dataset_name + "/"
+            self.ImageNetRoot = root + "/" + self.dataset_name + "/"
 
             self.train_data = datasets.ImageFolder(
                 root=self.ImageNetRoot + "train",

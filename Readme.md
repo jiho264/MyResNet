@@ -36,14 +36,10 @@
 ### 1.3.2. ```MyResNet34``` preprocessing for ImageNet2012 :
   - [x] The image is resized with its shorter side randomly sampled in [256, 480] for scale augmentation [41]. 
   - [x] A 224×224 crop is randomly sampled from an image or its horizontal flip, with the per-pixel mean subtracted [21]. 
-    > [21] AlexNet - Dataset section
-    >> We did not pre-process the images in any other way, except for subtracting the mean activity over the training set from each pixel. 
-    >> So we trained our network on the (centered) raw RGB values of the pixels.
   - [x] The standard color augmentation in [21] is used.
-    > 1. Crop + resizeing
-    > 2. Principal Components Analysis (PCA 개념참고 : https://ddongwon.tistory.com/114 )
-    > AutoAugment로 해결
-  - [ ] In testing, for comparison studies we adopt the standard 10-crop testing [21]. For best results, we adopt the fully- convolutional form as in [41, 13], and average the scores at multiple scales (images are resized such that the shorter side is in {224, 256, 384, 480, 640}).
+    > torchvision.transform.AutoAugment() 적용함.
+  - [x] In testing, for comparison studies we adopt the standard 10-crop testing [21]. For best results, we adopt the fully- convolutional form as in [41, 13], and average the scores at multiple scales (images are resized such that the shorter side is in {224, 256, 384, 480, 640}).
+    > src/Prediction_for_MultiScaleTest.ipynb
 
 ### 1.3.3. ```MyResNet_CIFAR``` preprocessing for CIFAR10 :
   - [x] 45k/5k train/valid split from origin train set(50k)
@@ -160,6 +156,7 @@
 
   - **MyResNet32_CIFAR_256_SGD** [End at Jan 17 21:10]
     > The ResNet32's Error on CIFAR10 from Reference Paper is 7.51%.
+    > ReduceLROnPlateau()에서 test loss를 기반으로 했기 때문에, 잘못된 실험임.
     ```py
     batch = 256
     split_ratio = 0    
@@ -224,14 +221,24 @@
     61 epoch: train_loss=0.0003, train_acc=0.6993, valid_loss=1.2985, valid_acc=0.7242, lr=0.0010
     ```
   - **MyResNet34_ImageNet_256_SGD** - [case2]
-    - 모든 조건 동일하되, 학습시간 전체적으로 조금 더 늘려서 재시도.paper의 figure 4와 비슷하게 스케쥴링함.
+    - paper의 figure 4와 비슷하게 스케쥴링함.
     ```
-    scheduler = ReduceLROnPlateau(patiance=5, factor=0.1, cooldown=25)
-    EarlyStopCounter = 50
+    scheduler = MultiStepLR(optimizer, milestones=[30, 60], gamma=0.1)
+    EarlyStopCounter = 30
     ```
     ```
     
     ```
-# 3. Training Log
-- ImageNet2012
-- CIFAR10
+# 3. Conclusion
+- Best ResNet32 Model on CIFAR10 
+  - **<MyResNet32_CIFAR_128_SGD>**
+    > test_loss: 0.2305202476232301
+    > test_acc: 92.63%
+    > test_error: 7.37%
+    - test loss에 기반해 스케쥴링하지 않고, MultiStepLR로 명시적인 Learning rate들을 적용함. 
+    - Validation set 따로 만들지 않고, 50K의 Training set 다 학습 시킨 것의 결과가 좋았음.
+      - **<MyResNet32_CIFAR_128_SGD_90>에 비해 2.93%의 Acc 향상있음.**
+    - 한정된 Training set의 환경에서 5k개의 추가 데이터는 원활한 학습에 큰 도움이 되었음.
+- Best ResNet34 model on ImageNet2012
+  - 연구 진행 중..
+     

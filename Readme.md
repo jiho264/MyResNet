@@ -89,98 +89,124 @@
   - >재실험으로 실험내용 삭제
   - 하나 알게된 것 : 동일 모델을 test할 때마다 loss가 소숫점 2자리대까지 바뀌는 것을 확인함. 
     - 동일 weights이어도, 컴퓨터 계산의 한계 때문에 오차 발생하는 것으로 보임  
-  - Q1 : Adam 논문에서는 Learning Rate alpha가 어떻게 변화하는가? 왜 lr의 재정의가 필요없다고 했는가?
-  - Q2 : 왜 Adam보다 SGD가 더 학습이 잘 되었는가?
-- Jan 17 : 
-  - 아차..
-    - **이틀 간 진행한 실험은 Adam과 SGD가 CIFAR10 & ResNet 구조에서 다른 성능을 낸다는 결론 이외 학습 결과는 중요하지 않음.**
-    - 구현 실수로 첫 conv3x3 layer의 BN과 Relu를 빼먹었음.
-    - Dataloader에서 training set 전처리도 오류있었음.
-    - 이하 (commit **BUG FIX**) 수정 후 재실험 :
-  - **MyResNet32_CIFAR_128_SGD** [End at Jan 17 23:22]
-    ```py
-    batch = 128
-    split_ratio = 0    
-    optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)
-    scheduler = MultiStepLR(optimizer, milestones=[82, 123], gamma=0.1)
-    EarlyStopCounter = 500
-    train.transforms = Compose(
-        ToTensor()
-        Normalize(mean=[0.49139968, 0.48215827, 0.44653124], std=[1, 1, 1], inplace=True)
-        AutoAugment(interpolation=InterpolationMode.NEAREST, policy=AutoAugmentPolicy.CIFAR10)
-        RandomCrop(size=(32, 32), padding=[4, 4, 4, 4], pad_if_needed=False, fill=0, padding_mode=constant)
-        RandomHorizontalFlip(p=0.5)
-    ) 
-    test.transforms = ToTensor() 
-    ```
-    ```
-    [Epoch 239/500] :
-    100%|██████████| 391/391 [00:09<00:00, 43.04it/s]
-    Train Loss: 0.0011 | Train Acc: 87.50%
-    Test  Loss: 0.2361 | Test Acc: 92.82%
-    Early stop!! best_eval_loss = 0.230629503420448
-    ``` 
-    > test_loss: 0.2305202476232301
-    > test_acc: 92.63%
-    > test_error: 7.37%
+  - Q : 왜 Adam보다 SGD가 더 학습이 잘 되었는가?
 
-    
-  - **MyResNet34_ImageNet_256_SGD** - [case1] [End at Jan 19]
-    ```py
-    batch = 256
-    split_ratio = 0    
-    optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)
-    scheduler = ReduceLROnPlateau(patiance=5, factor=0.1, cooldown=5)
-    EarlyStopCounter = 25 # MyResNet32_CIFAR_256_SGD의 결과가 좋아서, 동일한 공식으로 sch, ealry 설정함.
-    train = Compose(
-        RandomShortestSize(min_size=range(256, 480), antialias=True),
-        RandomCrop(size=224),
-        AutoAugment(policy=AutoAugmentPolicy.IMAGENET),
-        RandomHorizontalFlip(self.Randp),
-        ToTensor(),
-        Normalize(mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True),
-    )
-    # center croped valid set
-    valid = Compose(
-        RandomShortestSize(min_size=range(256, 480), antialias=True),
-        CenterCrop(size=368),
-        ToTensor(),
-        Normalize(mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True),
-    )
-    # 10-croped valid set
-    scales = [224, 256, 384, 480, 640]
-    valid  = Compose(
-        RandomShortestSize(min_size=scale[i], antialias=True)
-        TenCrop(size=scale[i])
-        ToTensor()
-        Normalize(mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True)
-    )
-    ``` 
-    ``` 
-    58 epoch: train_loss=0.0003, train_acc=0.6573, valid_loss=1.3160, valid_acc=0.7199, lr=0.0010
-    59 epoch: train_loss=0.0003, train_acc=0.6224, valid_loss=1.3129, valid_acc=0.7204, lr=0.0010
-    60 epoch: train_loss=0.0003, train_acc=0.6853, valid_loss=1.3108, valid_acc=0.7221, lr=0.0010
-    61 epoch: train_loss=0.0003, train_acc=0.6993, valid_loss=1.2985, valid_acc=0.7242, lr=0.0010
-    ```
-  - **MyResNet34_ImageNet_256_SGD** - [case2]
-    - paper의 figure 4와 비슷하게 스케쥴링함.
-    ```
-    scheduler = MultiStepLR(optimizer, milestones=[30, 60], gamma=0.1)
-    EarlyStopCounter = 30
-    ```
-    ```
-    
-    ```
-# 3. Conclusion
-- Best ResNet32 Model on CIFAR10 
-  - **<MyResNet32_CIFAR_128_SGD>**
+# 3. Training Results
+## MyResNet32_CIFAR_128_SGD [End at Jan 17]
+```py
+batch = 128
+split_ratio = 0    
+optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)
+scheduler = MultiStepLR(optimizer, milestones=[82, 123], gamma=0.1)
+EarlyStopCounter = 500
+train.transforms = Compose(
+    ToTensor()
+    Normalize(mean=[0.49139968, 0.48215827, 0.44653124], std=[1, 1, 1], inplace=True)
+    AutoAugment(interpolation=InterpolationMode.NEAREST, policy=AutoAugmentPolicy.CIFAR10)
+    RandomCrop(size=(32, 32), padding=[4, 4, 4, 4], pad_if_needed=False, fill=0, padding_mode=constant)
+    RandomHorizontalFlip(p=0.5)
+) 
+test.transforms = ToTensor() 
+```
+```
+[Epoch 239/500] :
+100%|██████████| 391/391 [00:09<00:00, 43.04it/s]
+Train Loss: 0.0011 | Train Acc: 87.50%
+Test  Loss: 0.2361 | Test Acc: 92.82%
+Early stop!! best_eval_loss = 0.230629503420448
+``` 
+> test_loss: 0.2305202476232301
+> test_acc: 92.63%
+> test_error: 7.37%
+
+## MyResNet32_CIFAR_128_SGD_90 [End at Jan ,,,,,,,,,,,]
+```py
+batch = 128
+split_ratio = 0.9    
+optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)
+scheduler = MultiStepLR(optimizer, milestones=[91, 137], gamma=0.1)
+EarlyStopCounter = 500
+train.transforms = Compose(
+    ToTensor()
+    Normalize(mean=[0.49139968, 0.48215827, 0.44653124], std=[1, 1, 1], inplace=True)
+    AutoAugment(interpolation=InterpolationMode.NEAREST, policy=AutoAugmentPolicy.CIFAR10)
+    RandomCrop(size=(32, 32), padding=[4, 4, 4, 4], pad_if_needed=False, fill=0, padding_mode=constant)
+    RandomHorizontalFlip(p=0.5)
+) 
+test.transforms = ToTensor() 
+```
+```
+
+
+
+``` 
+> test_loss: 
+> test_acc:  
+> test_error:
+
+  
+## MyResNet34_ImageNet_256_SGD [End at Jan 19]
+```py
+batch = 256
+split_ratio = 0    
+optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)
+scheduler = ReduceLROnPlateau(patiance=5, factor=0.1, cooldown=5)
+EarlyStopCounter = 25 
+train = Compose(
+    RandomShortestSize(min_size=range(256, 480), antialias=True),
+    RandomCrop(size=224),
+    AutoAugment(policy=AutoAugmentPolicy.IMAGENET),
+    RandomHorizontalFlip(self.Randp),
+    ToTensor(),
+    Normalize(mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True),
+)
+# center croped valid set
+valid = Compose(
+    RandomShortestSize(min_size=range(256, 480), antialias=True),
+    CenterCrop(size=368),
+    ToTensor(),
+    Normalize(mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True),
+)
+# 10-croped valid set
+scales = [224, 256, 384, 480, 640]
+valid  = Compose(
+    RandomShortestSize(min_size=scale[i], antialias=True)
+    TenCrop(size=scale[i])
+    ToTensor()
+    Normalize(mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True)
+)
+``` 
+``` 
+[Epoch 68/500] :
+100%|██████████| 5005/5005 
+Train Loss: 0.0003 | Train Acc: 62.24%
+Test  Loss: 1.2975 | Test Acc: 72.39%
+```
+
+# 4. Conclusion
+## Best ResNet32 Model on CIFAR10 
+  - MyResNet32_CIFAR_128_SGD
     > test_loss: 0.2305202476232301
     > test_acc: 92.63%
     > test_error: 7.37%
     - test loss에 기반해 스케쥴링하지 않고, MultiStepLR로 명시적인 Learning rate들을 적용함. 
-    - Validation set 따로 만들지 않고, 50K의 Training set 다 학습 시킨 것의 결과가 좋았음.
+      - 명시적인 lr 감소는 경험에 기반한 것인데, 이를 알아내기 위해선 시행착오가 필요함.
+    - split한 것과의 비교
+      - Validation set 따로 만들지 않고, 50K의 Training set 다 학습 시킨 것의 결과가 좋았음.
       - **<MyResNet32_CIFAR_128_SGD_90>에 비해 2.93%의 Acc 향상있음.**
-    - 한정된 Training set의 환경에서 5k개의 추가 데이터는 원활한 학습에 큰 도움이 되었음.
-- Best ResNet34 model on ImageNet2012
-  - 연구 진행 중..
+      - 한정된 Training set의 환경에서 5k개의 추가 데이터는 원활한 학습에 큰 도움이 되었음.
+## Best ResNet34 model on ImageNet2012
+  - MyResNet34_ImageNet_256_SGD
+    >test0: 100%|██████████| 196/196 [10:03<00:00,  3.08s/it]
+    >Dataset 1: Loss: 25.163187512937856, Top-1 Acc: 0.4722, Top-5 Acc: 0.7023
+    >test1: 100%|██████████| 196/196 [11:19<00:00,  3.47s/it]
+    >Dataset 2: Loss: 23.189826230917657, Top-1 Acc: 0.50176, Top-5 Acc: 0.730776
+    >test2: 100%|██████████| 196/196 [19:57<00:00,  6.11s/it]
+    >Dataset 3: Loss: 23.368813487948202, Top-1 Acc: 0.527296, Top-5 Acc: 0.75704
+    >test3: 100%|██████████| 196/196 [28:12<00:00,  8.64s/it]
+    >Dataset 4: Loss: 26.610214240696966, Top-1 Acc: 0.496662, Top-5 Acc: 0.731202
+    >test4: 100%|██████████| 196/196 [49:15<00:00, 15.08s/it]
+    >Dataset 5: Loss: 33.274302055032884, Top-1 Acc: 0.398678, Top-5 Acc: 0.637878
+    >Avg Loss: 26.321268705506714, Avg Top-1 Acc: 0.47931919999999995, Avg Top-5 Acc: 0.7118392
+    >> Top-1 47.93%, Top-5 71.18%
      

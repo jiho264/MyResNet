@@ -145,7 +145,7 @@ test.transforms = ToTensor()
 > test_error:
 
   
-## MyResNet34_ImageNet_256_SGD [End at Jan 19]
+## MyResNet34_ImageNet_256_SGD_1 [End at Jan 19]
 ```py
 batch = 256
 split_ratio = 0    
@@ -170,7 +170,7 @@ valid = Compose(
 # 10-croped valid set
 scales = [224, 256, 384, 480, 640]
 valid  = Compose(
-    RandomShortestSize(min_size=scale[i], antialias=True)
+    RandomShortestSize(min_size=scale[i]+1, antialias=True)
     TenCrop(size=scale[i])
     ToTensor()
     Normalize(mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True)
@@ -180,8 +180,43 @@ valid  = Compose(
 [Epoch 68/500] :
 100%|██████████| 5005/5005 
 Train Loss: 0.0003 | Train Acc: 62.24%
-Test  Loss: 1.2975 | Test Acc: 72.39%
+Valid Loss: 1.2975 | Valid Acc: 72.39%
 ```
+> Train set에서 acc가 낮은 현상 때문에, Test(10-crop)에서도 47%의 Top-1 Acc나옴. 
+> Train set도 acc올라올 때 까지 다시 학습시켜야 할 것 같음.
+
+## MyResNet34_ImageNet_256_SGD_2 
+- case1보다 cooldown을 5에서 25로 늘림. 얼리스탑 카운터도 25에서 30으로.
+```py
+batch = 256
+split_ratio = 0    
+optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)
+scheduler = ReduceLROnPlateau(patiance=5, factor=0.1, cooldown=25)
+EarlyStopCounter = 30
+train = Compose(
+    RandomShortestSize(min_size=range(256, 480), antialias=True),
+    RandomCrop(size=224),
+    AutoAugment(policy=AutoAugmentPolicy.IMAGENET),
+    RandomHorizontalFlip(self.Randp),
+    ToTensor(),
+    Normalize(mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True),
+)
+# center croped valid set
+valid = Compose(
+    RandomShortestSize(min_size=range(256, 480), antialias=True),
+    CenterCrop(size=368),
+    ToTensor(),
+    Normalize(mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True),
+)
+# 10-croped valid set
+scales = [224, 256, 384, 480, 640]
+valid  = Compose(
+    RandomShortestSize(min_size=scale[i]+1, antialias=True)
+    TenCrop(size=scale[i])
+    ToTensor()
+    Normalize(mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True)
+)
+``` 
 
 # 4. Conclusion
 ## Best ResNet32 Model on CIFAR10 

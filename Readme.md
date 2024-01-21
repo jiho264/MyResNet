@@ -90,9 +90,10 @@
   - 하나 알게된 것 : 동일 모델을 test할 때마다 loss가 소숫점 2자리대까지 바뀌는 것을 확인함. 
     - 동일 weights이어도, 컴퓨터 계산의 한계 때문에 오차 발생하는 것으로 보임  
   - Q : 왜 Adam보다 SGD가 더 학습이 잘 되었는가?
-
+- Jan 17 : 
 # 3. Training Results
-## MyResNet32_CIFAR_128_SGD [End at Jan 17]
+## CIFAR10
+### MyResNet32_CIFAR_128_SGD [End at Jan 17]
 ```py
 batch = 128
 split_ratio = 0    
@@ -119,7 +120,7 @@ Early stop!! best_eval_loss = 0.230629503420448
 > test_acc: 92.63%
 > test_error: 7.37%
 
-## MyResNet32_CIFAR_128_SGD_90 [End at Jan ,,,,,,,,,,,]
+### MyResNet32_CIFAR_128_SGD_90 [Cancel]
 ```py
 batch = 128
 split_ratio = 0.9    
@@ -135,17 +136,26 @@ train.transforms = Compose(
 ) 
 test.transforms = ToTensor() 
 ```
+- 전제가 잘못되었으므로, 실험 진행하지 않음.
+
+### MyResNet32_CIFAR_128_SGD_95 [Now going]
+```py
+batch = 128
+split_ratio = 0.95
+optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)
+scheduler = ReduceLROnPlateau(patiance=10, factor=0.1, cooldown=50)
+EarlyStopCounter = 70
+train.transforms = Compose(
+    AutoAugment(interpolation=InterpolationMode.NEAREST, policy=AutoAugmentPolicy.CIFAR10)
+    RandomCrop(size=(32, 32), padding=[4, 4, 4, 4], pad_if_needed=False, fill=0, padding_mode=constant)
+    RandomHorizontalFlip(p=0.5)
+    ToTensor()
+    Normalize(mean=[0.49139968, 0.48215827, 0.44653124], std=[1, 1, 1], inplace=True)
+) 
+test.transforms = ToTensor() 
 ```
-
-
-
-``` 
-> test_loss: 
-> test_acc:  
-> test_error:
-
-  
-## MyResNet34_ImageNet_256_SGD_1 [End at Jan 19]
+## ImageNet2012
+### MyResNet34_ImageNet_256_SGD_1 [End at Jan 19]
 ```py
 batch = 256
 split_ratio = 0    
@@ -185,7 +195,7 @@ Valid Loss: 1.2975 | Valid Acc: 72.39%
 > Train set에서 acc가 낮은 현상 때문에, Test(10-crop)에서도 47%의 Top-1 Acc나옴. 
 > Train set도 acc올라올 때 까지 다시 학습시켜야 할 것 같음.
 
-## MyResNet34_ImageNet_256_SGD_2 
+### MyResNet34_ImageNet_256_SGD_2 
 - case1보다 cooldown을 5에서 25로 늘림. 얼리스탑 카운터도 25에서 40으로.
 ```py
 batch = 256

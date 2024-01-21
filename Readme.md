@@ -124,33 +124,6 @@
     > test_acc: 92.63%
     > test_error: 7.37%
 
-
-  - **MyResNet32_CIFAR_256_SGD** 
-    ```py
-    batch = 256
-    split_ratio = 0.95    
-    optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)
-    scheduler = ReduceLROnPlateau(patiance=50, factor=0.1, cooldown=50)
-    EarlyStopCounter = 150
-    train.transforms = Compose(
-        ToTensor()
-        Normalize(mean=[0.49139968, 0.48215827, 0.44653124], std=[1, 1, 1], inplace=True)
-        AutoAugment(interpolation=InterpolationMode.NEAREST, policy=AutoAugmentPolicy.CIFAR10)
-        RandomCrop(size=(32, 32), padding=[4, 4, 4, 4], pad_if_needed=False, fill=0, padding_mode=constant)
-        RandomHorizontalFlip(p=0.5)
-    ) 
-    test.transforms = ToTensor() 
-    ``` 
-    ``` 
-    [Epoch 850/1000] :
-    100%|██████████| 196/196 [00:09<00:00, 20.04it/s]
-    Train Loss: 0.0007 | Train Acc: 96.25%
-    Test  Loss: 0.2224 | Test Acc: 93.72%
-    Early stop!! best_eval_loss = 0.208574132155627
-    ```  
-    > test_loss: 0.20969283301383257
-    > test_acc: 93.30%
-    > test_error: 6.70%
     
   - **MyResNet34_ImageNet_256_SGD** - [case1] [End at Jan 19]
     ```py

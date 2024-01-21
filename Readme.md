@@ -186,13 +186,13 @@ Valid Loss: 1.2975 | Valid Acc: 72.39%
 > Train set도 acc올라올 때 까지 다시 학습시켜야 할 것 같음.
 
 ## MyResNet34_ImageNet_256_SGD_2 
-- case1보다 cooldown을 5에서 25로 늘림. 얼리스탑 카운터도 25에서 30으로.
+- case1보다 cooldown을 5에서 25로 늘림. 얼리스탑 카운터도 25에서 40으로.
 ```py
 batch = 256
 split_ratio = 0    
 optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)
-scheduler = ReduceLROnPlateau(patiance=5, factor=0.1, cooldown=25)
-EarlyStopCounter = 30
+scheduler = ReduceLROnPlateau(patiance=10, factor=0.1, cooldown=25)
+EarlyStopCounter = 40
 train = Compose(
     RandomShortestSize(min_size=range(256, 480), antialias=True),
     RandomCrop(size=224),

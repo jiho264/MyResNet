@@ -60,40 +60,38 @@ train.transforms = Compose(
 test.transforms = ToTensor() 
 ```
 ### 2.1.1. MyResNet32_CIFAR_128_SGD [End at Jan 17]
-
 - batch = 128
 - split_ratio = 0    
 - optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)
 - scheduler = MultiStepLR(optimizer, milestones=[82, 123], gamma=0.1)
 - EarlyStopCounter = 500
-
 > test_loss: 0.2305202476232301
 > test_acc: 92.63%
 > test_error: 7.37%
+> 100 epochs 넘게 converge했기에, 239epochs에서 종료. 
 
 ### 2.1.2. MyResNet32_CIFAR_128_SGD_90 [Training now..]
-
 - batch = 128
 - split_ratio = 0.9    
 - optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)
 - scheduler = ReduceLROnPlateau(patiance=10, factor=0.1, cooldown=50)
 - EarlyStopCounter = 70
-
 > test_loss: 0.5532871841252605
 > test_acc: 83.39%
 > test_error: 16.61%
+>> 232 epochs에서 lr 1e-5로 감소해서 종료.
 
 ### 2.1.3. MyResNet32_CIFAR_128_SGD_95 [End at Jan 22]
-
 - batch = 128
 - split_ratio = 0.95
 - optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)
 - scheduler = ReduceLROnPlateau(patiance=10, factor=0.1, cooldown=50)
 - EarlyStopCounter = 70 
-
 > test_loss: 0.33611102500321355
 > test_acc: 89.40%
 > test_error: 10.60%
+>> 205 epochs에서 Early stop
+
 ---
 ## 2.2. ImageNet2012
 ```py

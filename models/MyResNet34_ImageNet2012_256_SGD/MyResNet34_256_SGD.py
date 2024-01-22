@@ -251,11 +251,11 @@ for epoch in range(NUM_EPOCHS):
     print("-" * 50)
 
 # %%
-view = LogViewer(logs)
-view.draw()
+# view = LogViewer(logs)
+# view.draw()
 
-# %%
-view.print_all()
+# # %%
+# view.print_all()
 
 # %%
 # CHECK = 5410

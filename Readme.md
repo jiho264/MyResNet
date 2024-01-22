@@ -48,14 +48,8 @@
 ---
 
 # 2. Training Results
-## CIFAR10
-### MyResNet32_CIFAR_128_SGD [End at Jan 17]
-```py
-batch = 128
-split_ratio = 0    
-optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)
-scheduler = MultiStepLR(optimizer, milestones=[82, 123], gamma=0.1)
-EarlyStopCounter = 500
+## 2.1. CIFAR10
+```py 
 train.transforms = Compose(
     ToTensor()
     Normalize(mean=[0.49139968, 0.48215827, 0.44653124], std=[1, 1, 1], inplace=True)
@@ -65,58 +59,45 @@ train.transforms = Compose(
 ) 
 test.transforms = ToTensor() 
 ```
-```
-[Epoch 239/500] :
-100%|██████████| 391/391 [00:09<00:00, 43.04it/s]
-Train Loss: 0.0011 | Train Acc: 87.50%
-Test  Loss: 0.2361 | Test Acc: 92.82%
-Early stop!! best_eval_loss = 0.230629503420448
-``` 
+### 2.1.1. MyResNet32_CIFAR_128_SGD [End at Jan 17]
+
+- batch = 128
+- split_ratio = 0    
+- optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)
+- scheduler = MultiStepLR(optimizer, milestones=[82, 123], gamma=0.1)
+- EarlyStopCounter = 500
+
 > test_loss: 0.2305202476232301
 > test_acc: 92.63%
 > test_error: 7.37%
 
-### MyResNet32_CIFAR_128_SGD_90 [Training now..]
-```py
-batch = 128
-split_ratio = 0.9    
-optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)
-scheduler = ReduceLROnPlateau(patiance=10, factor=0.1, cooldown=50)
-EarlyStopCounter = 70
-train.transforms = Compose(
-    ToTensor()
-    Normalize(mean=[0.49139968, 0.48215827, 0.44653124], std=[1, 1, 1], inplace=True)
-    AutoAugment(interpolation=InterpolationMode.NEAREST, policy=AutoAugmentPolicy.CIFAR10)
-    RandomCrop(size=(32, 32), padding=[4, 4, 4, 4], pad_if_needed=False, fill=0, padding_mode=constant)
-    RandomHorizontalFlip(p=0.5)
-) 
-test.transforms = ToTensor() 
-```
+### 2.1.2. MyResNet32_CIFAR_128_SGD_90 [Training now..]
 
-### MyResNet32_CIFAR_128_SGD_95 [End at Jan 22]
+- batch = 128
+- split_ratio = 0.9    
+- optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)
+- scheduler = ReduceLROnPlateau(patiance=10, factor=0.1, cooldown=50)
+- EarlyStopCounter = 70
+
+> test_loss: 0.5532871841252605
+> test_acc: 83.39%
+> test_error: 16.61%
+
+### 2.1.3. MyResNet32_CIFAR_128_SGD_95 [End at Jan 22]
+
+- batch = 128
+- split_ratio = 0.95
+- optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)
+- scheduler = ReduceLROnPlateau(patiance=10, factor=0.1, cooldown=50)
+- EarlyStopCounter = 70 
+
+> test_loss: 0.33611102500321355
+> test_acc: 89.40%
+> test_error: 10.60%
+---
+## 2.2. ImageNet2012
 ```py
-batch = 128
-split_ratio = 0.95
-optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)
-scheduler = ReduceLROnPlateau(patiance=10, factor=0.1, cooldown=50)
-EarlyStopCounter = 70
-train.transforms = Compose(
-    AutoAugment(interpolation=InterpolationMode.NEAREST, policy=AutoAugmentPolicy.CIFAR10)
-    RandomCrop(size=(32, 32), padding=[4, 4, 4, 4], pad_if_needed=False, fill=0, padding_mode=constant)
-    RandomHorizontalFlip(p=0.5)
-    ToTensor()
-    Normalize(mean=[0.49139968, 0.48215827, 0.44653124], std=[1, 1, 1], inplace=True)
-) 
-test.transforms = ToTensor() 
-```
-## ImageNet2012
-### MyResNet34_ImageNet_256_SGD_1 [End at Jan 19]
-```py
-batch = 256
-split_ratio = 0    
-optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)
-scheduler = ReduceLROnPlateau(patiance=5, factor=0.1, cooldown=5)
-EarlyStopCounter = 25 
+# Training set
 train = Compose(
     RandomShortestSize(min_size=range(256, 480), antialias=True),
     RandomCrop(size=224),
@@ -140,50 +121,37 @@ valid  = Compose(
     ToTensor()
     Normalize(mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True)
 )
-``` 
+```
+### 2.2.1. MyResNet34_ImageNet_256_SGD_1 [End at Jan 19]
+- batch = 256
+- optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)
+- scheduler = ReduceLROnPlateau(patiance=5, factor=0.1, cooldown=5)
+- EarlyStopCounter = 25 
+
 ``` 
 [Epoch 68/500] :
 100%|██████████| 5005/5005 
 Train Loss: 0.0003 | Train Acc: 62.24%
 Valid Loss: 1.2975 | Valid Acc: 72.39%
 ```
-> Train set에서 acc가 낮은 현상 때문에, Test(10-crop)에서도 47%의 Top-1 Acc나옴. 
-> Train set도 acc올라올 때 까지 다시 학습시켜야 할 것 같음.
+> Avg Loss: 26.3212
+> Avg Top-1 Acc: 47.93%
+> Avg Top-5 Acc: 71.18%
+>> Train set에서 acc가 낮은 현상 때문에, Test(10-crop)에서도 47%의 Top-1 Acc나옴. 
+>> Train set도 acc올라올 때 까지 다시 학습시켜야 할 것 같음.
 
-### MyResNet34_ImageNet_256_SGD_2 [Training now...]
+### 2.2.2. MyResNet34_ImageNet_256_SGD_2 [Training now...]
 - case1보다 cooldown을 5에서 25로 늘림. 얼리스탑 카운터도 25에서 40으로.
-```py
-batch = 256
-split_ratio = 0    
-optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)
-scheduler = ReduceLROnPlateau(patiance=10, factor=0.1, cooldown=25)
-EarlyStopCounter = 40
-train = Compose(
-    RandomShortestSize(min_size=range(256, 480), antialias=True),
-    RandomCrop(size=224),
-    AutoAugment(policy=AutoAugmentPolicy.IMAGENET),
-    RandomHorizontalFlip(self.Randp),
-    ToTensor(),
-    Normalize(mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True),
-)
-# center croped valid set
-valid = Compose(
-    RandomShortestSize(min_size=range(256, 480), antialias=True),
-    CenterCrop(size=368),
-    ToTensor(),
-    Normalize(mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True),
-)
-# 10-croped valid set
-scales = [224, 256, 384, 480, 640]
-valid  = Compose(
-    RandomShortestSize(min_size=scale[i]+1, antialias=True)
-    TenCrop(size=scale[i])
-    ToTensor()
-    Normalize(mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True)
-)
-``` 
+- batch = 256  
+- optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)
+- scheduler = ReduceLROnPlateau(patiance=10, factor=0.1, cooldown=25)
+- EarlyStopCounter = 40
 
-# 4. Conclusion
+> test_loss: 0.20692915320396424
+> test_acc: 92.92%
+> test_error: 7.08%
+
+# 3. Conclusion
 ## Best ResNet32 Model on CIFAR10 
   - MyResNet32_CIFAR_128_SGD
     > test_loss: 0.2305202476232301
@@ -192,21 +160,13 @@ valid  = Compose(
     - test loss에 기반해 스케쥴링하지 않고, MultiStepLR로 명시적인 Learning rate들을 적용함. 
       - 명시적인 lr 감소는 경험에 기반한 것인데, 이를 알아내기 위해선 시행착오가 필요함.
     - split한 것과의 비교
-      - Validation set 따로 만들지 않고, 50K의 Training set 다 학습 시킨 것의 결과가 좋았음.
-      - **<MyResNet32_CIFAR_128_SGD_90>에 비해 2.93%의 Acc 향상있음.**
-      - 한정된 Training set의 환경에서 5k개의 추가 데이터는 원활한 학습에 큰 도움이 되었음.
 ## Best ResNet34 model on ImageNet2012
   - MyResNet34_ImageNet_256_SGD (120m 소요)
-    >test0: 100%|██████████| 196/196 [10:03<00:00,  3.08s/it]
-    >Dataset 1: Loss: 25.163187512937856, Top-1 Acc: 0.4722, Top-5 Acc: 0.7023
-    >test1: 100%|██████████| 196/196 [11:19<00:00,  3.47s/it]
-    >Dataset 2: Loss: 23.189826230917657, Top-1 Acc: 0.50176, Top-5 Acc: 0.730776
-    >test2: 100%|██████████| 196/196 [19:57<00:00,  6.11s/it]
-    >Dataset 3: Loss: 23.368813487948202, Top-1 Acc: 0.527296, Top-5 Acc: 0.75704
-    >test3: 100%|██████████| 196/196 [28:12<00:00,  8.64s/it]
-    >Dataset 4: Loss: 26.610214240696966, Top-1 Acc: 0.496662, Top-5 Acc: 0.731202
-    >test4: 100%|██████████| 196/196 [49:15<00:00, 15.08s/it]
-    >Dataset 5: Loss: 33.274302055032884, Top-1 Acc: 0.398678, Top-5 Acc: 0.637878
-    >Avg Loss: 26.321268705506714, Avg Top-1 Acc: 0.47931919999999995, Avg Top-5 Acc: 0.7118392
+    >Dataset 1: Loss: 25.1631, Top-1 Acc: 0.4722, Top-5 Acc: 0.7023
+    >Dataset 2: Loss: 23.1898, Top-1 Acc: 0.50176, Top-5 Acc: 0.730776
+    >Dataset 3: Loss: 23.3688, Top-1 Acc: 0.527296, Top-5 Acc: 0.75704
+    >Dataset 4: Loss: 26.6102, Top-1 Acc: 0.496662, Top-5 Acc: 0.731202
+    >Dataset 5: Loss: 33.2743, Top-1 Acc: 0.398678, Top-5 Acc: 0.637878
+    >Avg Loss: 26.3212, Avg Top-1 Acc: 0.4793, Avg Top-5 Acc: 0.7118
     >> Top-1 47.93%, Top-5 71.18%
      

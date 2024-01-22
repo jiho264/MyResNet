@@ -76,13 +76,13 @@ Early stop!! best_eval_loss = 0.230629503420448
 > test_acc: 92.63%
 > test_error: 7.37%
 
-### MyResNet32_CIFAR_128_SGD_90 [Cancel]
+### MyResNet32_CIFAR_128_SGD_90 [Training now..]
 ```py
 batch = 128
 split_ratio = 0.9    
 optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)
-scheduler = MultiStepLR(optimizer, milestones=[91, 137], gamma=0.1)
-EarlyStopCounter = 500
+scheduler = ReduceLROnPlateau(patiance=10, factor=0.1, cooldown=50)
+EarlyStopCounter = 70
 train.transforms = Compose(
     ToTensor()
     Normalize(mean=[0.49139968, 0.48215827, 0.44653124], std=[1, 1, 1], inplace=True)
@@ -92,9 +92,8 @@ train.transforms = Compose(
 ) 
 test.transforms = ToTensor() 
 ```
-- 전제가 잘못되었으므로, 실험 진행하지 않음.
 
-### MyResNet32_CIFAR_128_SGD_95 [Now going]
+### MyResNet32_CIFAR_128_SGD_95 [End at Jan 22]
 ```py
 batch = 128
 split_ratio = 0.95
@@ -151,7 +150,7 @@ Valid Loss: 1.2975 | Valid Acc: 72.39%
 > Train set에서 acc가 낮은 현상 때문에, Test(10-crop)에서도 47%의 Top-1 Acc나옴. 
 > Train set도 acc올라올 때 까지 다시 학습시켜야 할 것 같음.
 
-### MyResNet34_ImageNet_256_SGD_2 
+### MyResNet34_ImageNet_256_SGD_2 [Training now...]
 - case1보다 cooldown을 5에서 25로 늘림. 얼리스탑 카운터도 25에서 40으로.
 ```py
 batch = 256
@@ -197,7 +196,7 @@ valid  = Compose(
       - **<MyResNet32_CIFAR_128_SGD_90>에 비해 2.93%의 Acc 향상있음.**
       - 한정된 Training set의 환경에서 5k개의 추가 데이터는 원활한 학습에 큰 도움이 되었음.
 ## Best ResNet34 model on ImageNet2012
-  - MyResNet34_ImageNet_256_SGD
+  - MyResNet34_ImageNet_256_SGD (120m 소요)
     >test0: 100%|██████████| 196/196 [10:03<00:00,  3.08s/it]
     >Dataset 1: Loss: 25.163187512937856, Top-1 Acc: 0.4722, Top-5 Acc: 0.7023
     >test1: 100%|██████████| 196/196 [11:19<00:00,  3.47s/it]

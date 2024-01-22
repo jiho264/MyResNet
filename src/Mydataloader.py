@@ -12,6 +12,8 @@ from torchvision.transforms.v2 import (
     CenterCrop,
 )
 from torchvision.transforms.autoaugment import AutoAugmentPolicy
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 class LoadDataset:
@@ -187,3 +189,87 @@ class LoadDataset:
             self.test_data,
             len(self.train_data.classes),
         )
+
+    def get_dataloader(
+        self,
+        batch_size,
+        num_workers,
+        shuffle=True,
+        pin_memory=True,
+        persistent_workers=True,
+        print_info=False,
+    ):
+        train_loader = DataLoader(
+            self.train_data,
+            batch_size=batch_size,
+            num_workers=num_workers,
+            shuffle=shuffle,
+            pin_memory=pin_memory,
+            persistent_workers=persistent_workers,
+        )
+        print("train.transforms =", self.train_data.transform, train_loader.batch_size)
+
+        if self.valid_data != None:
+            valid_loader = DataLoader(
+                self.valid_data,
+                batch_size=batch_size,
+                num_workers=num_workers,
+                shuffle=shuffle,
+                pin_memory=pin_memory,
+                persistent_workers=persistent_workers,
+            )
+            print(
+                "valid.transforms =", self.valid_data.transform, valid_loader.batch_size
+            )
+
+        else:
+            valid_loader = None
+        if self.test_data != None:
+            test_loader = DataLoader(
+                self.test_data,
+                batch_size=batch_size,
+                num_workers=num_workers,
+                shuffle=shuffle,
+                pin_memory=pin_memory,
+                persistent_workers=persistent_workers,
+            )
+            print(
+                "test.transforms =",
+                self.test_data.transform,
+                test_loader.batch_size,
+            )
+            if print_info == True:
+                for X, y in test_loader:
+                    print(f"Shape of X [N, C, H, W]: {X.shape}")
+                    print("mean of X", X.mean(dim=(0, 2, 3)))
+                    print(f"Shape of y: {y.shape} {y.dtype}")
+                    break
+
+                class_names = test_loader.dataset.classes
+                count = 0
+                _, axs = plt.subplots(2, 5, figsize=(8, 4))
+
+                for images, labels in test_loader:
+                    images = images.numpy()
+
+                    for i in range(len(images)):
+                        image = images[i]
+                        label = labels[i]
+                        image = np.transpose(image, (1, 2, 0))
+                        image = np.clip(image, 0, 1)
+                        ax = axs[count // 5, count % 5]
+                        ax.imshow(image)
+                        ax.set_title(f"{class_names[label], label}")
+                        ax.axis("off")
+                        count += 1
+
+                        if count == 10:
+                            break
+                    if count == 10:
+                        break
+                plt.tight_layout()
+                plt.show()
+
+        else:
+            test_loader = None
+        return (train_loader, valid_loader, test_loader)

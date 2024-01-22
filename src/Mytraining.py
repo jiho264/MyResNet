@@ -42,10 +42,10 @@ class DoTraining:
             self.scaler.step(self.optimizer)
             self.scaler.update()
 
-        running_loss += loss.item()
-        _, predicted = outputs.max(1)
-        total += labels.size(0)
-        correct += predicted.eq(labels).sum().item()
+            running_loss += loss.item()
+            _, predicted = outputs.max(1)
+            total += labels.size(0)
+            correct += predicted.eq(labels).sum().item()
 
         train_loss = running_loss / len(dataloader)
         train_acc = correct / total

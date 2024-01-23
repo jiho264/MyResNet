@@ -26,12 +26,15 @@ class DoTraining:
         self.file_path = file_path
 
     def Forward_train(self, dataloader):
+        now_epoch = len(self.logs["train_loss"]) + 1
         # Training loop @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         self.model.train()
         running_loss = 0.0
         correct = 0
         total = 0
-        for images, labels in tqdm.tqdm(dataloader, desc="train"):
+        for images, labels in tqdm.tqdm(
+            dataloader, desc=f"{now_epoch} Train", ncols=55
+        ):
             with torch.autocast(device_type="cuda", dtype=torch.float16, enabled=True):
                 images, labels = images.to(self.device), labels.to(self.device)
                 self.optimizer.zero_grad()
@@ -52,7 +55,8 @@ class DoTraining:
 
         return train_loss, train_acc
 
-    def Forward_eval(self, dataloader, test=False):
+    def Forward_eval(self, dataloader):
+        now_epoch = len(self.logs["train_loss"]) + 1
         self.model.eval()
         eval_loss = 0.0
         correct = 0
@@ -60,7 +64,9 @@ class DoTraining:
 
         with torch.no_grad():
             if "MyResNet34" in str(self.model.named_modules):
-                for images, labels in tqdm.tqdm(dataloader, desc="eval"):
+                for images, labels in tqdm.tqdm(
+                    dataloader, desc=f"{now_epoch} Eval", ncols=55
+                ):
                     images, labels = images.to(self.device), labels.to(self.device)
 
                     outputs = self.model(images)
@@ -123,7 +129,7 @@ class DoTraining:
             print(f"Valid Loss: {valid_loss:.4f} | Valid Acc: {valid_acc*100:.2f}%")
 
         if test_dataloader != None:
-            test_loss, test_acc = self.Forward_eval(test_dataloader, test=True)
+            test_loss, test_acc = self.Forward_eval(test_dataloader)
             self.logs["test_loss"].append(test_loss)
             self.logs["test_acc"].append(test_acc)
             print(f"Test  Loss: {test_loss:.4f} | Test Acc: {test_acc*100:.2f}%")

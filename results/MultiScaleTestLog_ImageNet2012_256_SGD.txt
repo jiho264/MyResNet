@@ -1,0 +1,62 @@
+Dataset ImageFolder
+    Number of datapoints: 50000
+    Root location: data/ImageNet2012/val
+    StandardTransform
+Transform: Compose(
+                 RandomShortestSize(min_size=[225], interpolation=InterpolationMode.BILINEAR, antialias=True)
+                 TenCrop(size=(224, 224), vertical_flip=False)
+                 ToTensor()
+                 Normalize(mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True)
+           ) 196 50000 256
+Dataset ImageFolder
+    Number of datapoints: 50000
+    Root location: data/ImageNet2012/val
+    StandardTransform
+Transform: Compose(
+                 RandomShortestSize(min_size=[257], interpolation=InterpolationMode.BILINEAR, antialias=True)
+                 TenCrop(size=(256, 256), vertical_flip=False)
+                 ToTensor()
+                 Normalize(mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True)
+           ) 391 50000 128
+Dataset ImageFolder
+    Number of datapoints: 50000
+    Root location: data/ImageNet2012/val
+    StandardTransform
+Transform: Compose(
+                 RandomShortestSize(min_size=[385], interpolation=InterpolationMode.BILINEAR, antialias=True)
+                 TenCrop(size=(384, 384), vertical_flip=False)
+                 ToTensor()
+                 Normalize(mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True)
+           ) 521 50000 96
+Dataset ImageFolder
+    Number of datapoints: 50000
+    Root location: data/ImageNet2012/val
+    StandardTransform
+Transform: Compose(
+                 RandomShortestSize(min_size=[481], interpolation=InterpolationMode.BILINEAR, antialias=True)
+                 TenCrop(size=(480, 480), vertical_flip=False)
+                 ToTensor()
+                 Normalize(mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True)
+           ) 782 50000 64
+Dataset ImageFolder
+    Number of datapoints: 50000
+    Root location: data/ImageNet2012/val
+    StandardTransform
+Transform: Compose(
+                 RandomShortestSize(min_size=[641], interpolation=InterpolationMode.BILINEAR, antialias=True)
+                 TenCrop(size=(640, 640), vertical_flip=False)
+                 ToTensor()
+                 Normalize(mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True)
+           ) 1786 50000 28
+ResNet-34 for ImageNet2012 is loaded.
+Dataset 1: Loss: 21.92211325831559, Top-1 Acc: 0.524304, Top-5 Acc: 0.752102
+Dataset 2: Loss: 19.95881298420679, Top-1 Acc: 0.555406, Top-5 Acc: 0.77963
+Dataset 3: Loss: 20.68209064979242, Top-1 Acc: 0.583468, Top-5 Acc: 0.804768
+Dataset 4: Loss: 23.97079176183247, Top-1 Acc: 0.560104, Top-5 Acc: 0.78783
+Dataset 5: Loss: 30.28034497361968, Top-1 Acc: 0.478232, Top-5 Acc: 0.719902
+Avg Loss: 23.362830725553387, Avg Top-1 Acc: 0.5403027999999999, Avg Top-5 Acc: 0.7688463999999999
+test0: 100%|█████████████████████████████| 196/196 [04:25<00:00,  1.36s/it]
+test1: 100%|█████████████████████████████| 391/391 [05:44<00:00,  1.13it/s]
+test2: 100%|█████████████████████████████| 521/521 [12:36<00:00,  1.45s/it]
+test3: 100%|█████████████████████████████| 782/782 [19:43<00:00,  1.51s/it]
+test4: 100%|███████████████████████████| 1786/1786 [35:38<00:00,  1.20s/it]

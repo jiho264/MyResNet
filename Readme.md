@@ -196,3 +196,7 @@ valid  = Compose(
 - ```TenCrop(640) on valid set : Loss: 30.2803, Top-1 Acc: 0.4782, Top-5 Acc: 0.7199```
 - ```Avg Loss: 23.3628, Avg Top-1 Acc: 0.5403, Avg Top-5 Acc: 0.7688```
 - 원활한 Test 진행되지 않은 것으로 판단, 학습 결과의 흥망을 판단하기엔 일러보임. 현재까지의 모델 평가는 2.2.2 참조.
+
+# 4. Todo
+1. ```TenCrop 잘못했나 찾아보기. ResNet34의 test acc가 너무 낮게 나왔음.```
+   1. 논문의 training 할 때의 center crop으로 valid acc그린 plot있는데, lr=0.001인 부분에서 training acc가 해당 그래프 만큼 나오지 않음.

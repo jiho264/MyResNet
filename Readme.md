@@ -200,3 +200,4 @@ valid  = Compose(
 # 4. Todo
 1. ```TenCrop 잘못했나 찾아보기. ResNet34의 test acc가 너무 낮게 나왔음.```
    1. 논문의 training 할 때의 center crop으로 valid acc그린 plot있는데, lr=0.001인 부분에서 training acc가 해당 그래프 만큼 나오지 않음.
+2. ```SGD말고 다른 Optimizer 적용해볼 수 있는지 알아보기.```

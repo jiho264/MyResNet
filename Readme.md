@@ -82,7 +82,7 @@ test.transforms = ToTensor()
 ```
 ### 2.1.1. MyResNet32_CIFAR_128_SGD [End at Jan 17]
 - ```batch = 128```
-- ```split_ratio = 0    ```
+- ```split_ratio = 0```
 - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)```
 - ```scheduler = MultiStepLR(optimizer, milestones=[82, 123], gamma=0.1)```
 - ```EarlyStopCounter = 500```
@@ -93,7 +93,7 @@ test.transforms = ToTensor()
 
 ### 2.1.2. MyResNet32_CIFAR_128_SGD_90 [End at Jan 23]
 - ```batch = 128```
-- ```split_ratio = 0.9    ```
+- ```split_ratio = 0.9```
 - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)```
 - ```scheduler = ReduceLROnPlateau(patiance=10, factor=0.1, cooldown=50)```
 - ```EarlyStopCounter = 70```
@@ -107,7 +107,7 @@ test.transforms = ToTensor()
 - ```split_ratio = 0.95```
 - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)```
 - ```scheduler = ReduceLROnPlateau(patiance=10, factor=0.1, cooldown=50)```
-- ```EarlyStopCounter = 70 ```
+- ```EarlyStopCounter = 70```
 <img src="results/MyResNet32_CIFAR10_128_SGD_95.png" style="width: 410px; height: 400px; object-fit: cover;"/>
 
 - Best model : ```test_loss: 0.3361``` ```test_acc: 89.40%``` ```test_error: 10.60%``` 
@@ -144,7 +144,7 @@ valid  = Compose(
 - ```batch = 256```
 - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)```
 - ```scheduler = ReduceLROnPlateau(patiance=5, factor=0.1, cooldown=5)```
-- ```EarlyStopCounter = 25 ```
+- ```EarlyStopCounter = 25```
 <img src="results/MyResNet34_256_SGD_case1.png" style="width: 410px; height: 400px; object-fit: cover;"/>
 
 - ```[Last] 68 epoch: train_loss=0.0003, train_acc=0.6224, valid_loss=1.2975, valid_acc=0.7239, lr=0.0010```
@@ -158,7 +158,7 @@ valid  = Compose(
   - 논문에선 120 epochs까지 학습시켰는데, 68 epochs에서 Early Stop이 나오게 학습을 설정한 바람에 일찍 종료됨. 
 
 ### 2.2.2. MyResNet34_ImageNet_256_SGD_case2 [End at Jan 24]
-- ```batch = 256  ```
+- ```batch = 256```
 - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)```
 - ```scheduler = ReduceLROnPlateau(patiance=10, factor=0.1, cooldown=25)```
 - ```EarlyStopCounter = 40 (Ends with lr decreasing to 1e-5 at 133 epochs.)```

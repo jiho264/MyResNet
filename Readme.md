@@ -7,7 +7,7 @@
 - The purpose of this project is that to create a ResNet using Pytorch and to get the accuracy of near original paper's one!
 - [x] The Origin ResNet32 have 7.51% top-1 error rate in CIFAR-10 dataset.
 - [ ] The Origin ResNet34 have 21.53% top-1 error rate in ImageNet2012 dataset.
-  - Haven't achieved that yet. 
+  >Haven't achieved that yet. 
 ---
 # 1. Usage
 ## 1.1. Requierments
@@ -86,7 +86,7 @@ test.transforms = ToTensor()
 - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)```
 - ```scheduler = MultiStepLR(optimizer, milestones=[82, 123], gamma=0.1)```
 - ```EarlyStopCounter = 500```
-<img src="results/MyResNet32_CIFAR10_128_SGD.png" style="width: 410px; height: 400px; object-fit: cover; object-position: right;" />
+<img src="results/MyResNet32_CIFAR10_128_SGD.png" style="width: 410px; height: 400px; object-fit: cover;"/>
 
 - Best model : ```test_loss: 0.2305``` ```test_acc: 92.63%``` ```test_error: 7.37%``` 
   >It converges in over 100 epochs. So ending at 239 epochs.
@@ -97,7 +97,7 @@ test.transforms = ToTensor()
 - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)```
 - ```scheduler = ReduceLROnPlateau(patiance=10, factor=0.1, cooldown=50)```
 - ```EarlyStopCounter = 70```
-<img src="results/MyResNet32_CIFAR10_128_SGD_90.png" style="width: 410px; height: 400px; object-fit: cover; object-position: right;" />
+<img src="results/MyResNet32_CIFAR10_128_SGD_90.png" style="width: 410px; height: 400px; object-fit: cover;"/>
 
 - Best model : ```test_loss: 0.5532``` ```test_acc: 83.39%``` ```test_error: 16.61%``` 
   >Ends with lr decreasing to 1e-5 at 232 epochs.
@@ -108,7 +108,7 @@ test.transforms = ToTensor()
 - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)```
 - ```scheduler = ReduceLROnPlateau(patiance=10, factor=0.1, cooldown=50)```
 - ```EarlyStopCounter = 70 ```
-<img src="results/MyResNet32_CIFAR10_128_SGD_95.png" style="width: 410px; height: 400px; object-fit: cover; object-position: right;" />
+<img src="results/MyResNet32_CIFAR10_128_SGD_95.png" style="width: 410px; height: 400px; object-fit: cover;"/>
 
 - Best model : ```test_loss: 0.3361``` ```test_acc: 89.40%``` ```test_error: 10.60%``` 
   >Early stopped on 205 epochs.
@@ -145,7 +145,7 @@ valid  = Compose(
 - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)```
 - ```scheduler = ReduceLROnPlateau(patiance=5, factor=0.1, cooldown=5)```
 - ```EarlyStopCounter = 25 ```
-<img src="results/MyResNet34_256_SGD_case1.png" style="width: 410px; height: 400px; object-fit: cover; object-position: right;" />
+<img src="results/MyResNet34_256_SGD_case1.png" style="width: 410px; height: 400px; object-fit: cover;"/>
 
 - ```[Last] 68 epoch: train_loss=0.0003, train_acc=0.6224, valid_loss=1.2975, valid_acc=0.7239, lr=0.0010```
 - ```Avg Loss: 26.3212, Avg Top-1 Acc: 0.4793, Avg Top-5 Acc: 0.7118```
@@ -162,7 +162,7 @@ valid  = Compose(
 - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)```
 - ```scheduler = ReduceLROnPlateau(patiance=10, factor=0.1, cooldown=25)```
 - ```EarlyStopCounter = 40 (Ends with lr decreasing to 1e-5 at 133 epochs.)```
-<img src="results/MyResNet34_256_SGD_case2.png" style="width: 410px; height: 400px; object-fit: cover; object-position: right;" />
+<img src="results/MyResNet34_256_SGD_case2.png" style="width: 410px; height: 400px; object-fit: cover;"/>
 
 - ```[Last] 133 epoch: train_loss=1.2615, train_acc=0.6986, valid_loss=1.2469, valid_acc=0.7456, lr=0.0001```
 - ```Avg Loss: 23.3628, Avg Top-1 Acc: 0.5403, Avg Top-5 Acc: 0.7688```

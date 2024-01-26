@@ -22,6 +22,9 @@ class EarlyStopper:
             if self.early_stop_counter >= self.PATIENCE:
                 print(f"Early stop!! best_eval_loss = {self.best_eval_loss}")
                 return True
+            else:
+                # print("Not early stop")
+                return False
 
     def state_dict(self):
         return {

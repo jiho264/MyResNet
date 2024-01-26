@@ -23,23 +23,23 @@ class ModelCase:
     ):
         model = MyResNet34(num_classes=1000, Downsample_option="B").to("cuda")
         print(f"ResNet-34 for ImageNet2012 is loaded.")
-
+        file_name = f"MyResNet34_{batch_size}_{optimizer}"
         if optimizer == "Adam":
             optimizer = torch.optim.Adam(model.parameters())
         elif optimizer == "Adam_decay":
-            optimizer = torch.optim.Adam(model.parameters(), weight_decay=1e-4)
+            optimizer = torch.optim.Adam(
+                model.parameters(), weight_decay=1e-4, foreach=True
+            )
         elif optimizer == "SGD":
             optimizer = torch.optim.SGD(
                 model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001
             )
         elif optimizer == "AdamW":
             optimizer = torch.optim.AdamW(
-                model.parameters(), weight_decay=1e-4, amsgrad=True
+                model.parameters(), weight_decay=1e-4, amsgrad=True, foreach=True
             )
         else:
             raise ValueError("Optimizer is not defined.")
-
-        file_name = f"MyResNet34_{batch_size}_{optimizer}"
 
         criterion = nn.CrossEntropyLoss()
 
@@ -53,7 +53,7 @@ class ModelCase:
             factor=0.1,
             verbose=True,
             threshold=1e-4,
-            min_lr=1e-4,
+            min_lr=1e-6,
             cooldown=cooldown,
         )
         scaler = torch.cuda.amp.GradScaler(enabled=True)

@@ -28,7 +28,8 @@ class ModelCase:
             optimizer = torch.optim.Adam(model.parameters())
         elif optimizer == "Adam_decay":
             optimizer = torch.optim.Adam(
-                model.parameters(), weight_decay=1e-4, foreach=True
+                model.parameters(),
+                weight_decay=1e-4,
             )
         elif optimizer == "SGD":
             optimizer = torch.optim.SGD(
@@ -36,7 +37,9 @@ class ModelCase:
             )
         elif optimizer == "AdamW":
             optimizer = torch.optim.AdamW(
-                model.parameters(), weight_decay=1e-4, amsgrad=True, foreach=True
+                model.parameters(),
+                weight_decay=1e-4,
+                amsgrad=True,
             )
         else:
             raise ValueError("Optimizer is not defined.")

@@ -83,7 +83,7 @@ elif OPTIMIZER == "SGD":
 # ## (3) Define Early Stopping
 
 # %%
-earlystopper = EarlyStopper(patience=777, model=model, file_path=file_path)
+earlystopper = EarlyStopper(patience=777, model=model, file_name=file_path)
 
 # %% [markdown]
 # ## (4) Define Learning Rate schedualer

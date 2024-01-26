@@ -38,7 +38,6 @@ class ModelCase:
             )
         else:
             raise ValueError("Optimizer is not defined.")
-            pass
 
         file_name = f"MyResNet34_{batch_size}_{optimizer}"
 

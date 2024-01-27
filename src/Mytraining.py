@@ -56,7 +56,8 @@ class DoTraining:
         return train_loss, train_acc
 
     def Forward_eval(self, dataloader):
-        now_epoch = len(self.logs["train_loss"]) + 1
+        if self.logs != None:
+            now_epoch = len(self.logs["train_loss"]) + 1
         self.model.eval()
         eval_loss = 0.0
         correct = 0
@@ -109,7 +110,12 @@ class DoTraining:
         return
 
     def SingleEpoch(
-        self, train_dataloader, valid_dataloader=None, test_dataloader=None
+        self,
+        train_dataloader,
+        valid_dataloader=None,
+        test_dataloader=None,
+        now_epoch=None,
+        goal_epoch=None,
     ):
         if valid_dataloader == None and test_dataloader == None:
             raise ValueError("No any valid/test dataloader")
@@ -154,5 +160,12 @@ class DoTraining:
                     "Learning Rate has changed : Now is",
                     self.optimizer.param_groups[0]["lr"],
                 )
+        elif self.scheduler.__class__ == torch.optim.lr_scheduler.CosineAnnealingLR:
+            pass
+        elif (
+            self.scheduler.__class__
+            == torch.optim.lr_scheduler.CosineAnnealingWarmRestarts
+        ):
+            pass
 
         return eval_loss

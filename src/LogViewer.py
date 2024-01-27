@@ -6,7 +6,7 @@ class LogViewer:
         self.logs = logs
         pass
 
-    def draw(self, start=0, range=999999):
+    def draw(self, start=0, range=999999, save_name=None):
         fig, axs = plt.subplots(ncols=2, figsize=(10, 5))
         if range == 999999:
             range = len(self.logs["train_loss"])
@@ -16,7 +16,10 @@ class LogViewer:
             axs[0].plot(self.logs["test_loss"][start:], label="Test Loss")
             axs[0].set_xlabel("Epoch")
             axs[0].set_ylabel("Loss")
-            axs[0].set_title("Training, Validation and Test Loss")
+            if save_name == None:
+                axs[0].set_title(f"Training, Validation and Test loss")
+            else:
+                axs[0].set_title(f"{save_name} loss")
             axs[0].legend()
 
             # 두 번째 그래프: Training and Test Accuracy
@@ -25,11 +28,16 @@ class LogViewer:
             axs[1].plot(self.logs["test_acc"][start:], label="Test Accuracy")
             axs[1].set_xlabel("Epoch")
             axs[1].set_ylabel("Accuracy")
-            axs[1].set_title("Training, Validation and Test Accuracy")
+            if save_name == None:
+                axs[1].set_title(f"Training, Validation and Test Accuracy")
+            else:
+                axs[1].set_title(f"{save_name} Accuracy")
             axs[1].legend()
 
             # 그래프를 보여줍니다.
             plt.tight_layout()
+            if save_name != None:
+                plt.savefig(f"results/{save_name}")
             plt.show()
 
         elif range != 999999 and start + range < len(self.logs["train_loss"]):

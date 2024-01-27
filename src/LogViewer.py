@@ -16,7 +16,10 @@ class LogViewer:
             axs[0].plot(self.logs["test_loss"][start:], label="Test Loss")
             axs[0].set_xlabel("Epoch")
             axs[0].set_ylabel("Loss")
-            axs[0].set_title("Training, Validation and Test Loss")
+            if save_name == None:
+                axs[0].set_title(f"Training, Validation and Test loss")
+            else:
+                axs[0].set_title(f"{save_name} loss")
             axs[0].legend()
 
             # 두 번째 그래프: Training and Test Accuracy
@@ -25,7 +28,10 @@ class LogViewer:
             axs[1].plot(self.logs["test_acc"][start:], label="Test Accuracy")
             axs[1].set_xlabel("Epoch")
             axs[1].set_ylabel("Accuracy")
-            axs[1].set_title("Training, Validation and Test Accuracy")
+            if save_name == None:
+                axs[1].set_title(f"Training, Validation and Test Accuracy")
+            else:
+                axs[1].set_title(f"{save_name} Accuracy")
             axs[1].legend()
 
             # 그래프를 보여줍니다.

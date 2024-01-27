@@ -178,7 +178,7 @@ valid  = Compose(
 # 3. Experiments
 ## 3.1. Best ResNet32 Model on CIFAR10 
 ### 3.1.1. MyResNet32_CIFAR_128_SGD
-- ```test_loss: 0.2305202476232301```
+- ```test_loss: 0.2305```
 - ```test_acc: 92.63%```
 - ```test_error: 7.37%```
 - MultiStepLR로 논문의 학습 방법과 동일하게, 명시적인 Learning rate들을 적용함. 
@@ -202,30 +202,52 @@ valid  = Compose(
 - ```all scheduler = CosineAnnealingLR(optimizer, T_max=180, eta_min=0)```
 - ```all earlystopper = EarlyStopper(patience=150, model=model, file_name=file_path)```
 1. Adam
-2. AdamW
-  - <img src="results/MyResNet32_CIFAR10_128_AdamW.png" style="width: 410px; height: 400px; object-fit: cover;"/>
-  - test_loss: 0.3640
-  - test_acc: 89.21%
-  - test_error: 10.79%
-3. AdamW with amsgrad
-  - <img src="results/MyResNet32_CIFAR10_128_AdamW_amsgrad.png" style="width: 410px; height: 400px; object-fit: cover;"/>
-  - test_loss: 0.3690
-  - test_acc: 88.98%
-  - test_error: 11.02%
-4. NAdam
-  - <img src="results/MyResNet32_CIFAR10_128_NAdam.png" style="width: 410px; height: 400px; object-fit: cover;"/>
-  - test_loss: 0.3767
-  - test_acc: 87.61%
-  - test_error: 12.39% 
-5. SGD with nasterov
-  - <img src="results/MyResNet32_CIFAR10_128_SGD_nasterov.png" style="width: 410px; height: 400px; object-fit: cover;"/>
-  - test_loss: 0.3728
-  - test_acc: 87.66%
-  - test_error: 12.34%
-6. SGD
+   - <img src="results/MyResNet32_CIFAR10_128_Adam.png"/>
+   - ```optimizer = torch.optim.Adam(model.parameters())```
+   - ```test_loss: 0.3437```
+   - ```test_acc: 89.70%```
+   - ```test_error: 10.30%```
+2. Adam with decay
+   - <img src="results/MyResNet32_CIFAR10_128_Adam_decay.png" />
+   - ```optimizer = torch.optim.Adam(model.parameters(), weight_decay=1e-4)```
+   - ```test_loss: 0.3366```
+   - ```test_acc: 88.44%```
+   - ```test_error: 11.56%```
+3. AdamW
+   - <img src="results/MyResNet32_CIFAR10_128_AdamW.png" />
+   - ```optimizer = torch.optim.AdamW(model.parameters(), weight_decay=1e-4)```
+   - ```test_loss: 0.3640```
+   - ```test_acc: 89.21%```
+   - ```test_error: 10.79%```
+4. AdamW with amsgrad
+   - <img src="results/MyResNet32_CIFAR10_128_AdamW_amsgrad.png" />
+   - ```optimizer = torch.optim.AdamW(model.parameters(), weight_decay=1e-4, amsgrad=True)```
+   - ```test_loss: 0.3690```
+   - ```test_acc: 88.98%```
+   - ```test_error: 11.02%```
+5. NAdam
+   - <img src="results/MyResNet32_CIFAR10_128_NAdam.png" />
+   - ```optimizer = torch.optim.NAdam(model.parameters(), weight_decay=1e-4)```
+   - ```test_loss: 0.3767```
+   - ```test_acc: 87.61%```
+   - ```test_error: 12.39% ```
+6. SGD with nasterov
+   - <img src="results/MyResNet32_CIFAR10_128_SGD_nasterov.png" />
+   - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=1e-4, nesterov=True)```
+   - ```test_loss: 0.3728```
+   - ```test_acc: 87.66%```
+   - ```test_error: 12.34%```
+7. SGD
+   - <img src="results/MyResNet32_CIFAR10_128_SGD_for_optime_test.png" />
+   - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=1e-4)```
+   - ```test_loss: 0.4251```
+   - ```test_acc: 86.09%```
+   - ```test_error: 13.91%```
+> Adam과 AdamW가 가장 좋은 성능을 보임. AdamW는 Adam에 weight decay의 식을 변형해서 적용한 것임.
+---
 # 4. Todo
 1. ```TenCrop 잘못했나 찾아보기. ResNet34의 test acc가 너무 낮게 나왔음.```
    1. 논문의 training 할 때의 center crop으로 valid acc그린 plot있는데, lr=0.001인 부분에서 training acc가 해당 그래프 만큼 나오지 않음.
 2. ```SGD말고 다른 Optimizer 적용해볼 수 있는지 알아보기.```
-  1. MyResNet34_ImageNet2012_256_Multi에서 Datalodaer 1번에 두 가지 모델 병렬학습 구현 [Jan 26]. 및 AdamW, Adam with decay 학습 중.
-  2. Adam에 weight decay 적용한게 AdamW임. Adam에 decay=1e-4주는거랑 똑같지만, option으로 amsgrad=True만 다름.
+   1. MyResNet34_ImageNet2012_256_Multi에서 Datalodaer 1번에 두 가지 모델 병렬학습 구현 [Jan 26]. 및 AdamW, Adam with decay 학습 중.
+   2. Adam에 weight decay 적용한게 AdamW임. Adam에 decay=1e-4주는거랑 똑같지만, option으로 amsgrad=True만 다름.

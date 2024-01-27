@@ -6,7 +6,7 @@ class LogViewer:
         self.logs = logs
         pass
 
-    def draw(self, start=0, range=999999):
+    def draw(self, start=0, range=999999, save_name=None):
         fig, axs = plt.subplots(ncols=2, figsize=(10, 5))
         if range == 999999:
             range = len(self.logs["train_loss"])
@@ -30,6 +30,8 @@ class LogViewer:
 
             # 그래프를 보여줍니다.
             plt.tight_layout()
+            if save_name != None:
+                plt.savefig(f"results/{save_name}")
             plt.show()
 
         elif range != 999999 and start + range < len(self.logs["train_loss"]):

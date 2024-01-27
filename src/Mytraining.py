@@ -56,7 +56,8 @@ class DoTraining:
         return train_loss, train_acc
 
     def Forward_eval(self, dataloader):
-        now_epoch = len(self.logs["train_loss"]) + 1
+        if self.logs != None:
+            now_epoch = len(self.logs["train_loss"]) + 1
         self.model.eval()
         eval_loss = 0.0
         correct = 0

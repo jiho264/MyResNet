@@ -175,7 +175,7 @@ valid  = Compose(
   - 하지만 TenCrop Test 결과, 논문의 결과만큼 잘 나오지 아니함. test method에 문제가 있는가 살펴봐야 할 것 같음.
   - 학습 방법은 dataset transforms가 잘못되지 않았다는 가정 하에 논문과 상이한 부분 없는 것으로 보임.
 ---
-# 3. Conclusion
+# 3. Experiments
 ## 3.1. Best ResNet32 Model on CIFAR10 
 ### 3.1.1. MyResNet32_CIFAR_128_SGD
 - ```test_loss: 0.2305202476232301```
@@ -196,7 +196,33 @@ valid  = Compose(
 - ```TenCrop(640) on valid set : Loss: 30.2803, Top-1 Acc: 0.4782, Top-5 Acc: 0.7199```
 - ```Avg Loss: 23.3628, Avg Top-1 Acc: 0.5403, Avg Top-5 Acc: 0.7688```
 - 원활한 Test 진행되지 않은 것으로 판단, 학습 결과의 흥망을 판단하기엔 일러보임. 현재까지의 모델 평가는 2.2.2 참조.
-
+## 3.3. What is the best optimizer?
+### 3.3.1. Comparing on CIFAR10
+- ```all batch = 128```
+- ```all scheduler = CosineAnnealingLR(optimizer, T_max=180, eta_min=0)```
+- ```all earlystopper = EarlyStopper(patience=150, model=model, file_name=file_path)```
+1. Adam
+2. AdamW
+  - <img src="results/MyResNet32_CIFAR10_128_AdamW.png" style="width: 410px; height: 400px; object-fit: cover;"/>
+  - test_loss: 0.3640
+  - test_acc: 89.21%
+  - test_error: 10.79%
+3. AdamW with amsgrad
+  - <img src="results/MyResNet32_CIFAR10_128_AdamW_amsgrad.png" style="width: 410px; height: 400px; object-fit: cover;"/>
+  - test_loss: 0.3690
+  - test_acc: 88.98%
+  - test_error: 11.02%
+4. NAdam
+  - <img src="results/MyResNet32_CIFAR10_128_NAdam.png" style="width: 410px; height: 400px; object-fit: cover;"/>
+  - test_loss: 0.3767
+  - test_acc: 87.61%
+  - test_error: 12.39% 
+5. SGD with nasterov
+  - <img src="results/MyResNet32_CIFAR10_128_SGD_nasterov.png" style="width: 410px; height: 400px; object-fit: cover;"/>
+  - test_loss: 0.3728
+  - test_acc: 87.66%
+  - test_error: 12.34%
+6. SGD
 # 4. Todo
 1. ```TenCrop 잘못했나 찾아보기. ResNet34의 test acc가 너무 낮게 나왔음.```
    1. 논문의 training 할 때의 center crop으로 valid acc그린 plot있는데, lr=0.001인 부분에서 training acc가 해당 그래프 만큼 나오지 않음.

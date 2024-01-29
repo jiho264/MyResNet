@@ -86,7 +86,7 @@ test.transforms = ToTensor()
 - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)```
 - ```scheduler = MultiStepLR(optimizer, milestones=[82, 123], gamma=0.1)```
 - ```EarlyStopCounter = 50```
-<img src="results/.png" style="width: 410px; height: 400px; object-fit: cover;"/>
+<img src="results/MyResNet32_123_SGD.png" style="width: 410px; height: 400px; object-fit: cover;"/>
 
 - Best model : ```test_loss: 0.2305``` ```test_acc: 92.63%``` ```test_error: 7.37%``` 
   >It converges in over 100 epochs. So ending at 239 epochs.
@@ -97,7 +97,7 @@ test.transforms = ToTensor()
 - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)```
 - ```scheduler = ReduceLROnPlateau(patiance=10, factor=0.1, cooldown=50)```
 - ```EarlyStopCounter = 70```
-<img src="results/.png" style="width: 410px; height: 400px; object-fit: cover;"/>
+<img src="results/MyResNet32_123_SGD90.png" style="width: 410px; height: 400px; object-fit: cover;"/>
 
 - Best model : ```test_loss: 0.5532``` ```test_acc: 83.39%``` ```test_error: 16.61%``` 
   >Ends with lr decreasing to 1e-5 at 232 epochs.
@@ -108,7 +108,7 @@ test.transforms = ToTensor()
 - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)```
 - ```scheduler = ReduceLROnPlateau(patiance=10, factor=0.1, cooldown=50)```
 - ```EarlyStopCounter = 70```
-<img src="results/.png" style="width: 410px; height: 400px; object-fit: cover;"/>
+<img src="results/MyResNet32_123_SGD95.png" style="width: 410px; height: 400px; object-fit: cover;"/>
 
 - Best model : ```test_loss: 0.3361``` ```test_acc: 89.40%``` ```test_error: 10.60%``` 
   >Early stopped on 205 epochs.
@@ -202,25 +202,25 @@ valid  = Compose(
 - ```all batch = 128```
 - ```all scheduler = ExponentialLR(optimizer, gamma=0.95)```
 1. Adam
-   - <img src="results/optim_test/.png" style="width: 600px; height: 300px;"/>
+   - <img src="results/optim_test/MyResNet32_128_Adam.png" style="width: 600px; height: 300px;"/>
    - ```optimizer = torch.optim.Adam(model.parameters())```
 2. Adam with decay
-   - <img src="results/optim_test/.png" style="width: 600px; height: 300px;"/>
+   - <img src="results/optim_test/MyResNet32_128_Adam_decay.png" style="width: 600px; height: 300px;"/>
    - ```optimizer = torch.optim.Adam(model.parameters(), weight_decay=1e-4)```
 3. AdamW
-   - <img src="results/optim_test/.png" style="width: 600px; height: 300px;"/>
+   - <img src="results/optim_test/MyResNet32_128_AdamW.png" style="width: 600px; height: 300px;"/>
    - ```optimizer = torch.optim.AdamW(model.parameters(), weight_decay=1e-4)```
 4. AdamW with amsgrad
-   - <img src="results/optim_test/.png" style="width: 600px; height: 300px;"/>
+   - <img src="results/optim_test/MyResNet32_128_AdamW_amsgrad.png" style="width: 600px; height: 300px;"/>
    - ```optimizer = torch.optim.AdamW(model.parameters(), weight_decay=1e-4, amsgrad=True)```
 5. NAdam
-   - <img src="results/optim_test/.png" style="width: 600px; height: 300px;"/>
+   - <img src="results/optim_test/MyResNet32_128_NAdam.png" style="width: 600px; height: 300px;"/>
    - ```optimizer = torch.optim.NAdam(model.parameters(), weight_decay=1e-4)```
 6. SGD
-   - <img src="results/optim_test/.png" style="width: 600px; height: 300px;"/>
+   - <img src="results/optim_test/MyResNet32_128_SGD.png" style="width: 600px; height: 300px;"/>
    - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=1e-4)```
 7. SGD with nasterov
-   - <img src="results/optim_test/.png" style="width: 600px; height: 300px;"/>
+   - <img src="results/optim_test/MyResNet32_128_SGD_nasterov.png" style="width: 600px; height: 300px;"/>
    - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=1e-4, nesterov=True)```
 
 ---

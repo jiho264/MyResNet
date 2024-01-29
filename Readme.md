@@ -86,7 +86,7 @@ test.transforms = ToTensor()
 - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)```
 - ```scheduler = MultiStepLR(optimizer, milestones=[82, 123], gamma=0.1)```
 - ```EarlyStopCounter = 50```
-<img src="results/MyResNet32_123_SGD.png" style="width: 410px; height: 400px; object-fit: cover;"/>
+<img src="results/MyResNet32_123_SGD.png" style="width: 600px; height: 300px;"/>
 
 - Best model : ```test_loss: 0.2305``` ```test_acc: 92.63%``` ```test_error: 7.37%``` 
   >It converges in over 100 epochs. So ending at 239 epochs.
@@ -97,7 +97,7 @@ test.transforms = ToTensor()
 - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)```
 - ```scheduler = ReduceLROnPlateau(patiance=10, factor=0.1, cooldown=50)```
 - ```EarlyStopCounter = 70```
-<img src="results/MyResNet32_123_SGD90.png" style="width: 410px; height: 400px; object-fit: cover;"/>
+<img src="results/MyResNet32_123_SGD90.png" style="width: 600px; height: 300px;"/>
 
 - Best model : ```test_loss: 0.5532``` ```test_acc: 83.39%``` ```test_error: 16.61%``` 
   >Ends with lr decreasing to 1e-5 at 232 epochs.
@@ -108,7 +108,7 @@ test.transforms = ToTensor()
 - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)```
 - ```scheduler = ReduceLROnPlateau(patiance=10, factor=0.1, cooldown=50)```
 - ```EarlyStopCounter = 70```
-<img src="results/MyResNet32_123_SGD95.png" style="width: 410px; height: 400px; object-fit: cover;"/>
+<img src="results/MyResNet32_123_SGD95.png"  style="width: 600px; height: 300px;"/>
 
 - Best model : ```test_loss: 0.3361``` ```test_acc: 89.40%``` ```test_error: 10.60%``` 
   >Early stopped on 205 epochs.

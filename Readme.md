@@ -85,8 +85,8 @@ test.transforms = ToTensor()
 - ```split_ratio = 0```
 - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)```
 - ```scheduler = MultiStepLR(optimizer, milestones=[82, 123], gamma=0.1)```
-- ```EarlyStopCounter = 500```
-<img src="results/MyResNet32_CIFAR10_128_SGD_stepLR.png" style="width: 410px; height: 400px; object-fit: cover;"/>
+- ```EarlyStopCounter = 50```
+<img src="results/.png" style="width: 410px; height: 400px; object-fit: cover;"/>
 
 - Best model : ```test_loss: 0.2305``` ```test_acc: 92.63%``` ```test_error: 7.37%``` 
   >It converges in over 100 epochs. So ending at 239 epochs.
@@ -97,7 +97,7 @@ test.transforms = ToTensor()
 - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)```
 - ```scheduler = ReduceLROnPlateau(patiance=10, factor=0.1, cooldown=50)```
 - ```EarlyStopCounter = 70```
-<img src="results/MyResNet32_CIFAR10_128_SGD_90_Plateau.png" style="width: 410px; height: 400px; object-fit: cover;"/>
+<img src="results/.png" style="width: 410px; height: 400px; object-fit: cover;"/>
 
 - Best model : ```test_loss: 0.5532``` ```test_acc: 83.39%``` ```test_error: 16.61%``` 
   >Ends with lr decreasing to 1e-5 at 232 epochs.
@@ -108,7 +108,7 @@ test.transforms = ToTensor()
 - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)```
 - ```scheduler = ReduceLROnPlateau(patiance=10, factor=0.1, cooldown=50)```
 - ```EarlyStopCounter = 70```
-<img src="results/MyResNet32_CIFAR10_128_SGD_95_Plateau.png" style="width: 410px; height: 400px; object-fit: cover;"/>
+<img src="results/.png" style="width: 410px; height: 400px; object-fit: cover;"/>
 
 - Best model : ```test_loss: 0.3361``` ```test_acc: 89.40%``` ```test_error: 10.60%``` 
   >Early stopped on 205 epochs.
@@ -196,54 +196,33 @@ valid  = Compose(
 - ```TenCrop(640) on valid set : Loss: 30.2803, Top-1 Acc: 0.4782, Top-5 Acc: 0.7199```
 - ```Avg Loss: 23.3628, Avg Top-1 Acc: 0.5403, Avg Top-5 Acc: 0.7688```
 - 원활한 Test 진행되지 않은 것으로 판단, 학습 결과의 흥망을 판단하기엔 일러보임. 현재까지의 모델 평가는 2.2.2 참조.
+
 ## 3.3. What is the best optimizer?
 ### 3.3.1. Comparing on CIFAR10
 - ```all batch = 128```
-- ```all scheduler = CosineAnnealingLR(optimizer, T_max=180, eta_min=0)```
-- ```all earlystopper = EarlyStopper(patience=150, model=model, file_name=file_path)```
+- ```all scheduler = ExponentialLR(optimizer, gamma=0.95)```
 1. Adam
-   - <img src="results/optim_test/MyResNet32_CIFAR10_128_Adam.png"/>
+   - <img src="results/optim_test/.png" style="width: 600px; height: 300px;"/>
    - ```optimizer = torch.optim.Adam(model.parameters())```
-   - ```test_loss: 0.3437```
-   - ```test_acc: 89.70%```
-   - ```test_error: 10.30%```
 2. Adam with decay
-   - <img src="results/optim_test/MyResNet32_CIFAR10_128_Adam_decay.png" />
+   - <img src="results/optim_test/.png" style="width: 600px; height: 300px;"/>
    - ```optimizer = torch.optim.Adam(model.parameters(), weight_decay=1e-4)```
-   - ```test_loss: 0.3366```
-   - ```test_acc: 88.44%```
-   - ```test_error: 11.56%```
 3. AdamW
-   - <img src="results/optim_test/MyResNet32_CIFAR10_128_AdamW.png" />
+   - <img src="results/optim_test/.png" style="width: 600px; height: 300px;"/>
    - ```optimizer = torch.optim.AdamW(model.parameters(), weight_decay=1e-4)```
-   - ```test_loss: 0.3640```
-   - ```test_acc: 89.21%```
-   - ```test_error: 10.79%```
 4. AdamW with amsgrad
-   - <img src="results/optim_test/MyResNet32_CIFAR10_128_AdamW_amsgrad.png" />
+   - <img src="results/optim_test/.png" style="width: 600px; height: 300px;"/>
    - ```optimizer = torch.optim.AdamW(model.parameters(), weight_decay=1e-4, amsgrad=True)```
-   - ```test_loss: 0.3690```
-   - ```test_acc: 88.98%```
-   - ```test_error: 11.02%```
 5. NAdam
-   - <img src="results/optim_test/MyResNet32_CIFAR10_128_NAdam.png" />
+   - <img src="results/optim_test/.png" style="width: 600px; height: 300px;"/>
    - ```optimizer = torch.optim.NAdam(model.parameters(), weight_decay=1e-4)```
-   - ```test_loss: 0.3767```
-   - ```test_acc: 87.61%```
-   - ```test_error: 12.39% ```
-6. SGD with nasterov
-   - <img src="results/optim_test/MyResNet32_CIFAR10_128_SGD_nasterov.png" />
-   - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=1e-4, nesterov=True)```
-   - ```test_loss: 0.3728```
-   - ```test_acc: 87.66%```
-   - ```test_error: 12.34%```
-7. SGD
-   - <img src="results/optim_test/MyResNet32_CIFAR10_128_SGD_cosLR.png" />
+6. SGD
+   - <img src="results/optim_test/.png" style="width: 600px; height: 300px;"/>
    - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=1e-4)```
-   - ```test_loss: 0.4140```
-   - ```test_acc: 86.09%```
-   - ```test_error: 13.91%```
-> Adam과 AdamW가 가장 좋은 성능을 보임. AdamW는 Adam에 weight decay의 식을 변형해서 적용한 것임.
+7. SGD with nasterov
+   - <img src="results/optim_test/.png" style="width: 600px; height: 300px;"/>
+   - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=1e-4, nesterov=True)```
+
 ---
 # 4. Todo
 1. ```TenCrop 잘못했나 찾아보기. ResNet34의 test acc가 너무 낮게 나왔음.```

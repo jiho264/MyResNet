@@ -70,18 +70,25 @@
 
 # 2. Experiments
 ## 2.1. AutoAugment is good?
-- Transform에서 autoaug -> submean 이랑 submean->autoaug랑 결과가 다름.
+- 동일한 세팅에서, 164 epochs (64k iterations) 학습 후, Test loss 및 Test acc를 비교함.
+- 파란 화살표는 Test loss가 최소인 Best model의 성능임.
 ### 2.1.1. Case 1 : Submean -> AutoAugment
 <img src="results/MyResNet32_128_SGD.png" style="width: 600px; height: 300px;"/>
 
 ### 2.1.2. Case 2 : Submean
-<img src="results/.png" style="width: 600px; height: 300px;"/>
+<img src="results/MyResNet32_128_SGD_Submean.png" style="width: 600px; height: 300px;"/>
 
 ### 2.1.3. Case 3 : AutoAugment -> Submean
-<img src="results/MyResNet32_128_SGD_submean-autoaug.png" style="width: 600px; height: 300px;"/>
+<img src="results/MyResNet32_128_SGD_Submean-autoaug.png" style="width: 600px; height: 300px;"/>
 
-
- 
+### 2.1.4. Conclusion
+1. (1)과 (2)의 비교를 통해, AutoAugment을 적용하는 것이 더 좋은 결과를 보임.
+2. (1)과 (3)의 비교를 통해, Submean 이후에 AutoAugment를 적용하는 것이 더 좋은 결과를 보임. 
+   - 최소 Test loss 지점의 모델이 가지는 loss 및 acc모두 (1)이 높고, 학습 시에 loss의 진동도 적음.
+3. 결론적으로, (1)의 방법이 가장 좋다고 볼 수 있음.
+4. 추가적으로, (1)에서만 Test 시에 Test acc가 train acc보다 높은 것을 볼 수 있음. AutoAugment가 워낙 변칙적이라, 학습은 잘 되면서 Training은 더 어렵게 잘 Augmentation하는 것으로 보임.
+    
+    ---
 ## 2.2. ResNet32 Model on CIFAR10 
 ```py 
 train.transforms = Compose(
@@ -94,7 +101,7 @@ train.transforms = Compose(
 test.transforms = ToTensor() 
 ```
 
-### 2.2.1. MyResNet32_CIFAR_128_SGD 
+### 2.2.1. [BEST] MyResNet32_CIFAR_128_SGD 
 - ```164 epochs``` (=64k iterations)
 - ```batch = 128```
 - ```split_ratio = 0```
@@ -111,16 +118,16 @@ test.transforms = ToTensor()
 - ```batch = 128```
 - ```split_ratio = 0.9```
 - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)```
-- ```scheduler = ReduceLROnPlateau(patiance=10, factor=0.1, cooldown=50)```
-- ```EarlyStopCounter = 70```
+- ```scheduler = ReduceLROnPlateau(patiance=10, factor=0.1, cooldown=40)```
+- ```EarlyStopCounter = 50```
 <img src="results/.png" style="width: 600px; height: 300px;"/>
 
 ### 2.2.3. MyResNet32_CIFAR_128_SGD_95 
 - ```batch = 128```
 - ```split_ratio = 0.95```
 - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)```
-- ```scheduler = ReduceLROnPlateau(patiance=10, factor=0.1, cooldown=50)```
-- ```EarlyStopCounter = 70```
+- ```scheduler = ReduceLROnPlateau(patiance=10, factor=0.1, cooldown=40)```
+- ```EarlyStopCounter = 50```
 <img src="results/.png"  style="width: 600px; height: 300px;"/>
 
 
@@ -160,11 +167,12 @@ valid  = Compose(
 )
 ```
 ### 2.3.1. MyResNet34_ImageNet_256_SGD_case1 
+> 재실험 필요함.
 - ```batch = 256```
 - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)```
 - ```scheduler = ReduceLROnPlateau(patiance=5, factor=0.1, cooldown=5)```
 - ```EarlyStopCounter = 25```
-<img src="results/MyResNet34_256_SGD_case1.png" style="width: 410px; height: 400px; object-fit: cover;"/>
+<img src="results/.png" style="width: 410px; height: 400px; object-fit: cover;"/>
 
 - ```[Last] 68 epoch: train_loss=0.0003, train_acc=0.6224, valid_loss=1.2975, valid_acc=0.7239, lr=0.0010```
 - ```Avg Loss: 26.3212, Avg Top-1 Acc: 0.4793, Avg Top-5 Acc: 0.7118```
@@ -181,7 +189,7 @@ valid  = Compose(
 - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)```
 - ```scheduler = ReduceLROnPlateau(patiance=10, factor=0.1, cooldown=25)```
 - ```EarlyStopCounter = 40 (Ends with lr decreasing to 1e-5 at 133 epochs.)```
-<img src="results/MyResNet34_256_SGD_case2.png" style="width: 410px; height: 400px; object-fit: cover;"/>
+<img src="results/.png" style="width: 410px; height: 400px; object-fit: cover;"/>
 
 - ```[Last] 133 epoch: train_loss=1.2615, train_acc=0.6986, valid_loss=1.2469, valid_acc=0.7456, lr=0.0001```
 - ```Avg Loss: 23.3628, Avg Top-1 Acc: 0.5403, Avg Top-5 Acc: 0.7688```

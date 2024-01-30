@@ -211,14 +211,14 @@ for epoch in range(NUM_EPOCHS):
                 outputs = _training.model(images)
                 loss = _training.criterion(outputs, labels)
 
-                _training.scaler.scale(loss).backward()
-                _training.scaler.step(_training.optimizer)
-                _training.scaler.update()
+            _training.scaler.scale(loss).backward()
+            _training.scaler.step(_training.optimizer)
+            _training.scaler.update()
 
-                _training.running_loss += loss.item()
-                _, predicted = outputs.max(1)
-                _training.running_total += labels.size(0)
-                _training.running_corrects += predicted.eq(labels).sum().item()
+            _training.running_loss += loss.item()
+            _, predicted = outputs.max(1)
+            _training.running_total += labels.size(0)
+            _training.running_corrects += predicted.eq(labels).sum().item()
 
     # %% Forward_eval ######################################################################################################
     for (

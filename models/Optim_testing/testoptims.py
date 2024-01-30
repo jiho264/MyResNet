@@ -8,9 +8,7 @@ sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname("src"))))
 
 from src.Mydataloader import LoadDataset
 from src.Mymodel import MyResNet_CIFAR
-from src.Mytraining import DoTraining
 from src.Earlystopper import EarlyStopper
-from src.LogViewer import LogViewer
 
 # %%
 """Dataset selection"""
@@ -154,18 +152,6 @@ class Single_training(Single_model):
             }
             print("File does not exist. Created a new log.")
 
-        self.Training = DoTraining(
-            model=self.model,
-            criterion=self.criterion,
-            optimizer=self.optimizer,
-            scaler=self.scaler,
-            scheduler=self.scheduler,
-            earlystopper=self.earlystopper,
-            device=self.device,
-            logs=self.logs,
-            file_path=self.file_name,
-        )
-
         self.train_loss = 0.0
         self.running_loss = 0.0
         self.running_corrects = 0
@@ -271,8 +257,18 @@ for epoch in range(NUM_EPOCHS):
         print(
             f"{_training.optim_name.ljust(print_pad_len)} | train : {_training.train_loss:.4f} / {_training.train_acc*100:.2f}% | test : {_training.test_loss:.4f} / {_training.test_acc*100:.2f}%"
         )
+
         # Save checkpoint ####### save는 제일 나중에
-        _training.Training.Save()
+        checkpoint = {
+            "model": _training.model.state_dict(),
+            "optimizer": _training.optimizer.state_dict(),
+            "scaler": _training.scaler.state_dict(),
+            "scheduler": _training.scheduler.state_dict(),
+            "earlystopper": _training.earlystopper.state_dict(),
+            "logs": _training.logs,
+        }
+        torch.save(checkpoint, _training.file_name + ".pth.tar")
+
         # Early stopping #######
         if _training.earlystopper.check(_training.test_loss) == True:
             break

@@ -143,7 +143,7 @@ class Single_model:
             - T_up : warmup period. 튀어오르는데 필요한 epochs.
             - gamma : eta_max decay factor.
             """
-            self.optimizer.param_groups[0]["lr"] = 1e-8
+
             self.scheduler = CosineAnnealingWarmUpRestarts(
                 self.optimizer, T_0=10, T_mult=1, eta_max=0.1, T_up=2, gamma=0.5
             )
@@ -241,6 +241,12 @@ for optim_name in optim_list:
                 optimizer_name=optim_name, schduler_name=schduler_name, device="cuda"
             )
         )
+
+        if schduler_name == "CosineAnnealingWarmUpRestarts":
+            each_trainings.last().optimizer.param_groups[0]["lr"] = 1e-8
+            if optim_name == "NAdam":
+                each_trainings.last().scheduler.eta_max *= 2
+
 print("-" * 50)
 # %%
 pre_epochs = len(each_trainings[0].logs["train_loss"])

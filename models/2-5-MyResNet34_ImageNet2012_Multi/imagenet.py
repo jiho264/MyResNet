@@ -13,17 +13,17 @@ import tqdm
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname("src"))))
 from src.CumstomCosineAnnealingwarmRestarts import CosineAnnealingWarmUpRestarts
 from src.Mydataloader import LoadDataset
-from src.Mymodel import MyResNet_CIFAR
+from src.Mymodel import MyResNet34
 from src.Earlystopper import EarlyStopper
 
 # %%
 """Dataset selection"""
-DATASET = "CIFAR10"
+# DATASET = "CIFAR10"
 # DATASET = "CIFAR100"
-# DATASET = "ImageNet2012"
+DATASET = "ImageNet2012"
 
 """Dataset parameters"""
-BATCH = 128
+BATCH = 256
 SHUFFLE = True
 NUMOFWORKERS = 8
 PIN_MEMORY = True
@@ -32,7 +32,7 @@ PIN_MEMORY = True
 optim_list = [
     # "Adam",
     # "Adam_decay",
-    "SGD",
+    # "SGD",
     # "SGD_nasterov",
     # "AdamW",
     # "AdamW_amsgrad",
@@ -41,20 +41,20 @@ optim_list = [
 print_pad_len_optim = max([len(i) for i in optim_list])
 
 scheduler_list = [
-    # "ExponentialLR",
-    # "MultiStepLR",
+    "ExponentialLR",
+    "MultiStepLR",
     # "ReduceLROnPlateau",
     # "CosineAnnealingLR",
-    "CosineAnnealingWarmUpRestarts",
+    # "CosineAnnealingWarmUpRestarts",
     # "CycleLR",
 ]
 print_pad_len_schduler = max([len(i) for i in scheduler_list])
 
 """Learning rate scheduler parameters"""
-NUM_EPOCHS = 100
+NUM_EPOCHS = 120
 
 """Early stopping parameters"""
-EARLYSTOPPINGPATIENCE = NUM_EPOCHS
+EARLYSTOPPINGPATIENCE = 120
 
 # %%
 
@@ -75,9 +75,9 @@ class Single_model:
         self.optim_name = optimizer_name
         self.scheduler_name = schduler_name
         """define model"""
-        self.model = MyResNet_CIFAR(
-            num_classes=COUNT_OF_CLASSES, num_layer_factor=5
-        ).to(device)
+        self.model = MyResNet34(num_classes=COUNT_OF_CLASSES, Downsample_option="B").to(
+            device
+        )
 
         """define loss function"""
         self.criterion = nn.CrossEntropyLoss()
@@ -123,7 +123,7 @@ class Single_model:
         if schduler_name == "ExponentialLR":
             self.scheduler = ExponentialLR(self.optimizer, gamma=0.95)
         elif schduler_name == "MultiStepLR":
-            self.scheduler = MultiStepLR(self.optimizer, milestones=[50, 75], gamma=0.1)
+            self.scheduler = MultiStepLR(self.optimizer, milestones=[30, 60], gamma=0.1)
         elif schduler_name == "ReduceLROnPlateau":
             self.scheduler = ReduceLROnPlateau(
                 self.optimizer, patience=10, factor=0.1, cooldown=40

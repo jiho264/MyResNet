@@ -143,6 +143,7 @@ test.transforms = ToTensor()
 - ```Use MyResNet32```
 - ```All batch = 128```
 - ```All scheduler = ExponentialLR(optimizer, gamma=0.95)```
+- ```epochs = 100```
 
 - | Optimizer | Test Loss | Test Acc |
   |:------------:|:------:|:------:|
@@ -187,19 +188,20 @@ test.transforms = ToTensor()
 ### 2.4.1. Comparing on CIFAR10
 - ```Use MyResNet32```
 - ```All batch = 128```
+- ```epochs = 100```
 
 - | Optimizer    | Scheduler  | Test Loss | Test Acc |
   |:------------:|:---------------------------:|:------:|:------:|
   | NAdam        |ExpoentialLR                 |0.2806 |90.77%  | 
-  | NAdam        |**MultiStepLR**                  |0.2549 |91.64%  |
+  | **NAdam**        |**MultiStepLR**                  |0.2549 |**91.64%**  |
   | NAdam        |ReduceLROnPlateau            |0.3277 |88.96%  |      
   | NAdam        |CosineAnnealingLR            |0.3026 |89.53%  |      
-  | NAdam        |CosineAnnealingWarmRestarts  |       |     %  | 
+  | **NAdam**        |**CosineAnnealingWarmRestarts**  |0.2790 |**90.51%**  | 
   | SGD          |ExpoentialLR                 |0.2942 |89.93%  |                
   | SGD          |MultiStepLR                  |0.2640 |90.76%  |
   | SGD          |ReduceLROnPlateau            |0.3487 |88.09%  |      
   | SGD          |CosineAnnealingLR            |0.2544 |91.18%  |      
-  | SGD          |CosineAnnealingWarmRestarts  |       |     %  |                
+  | SGD          |CosineAnnealingWarmRestarts  |0.3227 |89.17%  |                
 
 1. ```NAdam``` : ```torch.optim.NAdam(model.parameters(), weight_decay=1e-4)```
    1. ExponentialLR : ```ExponentialLR(self.optimizer, gamma=0.95)```
@@ -210,8 +212,8 @@ test.transforms = ToTensor()
       <img src="results/2-4-Scheduler_test/NAdam_ReduceLROnPlateau.png" style="width: 600px; height: 300px;"/>
    4. CosineAnnealingLR : ```CosineAnnealingLR(self.optimizer, T_max=20, eta_min=0.001)```
       <img src="results/2-4-Scheduler_test/NAdam_CosineAnnealingLR.png" style="width: 600px; height: 300px;"/>
-   5. CosineAnnealingWarmRestarts : ```CosineAnnealingWarmRestarts(self.optimizer, T_0=10, T_mult=2, eta_max=0.1, T_up=2, gamma=0.5)```
-      <img src="results/2-4-Scheduler_test/NAdam_CosineAnnealingWarmRestarts.png" style="width: 600px; height: 300px;"/>
+   5. CosineAnnealingWarmRestarts : ```CosineAnnealingWarmRestarts(self.optimizer, T_0=14, T_mult=2, eta_max=0.002, T_up=2, gamma=0.5)```
+      <img src="results/2-4-Scheduler_test/NAdam_CosineAnnealingWarmUpRestarts.png" style="width: 600px; height: 300px;"/>
    
 2. ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)```
    1. ExponentialLR : ```ExponentialLR(self.optimizer, gamma=0.95)```
@@ -222,10 +224,12 @@ test.transforms = ToTensor()
       <img src="results/2-4-Scheduler_test/SGD_ReduceLROnPlateau.png" style="width: 600px; height: 300px;"/>
    4. CosineAnnealingLR : ```CosineAnnealingLR(self.optimizer, T_max=20, eta_min=0.001)```
       <img src="results/2-4-Scheduler_test/SGD_CosineAnnealingLR.png" style="width: 600px; height: 300px;"/>
-   5. CosineAnnealingWarmRestarts : ```CosineAnnealingWarmRestarts(self.optimizer, T_0=10, T_mult=2, eta_max=0.1, T_up=2, gamma=0.5)```
-      <img src="results/2-4-Scheduler_test/SGD_CosineAnnealingWarmRestarts.png" style="width: 600px; height: 300px;"/>
+   5. CosineAnnealingWarmRestarts : ```CosineAnnealingWarmRestarts(self.optimizer, T_0=14, T_mult=2, eta_max=0.1, T_up=2, gamma=0.5)```
+      <img src="results/2-4-Scheduler_test/SGD_CosineAnnealingWarmUpRestarts.png" style="width: 600px; height: 300px;"/>
+### 2.4.2. ALL
+<img src="results/2-4-Scheduler_test/all.png" style="width: 800px; height: 600px;"/>
 
-## 2.4. Best ResNet34 model on ImageNet2012
+## 2.5. Best ResNet34 model on ImageNet2012
 ```py
 # Training set
 train = Compose(
@@ -253,7 +257,7 @@ valid  = Compose(
 )
 
 ```
-### 2.3.1. MyResNet34_ImageNet_256_SGD 
+### 2.5.1. MyResNet34_ImageNet_256_SGD 
 > 재실험 필요함.
 - ```epochs = 100```
 - ```batch = 256```

@@ -86,7 +86,7 @@ class LogViewer:
             # 그래프를 보여줍니다.
             plt.tight_layout()
             if save == True:
-                plt.savefig(f"results/{title}")
+                plt.savefig(f"{title}")
             plt.show()
 
         elif range != 999999 and start + range < len(self.logs["train_loss"]):

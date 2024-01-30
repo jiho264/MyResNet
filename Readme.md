@@ -139,7 +139,54 @@ test.transforms = ToTensor()
   - 오히려, Validation Set마저 학습했을 때에 가장 모델의 정확도가 높았음. 
     
     ---
-## 2.3. Best ResNet34 model on ImageNet2012
+
+
+## 2.3. What is the best optimizer?
+> 하위 항목 전부 다시 테스트중
+### 2.3.1. Comparing on CIFAR10
+- ```Use MyResNet32```
+- ```All batch = 128```
+- ```All scheduler = ExponentialLR(optimizer, gamma=0.95)```
+
+- | Optimizer | Test Loss | Test Acc |
+  |:------------:|:------:|:------:|
+  | **NAdam**        | 0.2780 | 90.**68**% |
+  | SGD          | 0.2987 | 89.99% |
+  | SGD_nasterov | 0.3079 | 89.33% |
+  | Adam_decay   | 0.3296 | 88.34% |
+  | AdamW_amsgrad| 0.3554 | 88.22% |
+  | AdamW        | 0.3520 | 88.16% |
+  | Adam         | 0.3574 | 87.62% |
+  
+  > **NAdam** - SGD - SGD_nasterov - Adam_decay - Adam_amsgrad - AdamW - Adam 
+- Blue marker : [Available Training Result] Best min test loss epoch
+1. Adam
+   - <img src="results/CompareOptims/MyResNet32_CIFAR10_128_Adam.png" style="width: 600px; height: 300px;"/>
+   - ```optimizer = torch.optim.Adam(model.parameters())```
+2. Adam with decay
+   - <img src="results/CompareOptims/MyResNet32_CIFAR10_128_Adam_decay.png" style="width: 600px; height: 300px;"/>
+   - ```optimizer = torch.optim.Adam(model.parameters(), weight_decay=1e-4)```
+3. AdamW
+   - <img src="results/CompareOptims/MyResNet32_CIFAR10_128_AdamW.png" style="width: 600px; height: 300px;"/>
+   - ```optimizer = torch.optim.AdamW(model.parameters(), weight_decay=1e-4)```
+4. AdamW with amsgrad
+   - <img src="results/CompareOptims/MyResNet32_CIFAR10_128_AdamW_amsgrad.png" style="width: 600px; height: 300px;"/>
+   - ```optimizer = torch.optim.AdamW(model.parameters(), weight_decay=1e-4, amsgrad=True)```
+5. NAdam
+   - <img src="results/CompareOptims/MyResNet32_CIFAR10_128_NAdam.png" style="width: 600px; height: 300px;"/>
+   - ```optimizer = torch.optim.NAdam(model.parameters(), weight_decay=1e-4)```
+6. SGD
+   - <img src="results/CompareOptims/MyResNet32_CIFAR10_128_SGD.png" style="width: 600px; height: 300px;"/>
+   - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=1e-4)```
+7. SGD with nasterov
+   - <img src="results/CompareOptims/MyResNet32_CIFAR10_128_SGD_nasterov.png" style="width: 600px; height: 300px;"/>
+   - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=1e-4, nesterov=True)```
+### 2.3.2. ALL
+<img src="results/CompareOptims/all.png" style="width: 800px; height: 600px;"/>
+<img src="results/CompareOptims/all_last30.png" style="width: 800px; height: 600px;"/>
+
+    ---
+## 2.4. Best ResNet34 model on ImageNet2012
 ```py
 # Training set
 train = Compose(
@@ -165,6 +212,24 @@ valid  = Compose(
     ToTensor()
     Normalize(mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True)
 )
+
+```
+### 2.3.1. MyResNet34_ImageNet_256_SGD 
+> 재실험 필요함.
+- ```epochs = 100```
+- ```batch = 256```
+- ```optimizer = ```
+- ```scheduler = ExponentialLR(optimizer, gamma=0.95)```
+<img src="results/.png" style="width: 600px; height: 300px;"/>
+
+
+- ```TenCrop [224] on valid set : ```
+- ```TenCrop [256] on valid set : ```
+- ```TenCrop [384] on valid set : ```
+- ```TenCrop [480] on valid set : ```
+- ```TenCrop [640] on valid set : ```
+
+아래 삭제 예정
 ```
 ### 2.3.1. MyResNet34_ImageNet_256_SGD_case1 
 > 재실험 필요함.
@@ -201,47 +266,7 @@ valid  = Compose(
   - case1보다 더 오랜 시간에 걸쳐 학습한 덕에 training acc도 많이 올라옴.
   - 하지만 TenCrop Test 결과, 논문의 결과만큼 잘 나오지 아니함. test method에 문제가 있는가 살펴봐야 할 것 같음.
   - 학습 방법은 dataset transforms가 잘못되지 않았다는 가정 하에 논문과 상이한 부분 없는 것으로 보임.
-
-## 2.4. What is the best optimizer?
-> 하위 항목 전부 다시 테스트중
-### 2.4.1. Comparing on CIFAR10
-- ```Use MyResNet32```
-- ```All batch = 128```
-- ```All scheduler = ExponentialLR(optimizer, gamma=0.95)```
-
-- | Optimizer | Test Loss | Test Acc |
-  |:---------:|:---------:|:--------:|
-  | Adam      | 0.3563    | **88.26%** |
-  | Adam_decay| 0.3817    | 87.55%   |
-  | AdamW     | 0.3692    | **88.50%**   |
-  | AdamW_amsgrad| 0.3804 | 87.82%   |
-  | NAdam     | 0.4274    | 85.45%   |
-  | SGD       | 0.4562    | 84.54%   |
-  | SGD_nasterov| 0.4255  | 85.55%   |
-  > **AdamW**- **Adam** - Adam_amsgrad - Adam_decay - SGD_nasterov - NAdam - SGD
-- Blue marker : [Available Training Result] Best min test loss epoch
-1. Adam
-   - <img src="results/optim_test/MyResNet32_128_Adam.png" style="width: 600px; height: 300px;"/>
-   - ```optimizer = torch.optim.Adam(model.parameters())```
-2. Adam with decay
-   - <img src="results/optim_test/MyResNet32_128_Adam_decay.png" style="width: 600px; height: 300px;"/>
-   - ```optimizer = torch.optim.Adam(model.parameters(), weight_decay=1e-4)```
-3. AdamW
-   - <img src="results/optim_test/MyResNet32_128_AdamW.png" style="width: 600px; height: 300px;"/>
-   - ```optimizer = torch.optim.AdamW(model.parameters(), weight_decay=1e-4)```
-4. AdamW with amsgrad
-   - <img src="results/optim_test/MyResNet32_128_AdamW_amsgrad.png" style="width: 600px; height: 300px;"/>
-   - ```optimizer = torch.optim.AdamW(model.parameters(), weight_decay=1e-4, amsgrad=True)```
-5. NAdam
-   - <img src="results/optim_test/MyResNet32_128_NAdam.png" style="width: 600px; height: 300px;"/>
-   - ```optimizer = torch.optim.NAdam(model.parameters(), weight_decay=1e-4)```
-6. SGD
-   - <img src="results/optim_test/MyResNet32_128_SGD.png" style="width: 600px; height: 300px;"/>
-   - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=1e-4)```
-7. SGD with nasterov
-   - <img src="results/optim_test/MyResNet32_128_SGD_nasterov.png" style="width: 600px; height: 300px;"/>
-   - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=1e-4, nesterov=True)```
-
+```
 ---
 # 3. Todo
 1. ```TenCrop 잘못했나 찾아보기. ResNet34의 test acc가 너무 낮게 나왔음.```

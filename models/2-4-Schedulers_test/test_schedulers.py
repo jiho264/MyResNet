@@ -243,9 +243,9 @@ for optim_name in optim_list:
         )
 
         if schduler_name == "CosineAnnealingWarmUpRestarts":
-            each_trainings.last().optimizer.param_groups[0]["lr"] = 1e-8
+            each_trainings[-1].optimizer.param_groups[0]["lr"] = 1e-8
             if optim_name == "NAdam":
-                each_trainings.last().scheduler.eta_max *= 2
+                each_trainings[-1].scheduler.eta_max *= 2
 
 print("-" * 50)
 # %%

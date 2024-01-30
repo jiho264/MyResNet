@@ -3,7 +3,6 @@ import torch
 from torch.utils.data import DataLoader, random_split
 from torchvision import datasets
 from torchvision.transforms.v2 import (
-    ToTensor,
     RandomHorizontalFlip,
     Compose,
     RandomCrop,
@@ -104,7 +103,7 @@ class LoadDataset:
                 root=root,
                 train=False,
                 download=False,
-                transform=ToTensor(),
+                transform=Compose([ToImage(), ToDtype(torch.float32, scale=True)]),
             )
 
             if self.split_ratio != 0:
@@ -117,7 +116,9 @@ class LoadDataset:
                 )
                 # Apply transform at each dataset
                 self.train_data.transform = copy.deepcopy(cifar_default_transforms)
-                self.valid_data.transform = ToTensor()
+                self.valid_data.transform = (
+                    Compose([ToImage(), ToDtype(torch.float32, scale=True)]),
+                )
 
                 self.train_data.classes = ref_train.classes
                 self.valid_data.classes = ref_train.classes
@@ -144,7 +145,7 @@ class LoadDataset:
                         RandomCrop(size=224),
                         AutoAugment(policy=AutoAugmentPolicy.IMAGENET),
                         RandomHorizontalFlip(self.Randp),
-                        ToTensor(),
+                        Compose([ToImage(), ToDtype(torch.float32, scale=True)]),
                         Normalize(
                             mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True
                         ),
@@ -158,7 +159,7 @@ class LoadDataset:
                         RandomShortestSize(min_size=range(256, 480), antialias=True),
                         # VGG에서 single scale로 했을 때는 두 range의 median 값으로 crop함.
                         CenterCrop(size=368),
-                        ToTensor(),
+                        Compose([ToImage(), ToDtype(torch.float32, scale=True)]),
                         Normalize(
                             mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True
                         ),

@@ -162,7 +162,18 @@ class Single_training(Single_model):
         self.test_corrects = 0
         self.test_total = 0
         self.test_acc = 0.0
-        pass
+
+    def set_mode_train(self):
+        self.running_loss = 0.0
+        self.running_corrects = 0
+        self.running_total = 0
+        self.model.train()
+
+    def set_mode_test(self):
+        self.test_loss = 0.0
+        self.test_corrects = 0
+        self.test_total = 0
+        self.model.eval()
 
 
 # %%
@@ -181,14 +192,12 @@ for epoch in range(NUM_EPOCHS):
         break
     print(f"[Epoch {now_epoch}/{NUM_EPOCHS}] :")
     # %% Forward_train ######################################################################################################
+    for _training in each_trainings:
+        _training.set_mode_train()
     for images, labels in tqdm.tqdm(
         train_dataloader, desc=f"{now_epoch} Train", ncols=55
     ):
         for _training in each_trainings:
-            _training.running_loss = 0.0
-            _training.running_corrects = 0
-            _training.running_total = 0
-            _training.model.train()
             with torch.autocast(device_type="cuda", dtype=torch.float16, enabled=True):
                 images, labels = images.to(_training.device), labels.to(
                     _training.device
@@ -207,16 +216,13 @@ for epoch in range(NUM_EPOCHS):
             _training.running_corrects += predicted.eq(labels).sum().item()
 
     # %% Forward_eval ######################################################################################################
+    for _training in each_trainings:
+        _training.set_mode_test()
     for (
         images,
         labels,
     ) in test_dataloader:
         for _training in each_trainings:
-            _training.model.eval()
-            _training.test_loss = 0.0
-            _training.test_corrects = 0
-            _training.test_total = 0
-
             with torch.no_grad():
                 images, labels = images.to(_training.device), labels.to(
                     _training.device

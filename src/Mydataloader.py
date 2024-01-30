@@ -29,11 +29,11 @@ class LoadDataset:
         - CIFAR10, CIFAR100 :
             - Option : split train/valid with (split_ratio):(1-split_ratio) ratio (default split_ratio = 0)
             - train :
-                - ToTensor(),
-                - Normalize(mean=[0.49139968, 0.48215827, 0.44653124], std=[1, 1, 1],inplace=True,),
-                - AutoAugment(policy=AutoAugmentPolicy.CIFAR10),
-                - RandomCrop(size=32, padding=4,fill=0,padding_mode="constant",),
-                - RandomHorizontalFlip(self.Randp),
+                - Compose([ToImage(), ToDtype(scale=True)])
+                - Normalize(mean=[0.49139968, 0.48215827, 0.44653124], std=[1, 1, 1], inplace=True)
+                - AutoAugment(interpolation=InterpolationMode.NEAREST, policy=AutoAugmentPolicy.CIFAR10)
+                - RandomCrop(size=(32, 32), padding=[4, 4, 4, 4], pad_if_needed=False, fill=0, padding_mode=constant)
+                - RandomHorizontalFlip(p=0.5)
             - valid, test :
                 - ToTensor(),
         - ImageNet2012 :
@@ -70,6 +70,12 @@ class LoadDataset:
             }
             cifar_default_transforms = Compose(
                 [
+                    Compose([ToImage(), ToDtype(torch.float32, scale=True)]),
+                    Normalize(
+                        mean=[0.49139968, 0.48215827, 0.44653124],
+                        std=[1, 1, 1],
+                        inplace=True,
+                    ),
                     AutoAugment(policy=AutoAugmentPolicy.CIFAR10),
                     RandomCrop(
                         size=32,
@@ -79,16 +85,10 @@ class LoadDataset:
                     ),
                     RandomHorizontalFlip(self.Randp),
                     # ToTensor(),
-                    Compose([ToImage(), ToDtype(torch.float32, scale=True)]),
                     # exject mean and std
                     # https://stackoverflow.com/questions/66678052/how-to-calculate-the-mean-and-the-std-of-cifar10-data
                     # std=1로 하면 submean
                     # https://pytorch.org/vision/main/generated/torchvision.transforms.v2.Normalize.html#torchvision.transforms.v2.Normalize
-                    Normalize(
-                        mean=[0.49139968, 0.48215827, 0.44653124],
-                        std=[1, 1, 1],
-                        inplace=True,
-                    ),
                     # Submean(),
                 ],
             )

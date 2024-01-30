@@ -5,6 +5,7 @@ from torch.optim.lr_scheduler import (
     CosineAnnealingLR,
     CyclicLR,
     MultiStepLR,
+    ReduceLROnPlateau,
 )
 import sys, os
 import tqdm
@@ -42,9 +43,9 @@ print_pad_len_optim = max([len(i) for i in optim_list])
 scheduler_list = [
     "ExponentialLR",
     "MultiStepLR",
-    # "ReduceLROnPlateau",
+    "ReduceLROnPlateau",
     "CosineAnnealingLR",
-    "CosineAnnealingWarmRestarts",
+    "CosineAnnealingWarmUpRestarts",
     # "CycleLR",
 ]
 print_pad_len_schduler = max([len(i) for i in scheduler_list])
@@ -69,10 +70,10 @@ print("-" * 50)
 
 # %%
 class Single_model:
-    def __init__(self, optimizer, schduler, device="cuda") -> None:
-        self.file_name = f"MyResNet32_{BATCH}_{optimizer}_{schduler}"
-        self.optim_name = optimizer
-        self.scheduler_name = schduler
+    def __init__(self, optimizer_name, schduler_name, device="cuda") -> None:
+        self.file_name = f"MyResNet32_{BATCH}_{optimizer_name}_{schduler_name}"
+        self.optim_name = optimizer_name
+        self.scheduler_name = schduler_name
         """define model"""
         self.model = MyResNet_CIFAR(
             num_classes=COUNT_OF_CLASSES, num_layer_factor=5
@@ -82,17 +83,17 @@ class Single_model:
         self.criterion = nn.CrossEntropyLoss()
 
         """define optimizer"""
-        if optimizer == "Adam":
+        if optimizer_name == "Adam":
             self.optimizer = torch.optim.Adam(self.model.parameters())
-        elif optimizer == "Adam_decay":
+        elif optimizer_name == "Adam_decay":
             self.optimizer = torch.optim.Adam(
                 self.model.parameters(), weight_decay=1e-4
             )
-        elif optimizer == "SGD":
+        elif optimizer_name == "SGD":
             self.optimizer = torch.optim.SGD(
                 self.model.parameters(), lr=0.1, momentum=0.9, weight_decay=1e-4
             )
-        elif optimizer == "SGD_nasterov":
+        elif optimizer_name == "SGD_nasterov":
             self.optimizer = torch.optim.SGD(
                 self.model.parameters(),
                 lr=0.1,
@@ -100,15 +101,15 @@ class Single_model:
                 weight_decay=1e-4,
                 nesterov=True,
             )
-        elif optimizer == "AdamW":
+        elif optimizer_name == "AdamW":
             self.optimizer = torch.optim.AdamW(
                 self.model.parameters(), weight_decay=1e-4
             )
-        elif optimizer == "AdamW_amsgrad":
+        elif optimizer_name == "AdamW_amsgrad":
             self.optimizer = torch.optim.AdamW(
                 self.model.parameters(), weight_decay=1e-4, amsgrad=True
             )
-        elif optimizer == "NAdam":
+        elif optimizer_name == "NAdam":
             self.optimizer = torch.optim.NAdam(
                 self.model.parameters(), weight_decay=1e-4
             )
@@ -119,39 +120,43 @@ class Single_model:
         )
 
         """define learning rate scheduler"""
-        if schduler == "ExponentialLR":
+        if schduler_name == "ExponentialLR":
             self.scheduler = ExponentialLR(self.optimizer, gamma=0.95)
-        elif schduler == "MultiStepLR":
+        elif schduler_name == "MultiStepLR":
             self.scheduler = MultiStepLR(self.optimizer, milestones=[50, 75], gamma=0.1)
-        # elif schduler == "ReduceLROnPlateau":
-        #     self.scheduler = ReduceLROnPlateau(self.optimizer)
-        elif schduler == "CosineAnnealingLR":
+        elif schduler_name == "ReduceLROnPlateau":
+            self.scheduler = ReduceLROnPlateau(
+                self.optimizer, patience=10, factor=0.1, cooldown=40
+            )
+        elif schduler_name == "CosineAnnealingLR":
             """
             - T_max : half of single pariod
             - eta_min : min_lr
             """
-            self.scheduler = CosineAnnealingLR(self.optimizer, T_max=100, eta_min=0.001)
-        elif schduler == "CosineAnnealingWarmRestarts":
+            self.scheduler = CosineAnnealingLR(self.optimizer, T_max=20, eta_min=0.001)
+        elif schduler_name == "CosineAnnealingWarmUpRestarts":
             """
+            초기 lr = near zero여야함.
             - T_0 : single period,
-            - T_mult : period multiply factor
-            - eta_max : max_lr
-            - T_up : warmup period
-            - gamma : decay factor
+            - T_mult : period multiply factor. 2면 다음부터 주기 2배욈
+            - eta_max : max_lr. 처음 튀어 오를 lr
+            - T_up : warmup period. 튀어오르는데 필요한 epochs.
+            - gamma : eta_max decay factor.
             """
+            self.optimizer.param_groups[0]["lr"] = 1e-8
             self.scheduler = CosineAnnealingWarmUpRestarts(
-                self.optimizer, T_0=100, T_mult=1, eta_max=0.1, T_up=10, gamma=0.5
+                self.optimizer, T_0=10, T_mult=1, eta_max=0.1, T_up=2, gamma=0.5
             )
 
-        elif schduler == "CycleLR":
-            self.scheduler = CyclicLR(
-                self.optimizer,
-                base_lr=0.001,
-                max_lr=0.1,
-                step_size_up=50,
-                step_size_down=None,
-                mode="triangular2",
-            )
+        # elif schduler == "CycleLR":
+        #     self.scheduler = CyclicLR(
+        #         self.optimizer,
+        #         base_lr=0.001,
+        #         max_lr=0.1,
+        #         step_size_up=50,
+        #         step_size_down=None,
+        #         mode="triangular2",
+        #     )
 
         """define scaler"""
         self.scaler = torch.cuda.amp.GradScaler(enabled=True)
@@ -159,8 +164,11 @@ class Single_model:
 
 # %%
 class Single_training(Single_model):
-    def __init__(self, optimizer, schduler, device="cuda"):
-        super().__init__(optimizer, schduler, device)
+    def __init__(self, optimizer_name, schduler_name, device="cuda"):
+        super().__init__(
+            optimizer_name=optimizer_name, schduler_name=schduler_name, device=device
+        )
+
         self.device = device
         """loading log file"""
         if os.path.exists(self.file_name + ".pth.tar"):
@@ -229,7 +237,9 @@ each_trainings = list()
 for optim_name in optim_list:
     for schduler_name in scheduler_list:
         each_trainings.append(
-            Single_training(optimizer=optim_name, schduler=schduler_name, device="cuda")
+            Single_training(
+                optimizer_name=optim_name, schduler_name=schduler_name, device="cuda"
+            )
         )
 print("-" * 50)
 # %%
@@ -298,8 +308,8 @@ for epoch in range(NUM_EPOCHS):
         _training.logs["lr_log"].append(_training.optimizer.param_groups[0]["lr"])
 
         # scheduler #######
-        if _training.scheduler.__class__.__name__ == "ReduceLRonPlateau":
-            _training.scheduler.step(_training.test_loss)
+        if _training.scheduler.__class__.__name__ == "ReduceLROnPlateau":
+            _training.scheduler.step(_training.train_loss)
         elif _training.scheduler.__class__.__name__ in (
             "ExponentialLR",
             "MultiStepLR",
@@ -331,6 +341,3 @@ for epoch in range(NUM_EPOCHS):
         if _training.earlystopper.check(_training.test_loss) == True:
             break
     print("-" * 50)
-
-# %%
-# add viewer

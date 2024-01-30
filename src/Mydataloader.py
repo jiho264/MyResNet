@@ -1,4 +1,5 @@
 import copy
+import torch
 from torch.utils.data import DataLoader, random_split
 from torchvision import datasets
 from torchvision.transforms.v2 import (
@@ -10,6 +11,8 @@ from torchvision.transforms.v2 import (
     AutoAugment,
     Normalize,
     CenterCrop,
+    ToImage,
+    ToDtype,
 )
 from torchvision.transforms.autoaugment import AutoAugmentPolicy
 import matplotlib.pyplot as plt
@@ -76,7 +79,8 @@ class LoadDataset:
                         padding_mode="constant",
                     ),
                     RandomHorizontalFlip(self.Randp),
-                    ToTensor(),
+                    # ToTensor(),
+                    Compose([ToImage(), ToDtype(torch.float32, scale=True)]),
                     # exject mean and std
                     # https://stackoverflow.com/questions/66678052/how-to-calculate-the-mean-and-the-std-of-cifar10-data
                     # std=1로 하면 submean

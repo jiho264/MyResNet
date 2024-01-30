@@ -85,11 +85,8 @@ test.transforms = ToTensor()
 - ```split_ratio = 0```
 - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)```
 - ```scheduler = MultiStepLR(optimizer, milestones=[82, 123], gamma=0.1)```
-- ```EarlyStopCounter = 50```
+- ```EarlyStopCounter = 100```
 <img src="results/MyResNet32_128_SGD.png" style="width: 600px; height: 300px;"/>
-
-- Best model : ```test_loss: 0.2305``` ```test_acc: 92.63%``` ```test_error: 7.37%``` 
-  >It converges in over 100 epochs. So ending at 239 epochs.
 
 ### 2.1.2. MyResNet32_CIFAR_128_SGD_90 [End at Jan 23]
 - ```batch = 128```
@@ -99,9 +96,6 @@ test.transforms = ToTensor()
 - ```EarlyStopCounter = 70```
 <img src="results/MyResNet32_128_SGD_90.png" style="width: 600px; height: 300px;"/>
 
-- Best model : ```test_loss: 0.5532``` ```test_acc: 83.39%``` ```test_error: 16.61%``` 
-  >Ends with lr decreasing to 1e-5 at 232 epochs.
-
 ### 2.1.3. MyResNet32_CIFAR_128_SGD_95 [End at Jan 22]
 - ```batch = 128```
 - ```split_ratio = 0.95```
@@ -110,8 +104,6 @@ test.transforms = ToTensor()
 - ```EarlyStopCounter = 70```
 <img src="results/MyResNet32_128_SGD_95.png"  style="width: 600px; height: 300px;"/>
 
-- Best model : ```test_loss: 0.3361``` ```test_acc: 89.40%``` ```test_error: 10.60%``` 
-  >Early stopped on 205 epochs.
 
 ## 2.2. ImageNet2012
 ```py
@@ -178,6 +170,14 @@ valid  = Compose(
 # 3. Experiments
 ## 3.1. Best ResNet32 Model on CIFAR10 
 ### 3.1.1. MyResNet32_CIFAR_128_SGD
+ - <img src="results/MyResNet32_CIFAR10_128_SGD_old_best.png" style="width: 600px; height: 300px;"/>
+
+> > !! 다시하니까 왜 안 되지?? AutoAugment 빼도 그대로다. 
+> > !! 다시하니까 왜 안 되지?? AutoAugment 빼도 그대로다. 
+> > !! 다시하니까 왜 안 되지?? AutoAugment 빼도 그대로다. 
+> > !! 다시하니까 왜 안 되지?? AutoAugment 빼도 그대로다. 
+> > !! 다시하니까 왜 안 되지?? AutoAugment 빼도 그대로다. 
+> > !! 다시하니까 왜 안 되지?? AutoAugment 빼도 그대로다. 
 - ```test_loss: 0.2305```
 - ```test_acc: 92.63%```
 - ```test_error: 7.37%```
@@ -199,8 +199,22 @@ valid  = Compose(
 
 ## 3.3. What is the best optimizer?
 ### 3.3.1. Comparing on CIFAR10
-- ```all batch = 128```
-- ```all scheduler = ExponentialLR(optimizer, gamma=0.95)```
+- ```Use MyResNet32```
+- ```All batch = 128```
+- ```All scheduler = ExponentialLR(optimizer, gamma=0.95)```
+
+- | Optimizer | Test Loss | Test Acc |
+  |:---------:|:---------:|:--------:|
+  | Adam      | 0.3563    | **88.26%** |
+  | Adam_decay| 0.3817    | 87.55%   |
+  | AdamW     | 0.3692    | **88.50%**   |
+  | AdamW_amsgrad| 0.3804 | 87.82%   |
+  | NAdam     | 0.4274    | 85.45%   |
+  | SGD       | 0.4562    | 84.54%   |
+  | SGD_nasterov| 0.4255  | 85.55%   |
+  > **AdamW**- **Adam** - Adam_amsgrad - Adam_decay - SGD_nasterov - NAdam - SGD
+- Blue marker : [Available Training Result] Best min test loss epoch
+- Black marker : Last epoch
 1. Adam
    - <img src="results/optim_test/MyResNet32_128_Adam.png" style="width: 600px; height: 300px;"/>
    - ```optimizer = torch.optim.Adam(model.parameters())```

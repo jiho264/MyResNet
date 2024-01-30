@@ -23,7 +23,7 @@ class DoTraining:
         self.earlystopper = earlystopper
         self.device = device
         self.logs = logs
-        self.file_path = file_path
+        self.file_name = file_path
 
     def Forward_train(self, dataloader):
         now_epoch = len(self.logs["train_loss"]) + 1
@@ -104,7 +104,7 @@ class DoTraining:
             "logs": self.logs,
         }
 
-        torch.save(checkpoint, self.file_path + ".pth.tar")
+        torch.save(checkpoint, self.file_name + ".pth.tar")
         # print(f"Saved PyTorch Model State to [logs/{file_path}.pth.tar]")
 
         return

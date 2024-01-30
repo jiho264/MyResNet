@@ -2,20 +2,15 @@ import torch
 from torch import nn
 from torch.optim.lr_scheduler import (
     ExponentialLR,
-    MultiStepLR,
-    ReduceLROnPlateau,
     CosineAnnealingLR,
-    CosineAnnealingWarmRestarts,
-    OneCycleLR,
     CyclicLR,
-    LambdaLR,
-    StepLR,
+    MultiStepLR,
 )
 import sys, os
 import tqdm
 
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname("src"))))
-
+from src.CumstomCosineAnnealingwarmRestarts import CosineAnnealingWarmUpRestarts
 from src.Mydataloader import LoadDataset
 from src.Mymodel import MyResNet_CIFAR
 from src.Earlystopper import EarlyStopper
@@ -34,16 +29,26 @@ PIN_MEMORY = True
 
 """optimizer parameters"""
 optim_list = [
-    "Adam",
-    "Adam_decay",
+    # "Adam",
+    # "Adam_decay",
     "SGD",
-    "SGD_nasterov",
-    "AdamW",
-    "AdamW_amsgrad",
+    # "SGD_nasterov",
+    # "AdamW",
+    # "AdamW_amsgrad",
     "NAdam",
 ]
-print_pad_len = max([len(i) for i in optim_list])
-SCHDULER = "ExponentialLR"
+print_pad_len_optim = max([len(i) for i in optim_list])
+
+scheduler_list = [
+    "ExponentialLR",
+    "MultiStepLR",
+    # "ReduceLROnPlateau",
+    "CosineAnnealingLR",
+    "CosineAnnealingWarmRestarts",
+    # "CycleLR",
+]
+print_pad_len_schduler = max([len(i) for i in scheduler_list])
+
 """Learning rate scheduler parameters"""
 NUM_EPOCHS = 100
 
@@ -59,13 +64,15 @@ train_data, valid_data, test_data, COUNT_OF_CLASSES = tmp.Unpack()
 train_dataloader, valid_dataloader, test_dataloader = tmp.get_dataloader(
     batch_size=BATCH, shuffle=SHUFFLE, num_workers=NUMOFWORKERS, pin_memory=PIN_MEMORY
 )
+print("-" * 50)
 
 
 # %%
 class Single_model:
     def __init__(self, optimizer, schduler, device="cuda") -> None:
-        self.file_name = f"MyResNet32_{BATCH}_{optimizer}_{SCHDULER}"
+        self.file_name = f"MyResNet32_{BATCH}_{optimizer}_{schduler}"
         self.optim_name = optimizer
+        self.scheduler_name = schduler
         """define model"""
         self.model = MyResNet_CIFAR(
             num_classes=COUNT_OF_CLASSES, num_layer_factor=5
@@ -114,27 +121,37 @@ class Single_model:
         """define learning rate scheduler"""
         if schduler == "ExponentialLR":
             self.scheduler = ExponentialLR(self.optimizer, gamma=0.95)
-        # elif schduler == "MultiStepLR":
-        #     self.scheduler = MultiStepLR(self.optimizer)
+        elif schduler == "MultiStepLR":
+            self.scheduler = MultiStepLR(self.optimizer, milestones=[50, 75], gamma=0.1)
         # elif schduler == "ReduceLROnPlateau":
         #     self.scheduler = ReduceLROnPlateau(self.optimizer)
         elif schduler == "CosineAnnealingLR":
-            self.scheduler = CosineAnnealingLR(self.optimizer)
+            """
+            - T_max : half of single pariod
+            - eta_min : min_lr
+            """
+            self.scheduler = CosineAnnealingLR(self.optimizer, T_max=100, eta_min=0.001)
         elif schduler == "CosineAnnealingWarmRestarts":
-            self.scheduler = CosineAnnealingWarmRestarts(self.optimizer)
-        elif schduler == "CycleLR":
-            self.scheduler = CyclicLR(self.optimizer)
+            """
+            - T_0 : single period,
+            - T_mult : period multiply factor
+            - eta_max : max_lr
+            - T_up : warmup period
+            - gamma : decay factor
+            """
+            self.scheduler = CosineAnnealingWarmUpRestarts(
+                self.optimizer, T_0=100, T_mult=1, eta_max=0.1, T_up=10, gamma=0.5
+            )
 
-        elif schduler == "OneCycleLR":
-            self.scheduler = OneCycleLR(self.optimizer)
-        """
-        
-        
-        스케쥴러 따라서 stop() 호출하는거 다르니까 그거 수정해야함.
-        참고할만한 자료 : 
-        https://gaussian37.github.io/dl-pytorch-lr_scheduler/
-        
-        """
+        elif schduler == "CycleLR":
+            self.scheduler = CyclicLR(
+                self.optimizer,
+                base_lr=0.001,
+                max_lr=0.1,
+                step_size_up=50,
+                step_size_down=None,
+                mode="triangular2",
+            )
 
         """define scaler"""
         self.scaler = torch.cuda.amp.GradScaler(enabled=True)
@@ -209,11 +226,12 @@ class Single_training(Single_model):
 
 # %%
 each_trainings = list()
-for optim in optim_list:
-    each_trainings.append(
-        Single_training(optimizer=optim, schduler=SCHDULER, device="cuda")
-    )
-
+for optim_name in optim_list:
+    for schduler_name in scheduler_list:
+        each_trainings.append(
+            Single_training(optimizer=optim_name, schduler=schduler_name, device="cuda")
+        )
+print("-" * 50)
 # %%
 pre_epochs = len(each_trainings[0].logs["train_loss"])
 
@@ -285,14 +303,17 @@ for epoch in range(NUM_EPOCHS):
         elif _training.scheduler.__class__.__name__ in (
             "ExponentialLR",
             "MultiStepLR",
+            "CosineAnnealingWarmUpRestarts",
             "CosineAnnealingLR",
         ):
             _training.scheduler.step()
+        # elif _training.scheduler.__class__.__name__ == "CosineAnnealingLR":
+        #     pass
         else:
-            pass
+            raise NotImplementedError
         # print #######
         print(
-            f"{_training.optim_name.ljust(print_pad_len)} | train : {_training.train_loss:.4f} / {_training.train_acc*100:.2f}% | test : {_training.test_loss:.4f} / {_training.test_acc*100:.2f}%"
+            f"{_training.optim_name.ljust(print_pad_len_optim)} - {_training.scheduler_name.ljust(print_pad_len_schduler)} | train : {_training.train_loss:.4f} / {_training.train_acc*100:.2f}% | test : {_training.test_loss:.4f} / {_training.test_acc*100:.2f}%"
         )
 
         # Save checkpoint ####### save는 제일 나중에

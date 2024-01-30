@@ -73,13 +73,13 @@
 - 동일한 세팅에서, 164 epochs (64k iterations) 학습 후, Test loss 및 Test acc를 비교함.
 - 파란 화살표는 Test loss가 최소인 Best model의 성능임.
 ### 2.1.1. Case 1 : Submean -> AutoAugment
-<img src="results/MyResNet32_128_SGD.png" style="width: 600px; height: 300px;"/>
+<img src="results/2-1-Autoaugment/MyResNet32_128_SGD_Submean->Aug.png" style="width: 600px; height: 300px;"/>
 
 ### 2.1.2. Case 2 : Submean
-<img src="results/MyResNet32_128_SGD_Submean.png" style="width: 600px; height: 300px;"/>
+<img src="results/2-1-Autoaugment/MyResNet32_128_SGD_Submean.png" style="width: 600px; height: 300px;"/>
 
 ### 2.1.3. Case 3 : AutoAugment -> Submean
-<img src="results/MyResNet32_128_SGD_Submean-autoaug.png" style="width: 600px; height: 300px;"/>
+<img src="results/2-1-Autoaugment/MyResNet32_128_SGD_Augm->Submean.png" style="width: 600px; height: 300px;"/>
 
 ### 2.1.4. Conclusion
 1. (1)과 (2)의 비교를 통해, AutoAugment을 적용하는 것이 더 좋은 결과를 보임.
@@ -101,26 +101,26 @@ train.transforms = Compose(
 test.transforms = ToTensor() 
 ```
 
-### 2.2.1. [BEST] MyResNet32_CIFAR_128_SGD 
+### 2.2.1. [BEST] MyResNet32_CIFAR_128_SGD_00
 - ```164 epochs``` (=64k iterations)
 - ```batch = 128```
 - ```split_ratio = 0```
 - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)```
 - ```scheduler = MultiStepLR(optimizer, milestones=[82, 123], gamma=0.1)```
-<img src="results/MyResNet32_128_SGD.png" style="width: 600px; height: 300px;"/>
+<img src="results/2-2-Split_test/MyResNet32_128_SGD.png" style="width: 600px; height: 300px;"/>
 
 - ```test_loss: 0.2384```
 - ```test_acc: 92.37%```
 - ```test_error: 7.63%```
 
 
-### 2.2.2. MyResNet32_CIFAR_128_SGD_90 
+### 2.2.2. MyResNet32_CIFAR_128_SGD_90
 - ```batch = 128```
 - ```split_ratio = 0.9```
 - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)```
 - ```scheduler = ReduceLROnPlateau(patiance=10, factor=0.1, cooldown=40)```
 - ```EarlyStopCounter = 50```
-<img src="results/.png" style="width: 600px; height: 300px;"/>
+<img src="results/2-2-Split_test/MyResNet32_CIFAR10_128_SGD_90.png" style="width: 600px; height: 300px;"/>
 
 ### 2.2.3. MyResNet32_CIFAR_128_SGD_95 
 - ```batch = 128```
@@ -128,7 +128,7 @@ test.transforms = ToTensor()
 - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)```
 - ```scheduler = ReduceLROnPlateau(patiance=10, factor=0.1, cooldown=40)```
 - ```EarlyStopCounter = 50```
-<img src="results/.png"  style="width: 600px; height: 300px;"/>
+<img src="results/2-2-Split_test/MyResNet32_CIFAR10_128_SGD_95.png"  style="width: 600px; height: 300px;"/>
 
 
 ### 2.2.5. Conclusion
@@ -149,7 +149,7 @@ test.transforms = ToTensor()
 
 - | Optimizer | Test Loss | Test Acc |
   |:------------:|:------:|:------:|
-  | **NAdam**        | 0.2780 | 90.**68**% |
+  | **NAdam**        | 0.2780 | **90.68**% |
   | SGD          | 0.2987 | 89.99% |
   | SGD_nasterov | 0.3079 | 89.33% |
   | Adam_decay   | 0.3296 | 88.34% |
@@ -161,29 +161,29 @@ test.transforms = ToTensor()
 - Blue marker : [Available Training Result] Best min test loss epoch
 1. Adam
    - ```optimizer = torch.optim.Adam(model.parameters())```
-    <img src="results/CompareOptims/MyResNet32_CIFAR10_128_Adam.png" style="width: 600px; height: 300px;"/>   
+    <img src="results/2-3-CompareOptims/MyResNet32_CIFAR10_128_Adam.png" style="width: 600px; height: 300px;"/>   
 2. Adam with decay
    - ```optimizer = torch.optim.Adam(model.parameters(), weight_decay=1e-4)```
-    <img src="results/CompareOptims/MyResNet32_CIFAR10_128_Adam_decay.png" style="width: 600px; height: 300px;"/>
+    <img src="results/2-3-CompareOptims/MyResNet32_CIFAR10_128_Adam_decay.png" style="width: 600px; height: 300px;"/>
 3. AdamW
    - ```optimizer = torch.optim.AdamW(model.parameters(), weight_decay=1e-4)```
-    <img src="results/CompareOptims/MyResNet32_CIFAR10_128_AdamW.png" style="width: 600px; height: 300px;"/>
+    <img src="results/2-3-CompareOptims/MyResNet32_CIFAR10_128_AdamW.png" style="width: 600px; height: 300px;"/>
 4. AdamW with amsgrad
    - ```optimizer = torch.optim.AdamW(model.parameters(), weight_decay=1e-4, amsgrad=True)```
-    <img src="results/CompareOptims/MyResNet32_CIFAR10_128_AdamW_amsgrad.png" style="width: 600px; height: 300px;"/>   
+    <img src="results/2-3-CompareOptims/MyResNet32_CIFAR10_128_AdamW_amsgrad.png" style="width: 600px; height: 300px;"/>   
 5. NAdam
    - ```optimizer = torch.optim.NAdam(model.parameters(), weight_decay=1e-4)```
-    <img src="results/CompareOptims/MyResNet32_CIFAR10_128_NAdam.png" style="width: 600px; height: 300px;"/>   
+    <img src="results/2-3-CompareOptims/MyResNet32_CIFAR10_128_NAdam.png" style="width: 600px; height: 300px;"/>   
 6. SGD
    - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=1e-4)```
-    <img src="results/CompareOptims/MyResNet32_CIFAR10_128_SGD.png" style="width: 600px; height: 300px;"/>   
+    <img src="results/2-3-CompareOptims/MyResNet32_CIFAR10_128_SGD.png" style="width: 600px; height: 300px;"/>   
 7. SGD with nasterov
    - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=1e-4, nesterov=True)```
-    <img src="results/CompareOptims/MyResNet32_CIFAR10_128_SGD_nasterov.png" style="width: 600px; height: 300px;"/>
+    <img src="results/2-3-CompareOptims/MyResNet32_CIFAR10_128_SGD_nasterov.png" style="width: 600px; height: 300px;"/>
    
 ### 2.3.2. ALL
-<img src="results/CompareOptims/all.png" style="width: 800px; height: 600px;"/>
-<img src="results/CompareOptims/all_last30.png" style="width: 800px; height: 600px;"/>
+<img src="results/2-3-CompareOptims/all.png" style="width: 800px; height: 600px;"/>
+<img src="results/2-3-CompareOptims/all_last30.png" style="width: 800px; height: 600px;"/>
   ---
 
 ## 2.4. Best ResNet34 model on ImageNet2012

@@ -41,10 +41,10 @@ optim_list = [
 print_pad_len_optim = max([len(i) for i in optim_list])
 
 scheduler_list = [
-    "ExponentialLR",
-    "MultiStepLR",
-    "ReduceLROnPlateau",
-    "CosineAnnealingLR",
+    # "ExponentialLR",
+    # "MultiStepLR",
+    # "ReduceLROnPlateau",
+    # "CosineAnnealingLR",
     "CosineAnnealingWarmUpRestarts",
     # "CycleLR",
 ]
@@ -143,9 +143,8 @@ class Single_model:
             - T_up : warmup period. 튀어오르는데 필요한 epochs.
             - gamma : eta_max decay factor.
             """
-
             self.scheduler = CosineAnnealingWarmUpRestarts(
-                self.optimizer, T_0=10, T_mult=1, eta_max=0.1, T_up=2, gamma=0.5
+                self.optimizer, T_0=10, T_mult=2, eta_max=0.1, T_up=2, gamma=0.5
             )
 
         # elif schduler == "CycleLR":
@@ -241,11 +240,14 @@ for optim_name in optim_list:
                 optimizer_name=optim_name, schduler_name=schduler_name, device="cuda"
             )
         )
-
         if schduler_name == "CosineAnnealingWarmUpRestarts":
             each_trainings[-1].optimizer.param_groups[0]["lr"] = 1e-8
             if optim_name == "NAdam":
-                each_trainings[-1].scheduler.eta_max *= 2
+                each_trainings[-1].scheduler.eta_max = 0.001
+            elif optim_name[:3] == "SGD":
+                each_trainings[-1].scheduler.eta_max = 0.1
+            elif optim_name[:4] == "Adam":
+                each_trainings[-1].scheduler.eta_max = 0.001
 
 print("-" * 50)
 # %%
@@ -312,7 +314,7 @@ for epoch in range(NUM_EPOCHS):
         _training.logs["test_acc"].append(_training.test_acc)
         # Save checkpoint #######
         _training.logs["lr_log"].append(_training.optimizer.param_groups[0]["lr"])
-
+        print(_training.optimizer.param_groups[0]["lr"])
         # scheduler #######
         if _training.scheduler.__class__.__name__ == "ReduceLROnPlateau":
             _training.scheduler.step(_training.train_loss)

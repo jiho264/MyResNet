@@ -141,8 +141,7 @@ test.transforms = ToTensor()
     ---
 
 
-## 2.3. What is the best optimizer?
-> 하위 항목 전부 다시 테스트중
+## 2.3. Which Optimizer is the best?
 ### 2.3.1. Comparing on CIFAR10
 - ```Use MyResNet32```
 - ```All batch = 128```
@@ -161,31 +160,32 @@ test.transforms = ToTensor()
   > **NAdam** - SGD - SGD_nasterov - Adam_decay - Adam_amsgrad - AdamW - Adam 
 - Blue marker : [Available Training Result] Best min test loss epoch
 1. Adam
-   - <img src="results/CompareOptims/MyResNet32_CIFAR10_128_Adam.png" style="width: 600px; height: 300px;"/>
    - ```optimizer = torch.optim.Adam(model.parameters())```
+    <img src="results/CompareOptims/MyResNet32_CIFAR10_128_Adam.png" style="width: 600px; height: 300px;"/>   
 2. Adam with decay
-   - <img src="results/CompareOptims/MyResNet32_CIFAR10_128_Adam_decay.png" style="width: 600px; height: 300px;"/>
    - ```optimizer = torch.optim.Adam(model.parameters(), weight_decay=1e-4)```
+    <img src="results/CompareOptims/MyResNet32_CIFAR10_128_Adam_decay.png" style="width: 600px; height: 300px;"/>
 3. AdamW
-   - <img src="results/CompareOptims/MyResNet32_CIFAR10_128_AdamW.png" style="width: 600px; height: 300px;"/>
    - ```optimizer = torch.optim.AdamW(model.parameters(), weight_decay=1e-4)```
+    <img src="results/CompareOptims/MyResNet32_CIFAR10_128_AdamW.png" style="width: 600px; height: 300px;"/>
 4. AdamW with amsgrad
-   - <img src="results/CompareOptims/MyResNet32_CIFAR10_128_AdamW_amsgrad.png" style="width: 600px; height: 300px;"/>
    - ```optimizer = torch.optim.AdamW(model.parameters(), weight_decay=1e-4, amsgrad=True)```
+    <img src="results/CompareOptims/MyResNet32_CIFAR10_128_AdamW_amsgrad.png" style="width: 600px; height: 300px;"/>   
 5. NAdam
-   - <img src="results/CompareOptims/MyResNet32_CIFAR10_128_NAdam.png" style="width: 600px; height: 300px;"/>
    - ```optimizer = torch.optim.NAdam(model.parameters(), weight_decay=1e-4)```
+    <img src="results/CompareOptims/MyResNet32_CIFAR10_128_NAdam.png" style="width: 600px; height: 300px;"/>   
 6. SGD
-   - <img src="results/CompareOptims/MyResNet32_CIFAR10_128_SGD.png" style="width: 600px; height: 300px;"/>
    - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=1e-4)```
+    <img src="results/CompareOptims/MyResNet32_CIFAR10_128_SGD.png" style="width: 600px; height: 300px;"/>   
 7. SGD with nasterov
-   - <img src="results/CompareOptims/MyResNet32_CIFAR10_128_SGD_nasterov.png" style="width: 600px; height: 300px;"/>
    - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=1e-4, nesterov=True)```
+    <img src="results/CompareOptims/MyResNet32_CIFAR10_128_SGD_nasterov.png" style="width: 600px; height: 300px;"/>
+   
 ### 2.3.2. ALL
 <img src="results/CompareOptims/all.png" style="width: 800px; height: 600px;"/>
 <img src="results/CompareOptims/all_last30.png" style="width: 800px; height: 600px;"/>
+  ---
 
-    ---
 ## 2.4. Best ResNet34 model on ImageNet2012
 ```py
 # Training set

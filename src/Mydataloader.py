@@ -35,20 +35,20 @@ class LoadDataset:
                 - RandomCrop(size=(32, 32), padding=[4, 4, 4, 4], pad_if_needed=False, fill=0, padding_mode=constant)
                 - RandomHorizontalFlip(p=0.5)
             - valid, test :
-                - ToTensor(),
+                - Compose([ToImage(), ToDtype(scale=True)])
         - ImageNet2012 :
             - train :
+                - Compose([ToImage(), ToDtype(scale=True)])
+                - Normalize(mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True),
                 - RandomShortestSize(min_size=range(256, 480), antialias=True),
                 - RandomCrop(size=224),
                 - AutoAugment(policy=AutoAugmentPolicy.IMAGENET),
                 - RandomHorizontalFlip(self.Randp),
-                - ToTensor(),
-                - Normalize(mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True),
             - valid (center croped valid set) :
+                - Compose([ToImage(), ToDtype(scale=True)])
+                - Normalize(mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True),
                 - RandomShortestSize(min_size=range(256, 480), antialias=True),
                 - CenterCrop(size=368),
-                - ToTensor(),
-                - Normalize(mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True),
             - test (10-croped valid set):
                 - Define another location. Find [/src/Prediction_for_MultiScaleTest.ipynb]
     output :
@@ -84,7 +84,6 @@ class LoadDataset:
                         padding_mode="constant",
                     ),
                     RandomHorizontalFlip(self.Randp),
-                    # ToTensor(),
                     # exject mean and std
                     # https://stackoverflow.com/questions/66678052/how-to-calculate-the-mean-and-the-std-of-cifar10-data
                     # std=1로 하면 submean
@@ -128,8 +127,6 @@ class LoadDataset:
 
             else:
                 self.train_data = ref_train
-                # self.train_data.transform = copy.deepcopy(cifar_default_transforms)
-                # self.train_data.transform = ToTensor()
                 self.valid_data = None
 
             #######################################################
@@ -141,14 +138,14 @@ class LoadDataset:
                 root=self.ImageNetRoot + "train",
                 transform=Compose(
                     [
-                        RandomShortestSize(min_size=range(256, 480), antialias=True),
-                        RandomCrop(size=224),
-                        AutoAugment(policy=AutoAugmentPolicy.IMAGENET),
-                        RandomHorizontalFlip(self.Randp),
                         Compose([ToImage(), ToDtype(torch.float32, scale=True)]),
                         Normalize(
                             mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True
                         ),
+                        RandomShortestSize(min_size=range(256, 480), antialias=True),
+                        RandomCrop(size=224),
+                        AutoAugment(policy=AutoAugmentPolicy.IMAGENET),
+                        RandomHorizontalFlip(self.Randp),
                     ]
                 ),
             )
@@ -156,13 +153,13 @@ class LoadDataset:
                 root=self.ImageNetRoot + "val",
                 transform=Compose(
                     [
-                        RandomShortestSize(min_size=range(256, 480), antialias=True),
-                        # VGG에서 single scale로 했을 때는 두 range의 median 값으로 crop함.
-                        CenterCrop(size=368),
                         Compose([ToImage(), ToDtype(torch.float32, scale=True)]),
                         Normalize(
                             mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True
                         ),
+                        RandomShortestSize(min_size=range(256, 480), antialias=True),
+                        # VGG에서 single scale로 했을 때는 두 range의 median 값으로 crop함.
+                        CenterCrop(size=368),
                     ]
                 ),
             )

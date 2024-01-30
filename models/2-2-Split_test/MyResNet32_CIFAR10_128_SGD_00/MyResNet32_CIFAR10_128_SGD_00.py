@@ -58,7 +58,9 @@ file_name
 # ## Define Dateloader
 
 # %%
-tmp = LoadDataset(root="../../data", seceted_dataset=DATASET, split_ratio=SPLIT_RATIO)
+tmp = LoadDataset(
+    root="../../../data", seceted_dataset=DATASET, split_ratio=SPLIT_RATIO
+)
 train_data, valid_data, test_data, COUNT_OF_CLASSES = tmp.Unpack()
 
 # %%

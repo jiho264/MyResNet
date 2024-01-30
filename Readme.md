@@ -106,12 +106,9 @@ test.transforms = ToTensor()
 - ```batch = 128```
 - ```split_ratio = 0```
 - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)```
-- ```scheduler = MultiStepLR(optimizer, milestones=[82, 123], gamma=0.1)```
-<img src="results/2-2-Split_test/MyResNet32_128_SGD.png" style="width: 600px; height: 300px;"/>
-
-- ```test_loss: 0.2384```
-- ```test_acc: 92.37%```
-- ```test_error: 7.63%```
+- ```scheduler = ReduceLROnPlateau(patiance=10, factor=0.1, cooldown=40)```
+<img src="results/2-2-Split_test/MyResNet32_CIFAR10_128_SGD_00.png" style="width: 600px; height: 300px;"/>
+> training 완료 후 업데이트 예정.
 
 
 ### 2.2.2. MyResNet32_CIFAR_128_SGD_90

@@ -114,8 +114,6 @@ class DoTraining:
         train_dataloader,
         valid_dataloader=None,
         test_dataloader=None,
-        now_epoch=None,
-        goal_epoch=None,
     ):
         if valid_dataloader == None and test_dataloader == None:
             raise ValueError("No any valid/test dataloader")
@@ -144,28 +142,36 @@ class DoTraining:
         # Save the model (checkpoint) and logs
         # self.Save(self.file_path)
 
+        eval_loss = None
         if valid_dataloader != None:
             eval_loss = valid_loss
-        if valid_dataloader == None and test_dataloader != None:
-            eval_loss = test_loss
+        elif valid_dataloader == None:
+            """self eval use test loss"""
+            eval_loss = train_loss
+        else:
+            raise ValueError("No eval loss")
 
-        # Learning rate scheduler
-        if self.scheduler.__class__ == torch.optim.lr_scheduler.ReduceLROnPlateau:
-            self.scheduler.step(eval_loss)
-        elif self.scheduler.__class__ == torch.optim.lr_scheduler.MultiStepLR:
-            _tmp_lr = self.optimizer.param_groups[0]["lr"]
-            self.scheduler.step()
-            if _tmp_lr != self.optimizer.param_groups[0]["lr"]:
-                print(
-                    "Learning Rate has changed : Now is",
-                    self.optimizer.param_groups[0]["lr"],
-                )
-        elif self.scheduler.__class__ == torch.optim.lr_scheduler.CosineAnnealingLR:
-            pass
-        elif (
-            self.scheduler.__class__
-            == torch.optim.lr_scheduler.CosineAnnealingWarmRestarts
-        ):
-            pass
+        if eval_loss != None:
+            # Learning rate scheduler
+            if self.scheduler.__class__ == torch.optim.lr_scheduler.ReduceLROnPlateau:
+                self.scheduler.step(eval_loss)
+            elif self.scheduler.__class__ == torch.optim.lr_scheduler.MultiStepLR:
+                _tmp_lr = self.optimizer.param_groups[0]["lr"]
+                self.scheduler.step()
+                if _tmp_lr != self.optimizer.param_groups[0]["lr"]:
+                    print(
+                        "Learning Rate has changed : Now is",
+                        self.optimizer.param_groups[0]["lr"],
+                    )
+            elif self.scheduler.__class__ == torch.optim.lr_scheduler.CosineAnnealingLR:
+                pass
+            elif (
+                self.scheduler.__class__
+                == torch.optim.lr_scheduler.CosineAnnealingWarmRestarts
+            ):
+                pass
 
-        return eval_loss
+            return eval_loss
+        else:
+            """test loss를 scheduler에 넣으면 안 됨. 넣으면 그냥 측정치인 eval용 test loss 뱉고 종료"""
+            return eval_loss

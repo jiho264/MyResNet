@@ -17,6 +17,16 @@ from src.Mydataloader import LoadDataset
 from src.Mymodel import MyResNet_CIFAR, MyResNet34
 from src.Earlystopper import EarlyStopper
 
+# %% memo
+"""
+
+NAdam + ReduceLROnPlateau 
+patience = 5
+cooldown = 5
+earlystopping = 15
+
+"""
+
 # %%
 """Dataset selection"""
 # DATASET = "CIFAR10"
@@ -42,9 +52,9 @@ optim_list = [
 PRINT_PAD_OPTIM = max([len(i) for i in optim_list])
 
 scheduler_list = [
-    "ExponentialLR",
-    "MultiStepLR",
-    # "ReduceLROnPlateau",
+    # "ExponentialLR",
+    # "MultiStepLR",
+    "ReduceLROnPlateau",
     # "CosineAnnealingLR",
     # "CosineAnnealingWarmUpRestarts",
     # "CycleLR",
@@ -53,10 +63,10 @@ scheduler_list = [
 PRINT_PAD_SCHDULER = max([len(i) for i in scheduler_list])
 
 """Learning rate scheduler parameters"""
-NUM_EPOCHS = 120
+NUM_EPOCHS = 150
 
 """Early stopping parameters"""
-EARLYSTOPPINGPATIENCE = NUM_EPOCHS
+EARLYSTOPPINGPATIENCE = 10
 
 # %%
 
@@ -135,7 +145,7 @@ class Single_model:
             self.scheduler = MultiStepLR(self.optimizer, milestones=[30, 60], gamma=0.1)
         elif schduler_name == "ReduceLROnPlateau":
             self.scheduler = ReduceLROnPlateau(
-                self.optimizer, patience=5, factor=0.1, cooldown=5
+                self.optimizer, patience=5, factor=0.1, cooldown=3
             )
         elif schduler_name == "CosineAnnealingLR":
             """
@@ -182,15 +192,6 @@ class Single_model:
                 self.optimizer, factor=1, total_iters=NUM_EPOCHS
             )
             pass
-        # elif schduler == "CycleLR":
-        #     self.scheduler = CyclicLR(
-        #         self.optimizer,
-        #         base_lr=0.001,
-        #         max_lr=0.1,
-        #         step_size_up=50,
-        #         step_size_down=None,
-        #         mode="triangular2",
-        #     )
 
         """define scaler"""
         self.scaler = torch.cuda.amp.GradScaler(enabled=True)

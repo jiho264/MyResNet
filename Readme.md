@@ -155,12 +155,12 @@ test.transforms = ToTensor()
 
 - | Optimizer | Test Loss | Test Acc |
   |:------------:|:------:|:------:|
-  | **NAdam**        | 0.2780 | **90.68**% |
-  | **SGD**          | 0.2987 | **89.99%**|
+  | **NAdam**    | 0.2780 | **90.68**% |
+  | **SGD**      | 0.2987 | **89.99%**|
   | SGD_nasterov | 0.3079 | 89.33% |
   | Adam_decay   | 0.3296 | 88.34% |
-  | AdamW_amsgrad| 0.3554 | 88.22% |
   | AdamW        | 0.3520 | 88.16% |
+  | AdamW_amsgrad| 0.3554 | 88.22% |
   | Adam         | 0.3574 | 87.62% |
   
   > **NAdam** - SGD - SGD_nasterov - Adam_decay - Adam_amsgrad - AdamW - Adam 
@@ -198,20 +198,23 @@ test.transforms = ToTensor()
 
 - | Optimizer    | Scheduler  | Test Loss | Test Acc |
   |:------------:|:---------------------------:|:------:|:------:|
-  | NAdam        |ExpoentialLR                     |0.2806 |90.77%  | 
+  | **NAdam**    |**ReduceLROnPlateau**            |0.2541 |**91.18%**  |  
+  | **SGD**      |**CosineAnnealingLR**            |0.2544 |**91.18%**  |
   | **NAdam**    |**MultiStepLR**                  |0.2549 |**91.64%**  |
-  | **NAdam**    |**ReduceLROnPlateau**            |0.2541 |**91.18%**  |
-  | NAdam        |CosineAnnealingLR                |0.3026 |89.53%  |      
-  | NAdam        |CosineAnnealingWarmRestarts8     |0.3233 |89.09%  |
-  | NAdam        |CosineAnnealingWarmRestarts10    |0.3148 |89.43%  |
-  | NAdam        |CosineAnnealingWarmRestarts14    |0.2790 |90.51%  | 
-  | SGD          |ExpoentialLR                     |0.2942 |89.93%  |                
   | SGD          |MultiStepLR                      |0.2640 |90.76%  |
+  | NAdam        |CosineAnnealingWarmRestarts14    |0.2790 |90.51%  | 
+  | NAdam        |ExpoentialLR                     |0.2806 |90.77%  | 
+  | SGD          |ExpoentialLR                     |0.2942 |89.93%  |
+  | NAdam        |CosineAnnealingLR                |0.3026 |89.53%  |        
+  | NAdam        |CosineAnnealingWarmRestarts10    |0.3148 |89.43%  |
+  | SGD          |CosineAnnealingWarmRestarts14    |0.3227 |89.17%  |
+  | NAdam        |CosineAnnealingWarmRestarts8     |0.3233 |89.09%  |                
   | SGD          |ReduceLROnPlateau                |0.3474 |88.21%  |
-  | **SGD**      |**CosineAnnealingLR**            |0.2544 |**91.18%**  |      
+  | SGD          |CosineAnnealingWarmRestarts10    |0.3602 |87.92%  |      
   | SGD          |CosineAnnealingWarmRestarts8     |0.3704 |87.65%  |
-  | SGD          |CosineAnnealingWarmRestarts10    |0.3602 |87.92%  |
-  | SGD          |CosineAnnealingWarmRestarts14    |0.3227 |89.17%  |     
+       
+   > **NAdam ReduceLROnPlateau** - **SGD CosineAnnealingLR** - **NAdam MultiStepLR** - etc..
+   > 상위 3개의 case 오차 3%이내.
 
 - ```NAdam``` : ```torch.optim.NAdam(model.parameters(), weight_decay=1e-4)```
 - ```SGD``` : ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=1e-4)```

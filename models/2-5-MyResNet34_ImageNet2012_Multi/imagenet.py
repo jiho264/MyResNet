@@ -21,7 +21,7 @@ from src.Earlystopper import EarlyStopper
 
 NAdam + ReduceLROnPlateau 
 patience = 5
-cooldown = 5
+cooldown = 3
 earlystopping = 15
 
 """
@@ -322,14 +322,10 @@ for epoch in range(NUM_EPOCHS):
     now_epoch = epoch + 1 + pre_epochs
     if now_epoch > NUM_EPOCHS:
         break
-    print(f"[Epoch {now_epoch}/{NUM_EPOCHS}] :")
     # %% Forward_train ######################################################################################################
     for images, labels in tqdm.tqdm(
         train_dataloader, desc=f"{now_epoch} Train", ncols=55
     ):
-        endtime = time.time()
-        print(f"1 batch time : {endtime-starttime:.2f} sec")
-
         for _training in each_trainings:
             _training.model.train()
             with torch.autocast(device_type="cuda", dtype=torch.float16, enabled=True):

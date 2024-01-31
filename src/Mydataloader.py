@@ -133,52 +133,7 @@ class LoadDataset:
 
         elif self.dataset_name == "ImageNet2012":
             self.ImageNetRoot = root + "/" + self.dataset_name + "/"
-            """
-            25분걸리는 정답
-                RandomShortestSize(min_size=range(256, 480), antialias=True),
-                RandomCrop(size=224),
-                RandomHorizontalFlip(self.Randp),
-                Compose([ToImage(), ToDtype(torch.float32, scale=True)]),
-                Normalize(
-                    mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True
-                ),
-                AutoAugment(policy=AutoAugmentPolicy.IMAGENET),
-                    
-            """
-            # 0.185s / 1.1~1.5
-            # self.train_data = datasets.ImageFolder(
-            #     root=self.ImageNetRoot + "train",
-            #     transform=Compose(
-            #         [
-            #             RandomShortestSize(min_size=range(256, 480), antialias=True),
-            #             RandomCrop(size=224),
-            #             RandomHorizontalFlip(self.Randp),
-            #             Compose([ToImage(), ToDtype(torch.float32, scale=True)]),
-            #             Normalize(
-            #                 mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True
-            #             ),
-            #             AutoAugment(policy=AutoAugmentPolicy.IMAGENET),
-            #         ]
-            #     ).to(torch.device("cuda")),
-            # )
-            # self.train_data = datasets.ImageFolder(
-            #     root=self.ImageNetRoot + "train",
-            #     transform=Compose(
-            #         [
-            #             RandomShortestSize(min_size=range(256, 480), antialias=True),
-            #             RandomCrop(size=224),
-            #             RandomHorizontalFlip(self.Randp),
-            #             Compose([ToImage(), ToDtype(torch.float32, scale=True)]),
-            #             Normalize(
-            #                 mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True
-            #             ),
-            #             AutoAugment(policy=AutoAugmentPolicy.IMAGENET),
-            #         ]
-            #     )
-            # )
 
-            # 0.195s / 2후반~ 3초
-            # train transform 이렇게 하면 시간 2배걸림. 48분걸렸음.
             self.train_data = datasets.ImageFolder(
                 root=self.ImageNetRoot + "train",
                 transform=Compose(
@@ -195,39 +150,6 @@ class LoadDataset:
                 ),
             )
 
-            # 0.19s / 1초 초반
-            # self.train_data = datasets.ImageFolder(
-            #     root=self.ImageNetRoot + "train",
-            #     transform=Compose(
-            #         [
-            #             RandomShortestSize(min_size=range(256, 480), antialias=True),
-            #             RandomCrop(size=224),
-            #             AutoAugment(policy=AutoAugmentPolicy.IMAGENET),
-            #             RandomHorizontalFlip(self.Randp),
-            #             Compose([ToImage(), ToDtype(torch.float32, scale=True)]),
-            #             Normalize(
-            #                 mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True
-            #             ),
-            #         ]
-            #     ),
-            # )
-
-            # 약 1.6s
-            # self.train_data = datasets.ImageFolder(
-            #     root=self.ImageNetRoot + "train",
-            #     transform=Compose(
-            #         [
-            #             RandomShortestSize(min_size=range(256, 480), antialias=True),
-            #             RandomCrop(size=224),
-            #             RandomHorizontalFlip(self.Randp),
-            #             Compose([ToImage(), ToDtype(torch.float32, scale=True)]),
-            #             Normalize(
-            #                 mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True
-            #             ),
-            #             AutoAugment(policy=AutoAugmentPolicy.IMAGENET),
-            #         ]
-            #     ).to(torch.device("cuda")),
-            # )
             self.valid_data = datasets.ImageFolder(
                 root=self.ImageNetRoot + "val",
                 transform=Compose(

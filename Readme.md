@@ -127,7 +127,7 @@ test.transforms = ToTensor()
 - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=1e-4)```
 - ```scheduler = ReduceLROnPlateau(patiance=10, factor=0.1, cooldown=40)```
 - ```EarlyStopCounter = 50```
-<img src="results/2-2-Split_test/MyResNet32_128_SGD_90.png" style="width: 900px; height: 300px;"/>
+   <img src="results/2-2-Split_test/MyResNet32_128_SGD_90.png" style="width: 900px; height: 300px;"/>
 
 ### 2.2.3. MyResNet32_CIFAR_128_SGD_95 
 - ```batch = 128```
@@ -135,7 +135,7 @@ test.transforms = ToTensor()
 - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=1e-4)```
 - ```scheduler = ReduceLROnPlateau(patiance=10, factor=0.1, cooldown=40)```
 - ```EarlyStopCounter = 50```
-<img src="results/2-2-Split_test/MyResNet32_128_SGD_95.png"  style="width: 900px; height: 300px;"/>
+   <img src="results/2-2-Split_test/MyResNet32_128_SGD_95.png"  style="width: 900px; height: 300px;"/>
 
 
 ### 2.2.5. Conclusion

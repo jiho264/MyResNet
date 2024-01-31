@@ -143,7 +143,7 @@ test.transforms = ToTensor()
   - 간단한 Dataset이라, Validation Set으로 Learning Rate Scheduling이 기대만큼 효과적이지 않았음.
   - 오히려, Validation Set마저 학습했을 때에 가장 모델의 정확도가 높았음. 
     
-    ---
+
 
 
 ## 2.3. Which Optimizer is the best?
@@ -188,7 +188,7 @@ test.transforms = ToTensor()
    
 ### 2.3.3. ALL
 <img src="results/2-3-CompareOptims/all.png" style="width: 800px; height: 600px;"/>
-  ---
+
 
 ## 2.4. Which Scheduler is the best?
 ### 2.4.1. Comparing on CIFAR10

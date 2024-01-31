@@ -8,8 +8,7 @@ from torch.optim.lr_scheduler import (
     ReduceLROnPlateau,
     ConstantLR,
 )
-import sys, os
-import tqdm
+import sys, os, tqdm, time
 
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname("src"))))
 from src.CumstomCosineAnnealingwarmRestarts import CosineAnnealingWarmUpRestarts
@@ -318,7 +317,7 @@ for optim_name in optim_list:
 print("-" * 50)
 # %%
 pre_epochs = len(each_trainings[0].logs["train_loss"])
-
+starttime = time.time()
 for epoch in range(NUM_EPOCHS):
     now_epoch = epoch + 1 + pre_epochs
     if now_epoch > NUM_EPOCHS:
@@ -328,6 +327,9 @@ for epoch in range(NUM_EPOCHS):
     for images, labels in tqdm.tqdm(
         train_dataloader, desc=f"{now_epoch} Train", ncols=55
     ):
+        endtime = time.time()
+        print(f"1 batch time : {endtime-starttime:.2f} sec")
+
         for _training in each_trainings:
             _training.model.train()
             with torch.autocast(device_type="cuda", dtype=torch.float16, enabled=True):
@@ -346,7 +348,7 @@ for epoch in range(NUM_EPOCHS):
             _, predicted = outputs.max(1)
             _training.running_total += labels.size(0)
             _training.running_corrects += predicted.eq(labels).sum().item()
-
+        starttime = time.time()
     # %% Forward_valid ######################################################################################################
     if valid_dataloader != None:
         for images, labels in tqdm.tqdm(

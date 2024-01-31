@@ -261,19 +261,21 @@ valid  = Compose(
 > 재실험 필요함.
 - ```epochs = 100```
 - ```batch = 256```
-- ```optimizer = ```
-- ```scheduler = ExponentialLR(optimizer, gamma=0.95)```
-<img src="results/.png" style="width: 600px; height: 300px;"/>
 
 
+
+
+아래 삭제 예정
+```
 - ```TenCrop [224] on valid set : ```
 - ```TenCrop [256] on valid set : ```
 - ```TenCrop [384] on valid set : ```
 - ```TenCrop [480] on valid set : ```
 - ```TenCrop [640] on valid set : ```
 
-아래 삭제 예정
-```
+- ```optimizer = ```
+- ```scheduler = ExponentialLR(optimizer, gamma=0.95)```
+<img src="results/.png" style="width: 600px; height: 300px;"/>
 ### 2.3.1. MyResNet34_ImageNet_256_SGD_case1 
 > 재실험 필요함.
 - ```batch = 256```

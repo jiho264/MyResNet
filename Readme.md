@@ -1,3 +1,13 @@
+<style>
+  details{margin-bottom:10px;}
+  details summary{padding:0 10px; background:#000; color:#fff; height:35px; line-height:35px; font-weight:bold; cursor:pointer;}
+  details summary::marker{font-size:0;}
+  details ul{border:1px solid #aaa;}
+  details ul li a{display:block; padding:5px 10px;}
+  details ul li a:hover{background:#333; color:#fff;}
+  details .txt{border:1px solid #999; padding:5px 10px; text-align:center;}
+</style>
+
 # MyResNet
 ##### LEE, JIHO
 > Dept. of Embedded Systems Engineering, Incheon National University
@@ -25,18 +35,18 @@
 │       ├── train
 │       └── val
 ├── models
-│   ├── MyResNet32_CIFAR10_128_SGD
+│   ├── 2-1-Autoaugment
 │   │   └── etc..
-│   ├── MyResNet32_CIFAR10_128_SGD_90
+│   ├── 2-2-Split_test
 │   │   └── etc..
-│   ├── MyResNet32_CIFAR10_128_SGD_95
+│   ├── 2-3-Optim_test
 │   │   └── etc..
-│   └── MyResNet34_ImageNet2012_256_SGD
-│       ├── MyResNet34_256_SGD.ipynb "Training Code"
-│       ├── MyResNet34_256_SGD.pth.tar "Check Point"
-│       └── MyResNet34_256_SGD.pth "Only parameters of model"
+│   ├── 2-4-Schedulers_test
+│   │   └── etc..
+│   └── 2-5-ImageNet_test
+|       └── etc..
 └── src
-     └── "Source Codes"
+    └── "Source Codes"
 ``` 
 ## 1.3. How to run 
   - Run ```models/{dir}/{model_name}_{dataset}_{batch}_{optimizer}.ipynb```
@@ -105,27 +115,27 @@ test.transforms = ToTensor()
 - ```164 epochs``` (=64k iterations)
 - ```batch = 128```
 - ```split_ratio = 0```
-- ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)```
+- ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=1e-4)```
 - ```scheduler = ReduceLROnPlateau(patiance=10, factor=0.1, cooldown=40)```
-<img src="results/2-2-Split_test/MyResNet32_CIFAR10_128_SGD_00.png" style="width: 600px; height: 300px;"/>
-> training 완료 후 업데이트 예정.
-
+   > Train loss를 ReduceLROnPlateau의 Step에서 사용함.
+   
+   <img src="results/2-2-Split_test/MyResNet32_128_SGD_00.png" style="width: 900px; height: 300px;"/>
 
 ### 2.2.2. MyResNet32_CIFAR_128_SGD_90
 - ```batch = 128```
 - ```split_ratio = 0.9```
-- ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)```
+- ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=1e-4)```
 - ```scheduler = ReduceLROnPlateau(patiance=10, factor=0.1, cooldown=40)```
 - ```EarlyStopCounter = 50```
-<img src="results/2-2-Split_test/MyResNet32_CIFAR10_128_SGD_90.png" style="width: 600px; height: 300px;"/>
+<img src="results/2-2-Split_test/MyResNet32_128_SGD_90.png" style="width: 900px; height: 300px;"/>
 
 ### 2.2.3. MyResNet32_CIFAR_128_SGD_95 
 - ```batch = 128```
 - ```split_ratio = 0.95```
-- ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)```
+- ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=1e-4)```
 - ```scheduler = ReduceLROnPlateau(patiance=10, factor=0.1, cooldown=40)```
 - ```EarlyStopCounter = 50```
-<img src="results/2-2-Split_test/MyResNet32_CIFAR10_128_SGD_95.png"  style="width: 600px; height: 300px;"/>
+<img src="results/2-2-Split_test/MyResNet32_128_SGD_95.png"  style="width: 900px; height: 300px;"/>
 
 
 ### 2.2.5. Conclusion
@@ -148,7 +158,7 @@ test.transforms = ToTensor()
 - | Optimizer | Test Loss | Test Acc |
   |:------------:|:------:|:------:|
   | **NAdam**        | 0.2780 | **90.68**% |
-  | SGD          | 0.2987 | 89.99% |
+  | **SGD**          | 0.2987 | **89.99%**|
   | SGD_nasterov | 0.3079 | 89.33% |
   | Adam_decay   | 0.3296 | 88.34% |
   | AdamW_amsgrad| 0.3554 | 88.22% |
@@ -156,32 +166,30 @@ test.transforms = ToTensor()
   | Adam         | 0.3574 | 87.62% |
   
   > **NAdam** - SGD - SGD_nasterov - Adam_decay - Adam_amsgrad - AdamW - Adam 
-- Blue marker : [Available Training Result] Best min test loss epoch
-1. Adam
-   - ```optimizer = torch.optim.Adam(model.parameters())```
-    <img src="results/2-3-CompareOptims/MyResNet32_CIFAR10_128_Adam.png" style="width: 600px; height: 300px;"/>   
-2. Adam with decay
-   - ```optimizer = torch.optim.Adam(model.parameters(), weight_decay=1e-4)```
-    <img src="results/2-3-CompareOptims/MyResNet32_CIFAR10_128_Adam_decay.png" style="width: 600px; height: 300px;"/>
-3. AdamW
-   - ```optimizer = torch.optim.AdamW(model.parameters(), weight_decay=1e-4)```
-    <img src="results/2-3-CompareOptims/MyResNet32_CIFAR10_128_AdamW.png" style="width: 600px; height: 300px;"/>
-4. AdamW with amsgrad
-   - ```optimizer = torch.optim.AdamW(model.parameters(), weight_decay=1e-4, amsgrad=True)```
-    <img src="results/2-3-CompareOptims/MyResNet32_CIFAR10_128_AdamW_amsgrad.png" style="width: 600px; height: 300px;"/>   
-5. NAdam
-   - ```optimizer = torch.optim.NAdam(model.parameters(), weight_decay=1e-4)```
-    <img src="results/2-3-CompareOptims/MyResNet32_CIFAR10_128_NAdam.png" style="width: 600px; height: 300px;"/>   
-6. SGD
-   - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=1e-4)```
-    <img src="results/2-3-CompareOptims/MyResNet32_CIFAR10_128_SGD.png" style="width: 600px; height: 300px;"/>   
-7. SGD with nasterov
-   - ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=1e-4, nesterov=True)```
-    <img src="results/2-3-CompareOptims/MyResNet32_CIFAR10_128_SGD_nasterov.png" style="width: 600px; height: 300px;"/>
+### 2.3.2. Figures
+<details>
+<summary>[view figures]</summary>
+<ul>
+      <li>1. Adam : ```optimizer = torch.optim.Adam(model.parameters())```</li>
+         <img src="results/2-3-CompareOptims/MyResNet32_CIFAR10_128_Adam.png" style="width: 600px; height: 300px;"/>   
+      <li>2. Adam with decay : ```optimizer = torch.optim.Adam(model.parameters(), weight_decay=1e-4)```</li>
+         <img src="results/2-3-CompareOptims/MyResNet32_CIFAR10_128_Adam_decay.png" style="width: 600px; height: 300px;"/>
+      <li>3. AdamW : ```optimizer = torch.optim.AdamW(model.parameters(), weight_decay=1e-4)```</li>
+         <img src="results/2-3-CompareOptims/MyResNet32_CIFAR10_128_AdamW.png" style="width: 600px; height: 300px;"/>
+      <li>4. AdamW with amsgrad : ```optimizer = torch.optim.AdamW(model.parameters(), weight_decay=1e-4, amsgrad=True)```</li>
+         <img src="results/2-3-CompareOptims/MyResNet32_CIFAR10_128_AdamW_amsgrad.png" style="width: 600px; height: 300px;"/>   
+      <li>5. NAdam : ```optimizer = torch.optim.NAdam(model.parameters(), weight_decay=1e-4)```</li>
+         <img src="results/2-3-CompareOptims/MyResNet32_CIFAR10_128_NAdam.png" style="width: 600px; height: 300px;"/>   
+      <li>6. SGD : ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=1e-4)```</li>
+         <img src="results/2-3-CompareOptims/MyResNet32_CIFAR10_128_SGD.png" style="width: 600px; height: 300px;"/>   
+      <li>7. SGD with nasterov : ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=1e-4, nesterov=True)```</li>
+      <img src="results/2-3-CompareOptims/MyResNet32_CIFAR10_128_SGD_nasterov.png" style="width: 600px; height: 300px;"/>
+</ui>
+</details>
+
    
-### 2.3.2. ALL
+### 2.3.3. ALL
 <img src="results/2-3-CompareOptims/all.png" style="width: 800px; height: 600px;"/>
-<img src="results/2-3-CompareOptims/all_last30.png" style="width: 800px; height: 600px;"/>
   ---
 
 ## 2.4. Which Scheduler is the best?
@@ -194,53 +202,77 @@ test.transforms = ToTensor()
   |:------------:|:---------------------------:|:------:|:------:|
   | NAdam        |ExpoentialLR                     |0.2806 |90.77%  | 
   | **NAdam**    |**MultiStepLR**                  |0.2549 |**91.64%**  |
-  | NAdam        |ReduceLROnPlateau                |0.2541 |91.18%  |
+  | **NAdam**    |**ReduceLROnPlateau**            |0.2541 |**91.18%**  |
   | NAdam        |CosineAnnealingLR                |0.3026 |89.53%  |      
-  | NAdam        |CosineAnnealingWarmRestarts8     |0.2790 |90.51%  |
-  | NAdam        |CosineAnnealingWarmRestarts10    |0.2790 |90.51%  |
-  | **NAdam**    |**CosineAnnealingWarmRestarts14**|0.2790 |90.51%  | 
+  | NAdam        |CosineAnnealingWarmRestarts8     |0.3233 |89.09%  |
+  | NAdam        |CosineAnnealingWarmRestarts10    |0.3148 |89.43%  |
+  | NAdam        |CosineAnnealingWarmRestarts14    |0.2790 |90.51%  | 
   | SGD          |ExpoentialLR                     |0.2942 |89.93%  |                
   | SGD          |MultiStepLR                      |0.2640 |90.76%  |
   | SGD          |ReduceLROnPlateau                |0.3474 |88.21%  |
   | **SGD**      |**CosineAnnealingLR**            |0.2544 |**91.18%**  |      
-  | SGD          |CosineAnnealingWarmRestarts8     |0.
-  | SGD          |CosineAnnealingWarmRestarts10    |0.
-  | SGD          |CosineAnnealingWarmRestarts14    |0.3227 |89.17%  |                
+  | SGD          |CosineAnnealingWarmRestarts8     |0.3704 |87.65%  |
+  | SGD          |CosineAnnealingWarmRestarts10    |0.3602 |87.92%  |
+  | SGD          |CosineAnnealingWarmRestarts14    |0.3227 |89.17%  |     
 
-1. ```NAdam``` : ```torch.optim.NAdam(model.parameters(), weight_decay=1e-4)```
-   1. ExponentialLR : ```ExponentialLR(self.optimizer, gamma=0.95)```
-      <img src="results/2-4-Scheduler_test/NAdam_ExponentialLR.png" style="width: 900px; height: 300px;"/>
-   2. MultiStepLR : ```MultiStepLR(self.optimizer, milestones=[50, 75], gamma=0.1)```
-      <img src="results/2-4-Scheduler_test/NAdam_MultiStepLR.png" style="width: 900px; height: 300px;"/>
-   3. ReduceLROnPlateau : ```ReduceLROnPlateau(self.optimizer, patiance=5, factor=0.1, cooldown=2)```
-      <img src="results/2-4-Scheduler_test/NAdam_ReduceLROnPlateau.png" style="width: 900px; height: 300px;"/>
-   4. CosineAnnealingLR : ```CosineAnnealingLR(self.optimizer, T_max=20, eta_min=0.001)```
-      <img src="results/2-4-Scheduler_test/NAdam_CosineAnnealingLR.png" style="width: 900px; height: 300px;"/>
-   5. CosineAnnealingWarmRestarts8 : ```CosineAnnealingWarmRestarts(self.optimizer, T_0=8, T_mult=2, eta_max=0.002, T_up=2, gamma=0.5)```
-      <img src="results/2-4-Scheduler_test/NAdam_CosineAnnealingWarmUpRestarts8.png" style="width: 900px; height: 300px;"/>
-   6. CosineAnnealingWarmRestarts10 : ```CosineAnnealingWarmRestarts(self.optimizer, T_0=10, T_mult=2, eta_max=0.002, T_up=2, gamma=0.5)```
-      <img src="results/2-4-Scheduler_test/NAdam_CosineAnnealingWarmUpRestarts10.png" style="width: 900px; height: 300px;"/>
-   7. CosineAnnealingWarmRestarts14 : ```CosineAnnealingWarmRestarts(self.optimizer, T_0=14, T_mult=2, eta_max=0.002, T_up=2, gamma=0.5)```
-      <img src="results/2-4-Scheduler_test/NAdam_CosineAnnealingWarmUpRestarts14.png" style="width: 900px; height: 300px;"/>
-   
-2. ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)```
-   1. ExponentialLR : ```ExponentialLR(self.optimizer, gamma=0.95)```
-      <img src="results/2-4-Scheduler_test/SGD_ExponentialLR.png" style="width: 900px; height: 300px;"/>
-   2. MultiStepLR : ```MultiStepLR(self.optimizer, milestones=[50, 75], gamma=0.1)```
-      <img src="results/2-4-Scheduler_test/SGD_MultiStepLR.png" style="width: 900px; height: 300px;"/>
-   3. ReduceLROnPlateau : ```ReduceLROnPlateau(self.optimizer, patiance=5, factor=0.1, cooldown=2)```
-      <img src="results/2-4-Scheduler_test/SGD_ReduceLROnPlateau.png" style="width: 900px; height: 300px;"/>
-   4. CosineAnnealingLR : ```CosineAnnealingLR(self.optimizer, T_max=20, eta_min=0.001)```
-      <img src="results/2-4-Scheduler_test/SGD_CosineAnnealingLR.png" style="width: 900px; height: 300px;"/>
-   5. CosineAnnealingWarmRestarts8 : ```CosineAnnealingWarmRestarts(self.optimizer, T_0=8, T_mult=2, eta_max=0.002, T_up=2, gamma=0.5)```
-      <img src="results/2-4-Scheduler_test/SGD_CosineAnnealingWarmUpRestarts8.png" style="width: 900px; height: 300px;"/>
-   6. CosineAnnealingWarmRestarts10 : ```CosineAnnealingWarmRestarts(self.optimizer, T_0=10, T_mult=2, eta_max=0.002, T_up=2, gamma=0.5)```
-      <img src="results/2-4-Scheduler_test/SGD_CosineAnnealingWarmUpRestarts10.png" style="width: 900px; height: 300px;"/>
-   7. CosineAnnealingWarmRestarts14 : ```CosineAnnealingWarmRestarts(self.optimizer, T_0=14, T_mult=2, eta_max=0.002, T_up=2, gamma=0.5)```
-      <img src="results/2-4-Scheduler_test/SGD_CosineAnnealingWarmUpRestarts14.png" style="width: 900px; height: 300px;"/>
-### 2.4.2. ALL
+- ```NAdam``` : ```torch.optim.NAdam(model.parameters(), weight_decay=1e-4)```
+- ```SGD``` : ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=1e-4)```
+- ExponentialLR : ```ExponentialLR(self.optimizer, gamma=0.95)```
+- MultiStepLR : ```MultiStepLR(self.optimizer, milestones=[50, 75], gamma=0.1)```
+- ReduceLROnPlateau : ```ReduceLROnPlateau(self.optimizer, patiance=5, factor=0.1, cooldown=2)```
+- CosineAnnealingLR : ```CosineAnnealingLR(self.optimizer, T_max=20, eta_min=0.001)```
+- CosineAnnealingWarmRestarts8 : ```CosineAnnealingWarmRestarts(self.optimizer, T_0=8, T_mult=2, eta_max=0.002, T_up=2, gamma=0.5)```
+- CosineAnnealingWarmRestarts10 : ```CosineAnnealingWarmRestarts(self.optimizer, T_0=10, T_mult=2, eta_max=0.002, T_up=2, gamma=0.5)```
+- CosineAnnealingWarmRestarts14 : ```CosineAnnealingWarmRestarts(self.optimizer, T_0=14, T_mult=2, eta_max=0.002, T_up=2, gamma=0.5)```
+
+### 2.4.2. Figures
 <img src="results/2-4-Scheduler_test/all_NAdam.png" style="width: 800px; height: 600px;"/>
 <img src="results/2-4-Scheduler_test/all_SGD.png" style="width: 800px; height: 600px;"/>
+
+#### 2.4.2.1. NAdam
+
+<details>
+<summary>[view figures]</summary>
+<ul>
+   <li>1. ExponentialLR : ```ExponentialLR(self.optimizer, gamma=0.95)```</li>
+   <img src="results/2-4-Scheduler_test/NAdam_ExponentialLR.png" style="width: 900px; height: 300px;"/>
+   <li>2. MultiStepLR : ```MultiStepLR(self.optimizer, milestones=[50, 75], gamma=0.1)```</li>
+   <img src="results/2-4-Scheduler_test/NAdam_MultiStepLR.png" style="width: 900px; height: 300px;"/>
+   <li>3. ReduceLROnPlateau : ```ReduceLROnPlateau(self.optimizer, patiance=5, factor=0.1, cooldown=2)```</li>
+   <img src="results/2-4-Scheduler_test/NAdam_ReduceLROnPlateau.png" style="width: 900px; height: 300px;"/>
+   <li>4. CosineAnnealingLR : ```CosineAnnealingLR(self.optimizer, T_max=20, eta_min=0.001)```</li>
+   <img src="results/2-4-Scheduler_test/NAdam_CosineAnnealingLR.png" style="width: 900px; height: 300px;"/>
+   <li>5. CosineAnnealingWarmRestarts8 : ```CosineAnnealingWarmRestarts(self.optimizer, T_0=8, T_mult=2, eta_max=0.002, T_up=2, gamma=0.5)```</li>
+   <img src="results/2-4-Scheduler_test/NAdam_CosineAnnealingWarmUpRestarts8.png" style="width: 900px; height: 300px;"/>
+   <li>6. CosineAnnealingWarmRestarts10 : ```CosineAnnealingWarmRestarts(self.optimizer, T_0=10, T_mult=2, eta_max=0.002, T_up=2, gamma=0.5)```</li>
+   <img src="results/2-4-Scheduler_test/NAdam_CosineAnnealingWarmUpRestarts10.png" style="width: 900px; height: 300px;"/>
+   <li>7. CosineAnnealingWarmRestarts14 : ```CosineAnnealingWarmRestarts(self.optimizer, T_0=14, T_mult=2, eta_max=0.002, T_up=2, gamma=0.5)```</li>
+   <img src="results/2-4-Scheduler_test/NAdam_CosineAnnealingWarmUpRestarts14.png" style="width: 900px; height: 300px;"/>
+</ul>
+</details>
+
+#### 2.4.2.2. SGD
+<details>
+<summary>[view figures]</summary>
+<ul>
+   <li>1. ExponentialLR : ```ExponentialLR(self.optimizer, gamma=0.95)```</li>
+   <img src="results/2-4-Scheduler_test/SGD_ExponentialLR.png" style="width: 900px; height: 300px;"/>
+   <li>2. MultiStepLR : ```MultiStepLR(self.optimizer, milestones=[50, 75], gamma=0.1)```</li>
+   <img src="results/2-4-Scheduler_test/SGD_MultiStepLR.png" style="width: 900px; height: 300px;"/>
+   <li>3. ReduceLROnPlateau : ```ReduceLROnPlateau(self.optimizer, patiance=5, factor=0.1, cooldown=2)```</li>
+   <img src="results/2-4-Scheduler_test/SGD_ReduceLROnPlateau.png" style="width: 900px; height: 300px;"/>
+   <li>4. CosineAnnealingLR : ```CosineAnnealingLR(self.optimizer, T_max=20, eta_min=0.001)```</li>
+   <img src="results/2-4-Scheduler_test/SGD_CosineAnnealingLR.png" style="width: 900px; height: 300px;"/>
+   <li>5. CosineAnnealingWarmRestarts8 : ```CosineAnnealingWarmRestarts(self.optimizer, T_0=8, T_mult=2, eta_max=0.002, T_up=2, gamma=0.5)```</li>
+   <img src="results/2-4-Scheduler_test/SGD_CosineAnnealingWarmUpRestarts8.png" style="width: 900px; height: 300px;"/>
+   <li>6. CosineAnnealingWarmRestarts10 : ```CosineAnnealingWarmRestarts(self.optimizer, T_0=10, T_mult=2, eta_max=0.002, T_up=2, gamma=0.5)```</li>
+   <img src="results/2-4-Scheduler_test/SGD_CosineAnnealingWarmUpRestarts10.png" style="width: 900px; height: 300px;"/>
+   <li>7. CosineAnnealingWarmRestarts14 : ```CosineAnnealingWarmRestarts(self.optimizer, T_0=14, T_mult=2, eta_max=0.002, T_up=2, gamma=0.5)```</li>
+   <img src="results/2-4-Scheduler_test/SGD_CosineAnnealingWarmUpRestarts14.png" style="width: 900px; height: 300px;"/>
+</ul>
+</details>
+
+---
 
 ## 2.5. Best ResNet34 model on ImageNet2012
 ```py
@@ -275,57 +307,6 @@ valid  = Compose(
 - ```epochs = 100```
 - ```batch = 256```
 
-
-
-
-아래 삭제 예정
-```
-- ```TenCrop [224] on valid set : ```
-- ```TenCrop [256] on valid set : ```
-- ```TenCrop [384] on valid set : ```
-- ```TenCrop [480] on valid set : ```
-- ```TenCrop [640] on valid set : ```
-
-- ```optimizer = ```
-- ```scheduler = ExponentialLR(optimizer, gamma=0.95)```
-<img src="results/.png" style="width: 600px; height: 300px;"/>
-### 2.3.1. MyResNet34_ImageNet_256_SGD_case1 
-> 재실험 필요함.
-- ```batch = 256```
-- ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)```
-- ```scheduler = ReduceLROnPlateau(patiance=5, factor=0.1, cooldown=5)```
-- ```EarlyStopCounter = 25```
-<img src="results/.png" style="width: 410px; height: 400px; object-fit: cover;"/>
-
-- ```[Last] 68 epoch: train_loss=0.0003, train_acc=0.6224, valid_loss=1.2975, valid_acc=0.7239, lr=0.0010```
-- ```Avg Loss: 26.3212, Avg Top-1 Acc: 0.4793, Avg Top-5 Acc: 0.7118```
-  - ```TenCrop [224] on valid set : Loss: 25.1631, Top-1 Acc: 0.4722, Top-5 Acc: 0.7023```
-  - ```TenCrop [256] on valid set : Loss: 23.1898, Top-1 Acc: 0.5017, Top-5 Acc: 0.7307```
-  - ```TenCrop [384] on valid set : Loss: 23.3688, Top-1 Acc: 0.5272, Top-5 Acc: 0.7570```
-  - ```TenCrop [480] on valid set : Loss: 26.6102, Top-1 Acc: 0.4966, Top-5 Acc: 0.7312```
-  - ```TenCrop [640] on valid set : Loss: 33.2743, Top-1 Acc: 0.3986, Top-5 Acc: 0.6378```
-  - Train set에서 acc가 낮은 현상 때문에, Test(10-crop)에서도 47%의 Top-1 Acc나옴. 
-  - 논문에선 120 epochs까지 학습시켰는데, 68 epochs에서 Early Stop이 나오게 학습을 설정한 바람에 일찍 종료됨. 
-
-### 2.3.2. MyResNet34_ImageNet_256_SGD_case2 
-- ```batch = 256```
-- ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)```
-- ```scheduler = ReduceLROnPlateau(patiance=10, factor=0.1, cooldown=25)```
-- ```EarlyStopCounter = 40 (Ends with lr decreasing to 1e-5 at 133 epochs.)```
-<img src="results/.png" style="width: 410px; height: 400px; object-fit: cover;"/>
-
-- ```[Last] 133 epoch: train_loss=1.2615, train_acc=0.6986, valid_loss=1.2469, valid_acc=0.7456, lr=0.0001```
-- ```Avg Loss: 23.3628, Avg Top-1 Acc: 0.5403, Avg Top-5 Acc: 0.7688```
-  - ```TenCrop(224) on valid set : Loss: 21.9221, Top-1 Acc: 0.5243, Top-5 Acc: 0.7521```
-  - ```TenCrop(256) on valid set : Loss: 19.9588, Top-1 Acc: 0.5554, Top-5 Acc: 0.7796```
-  - ```TenCrop(384) on valid set : Loss: 20.6820, Top-1 Acc: 0.5834, Top-5 Acc: 0.8047```
-  - ```TenCrop(480) on valid set : Loss: 23.9707, Top-1 Acc: 0.5601, Top-5 Acc: 0.7878```
-  - ```TenCrop(640) on valid set : Loss: 30.2803, Top-1 Acc: 0.4782, Top-5 Acc: 0.7199```
-  - case1보다 더 오랜 시간에 걸쳐 학습한 덕에 training acc도 많이 올라옴.
-  - 하지만 TenCrop Test 결과, 논문의 결과만큼 잘 나오지 아니함. test method에 문제가 있는가 살펴봐야 할 것 같음.
-  - 학습 방법은 dataset transforms가 잘못되지 않았다는 가정 하에 논문과 상이한 부분 없는 것으로 보임.
-```
----
 # 3. Todo
 1. ```TenCrop 잘못했나 찾아보기. ResNet34의 test acc가 너무 낮게 나왔음.```
    1. 논문의 training 할 때의 center crop으로 valid acc그린 plot있는데, lr=0.001인 부분에서 training acc가 해당 그래프 만큼 나오지 않음.

@@ -196,12 +196,14 @@ test.transforms = ToTensor()
   | **NAdam**    |**MultiStepLR**                  |0.2549 |**91.64%**  |
   | NAdam        |ReduceLROnPlateau                |0.    
   | NAdam        |CosineAnnealingLR                |0.3026 |89.53%  |      
-  | **NAdam**    |**CosineAnnealingWarmRestarts**  |0.2790 |90.51%  | 
+  | NAdam        |CosineAnnealingWarmRestarts10    |0.
+  | **NAdam**    |**CosineAnnealingWarmRestarts14**|0.2790 |90.51%  | 
   | SGD          |ExpoentialLR                     |0.2942 |89.93%  |                
   | SGD          |MultiStepLR                      |0.2640 |90.76%  |
   | SGD          |ReduceLROnPlateau                |0.      
   | **SGD**      |**CosineAnnealingLR**            |0.2544 |**91.18%**  |      
-  | SGD          |CosineAnnealingWarmRestarts      |0.3227 |89.17%  |                
+  | SGD          |CosineAnnealingWarmRestarts10    |0.
+  | SGD          |CosineAnnealingWarmRestarts14    |0.3227 |89.17%  |                
 
 1. ```NAdam``` : ```torch.optim.NAdam(model.parameters(), weight_decay=1e-4)```
    1. ExponentialLR : ```ExponentialLR(self.optimizer, gamma=0.95)```
@@ -209,7 +211,7 @@ test.transforms = ToTensor()
    2. MultiStepLR : ```MultiStepLR(self.optimizer, milestones=[50, 75], gamma=0.1)```
       <img src="results/2-4-Scheduler_test/NAdam_MultiStepLR.png" style="width: 600px; height: 300px;"/>
    3. ReduceLROnPlateau : ```ReduceLROnPlateau(self.optimizer, patiance=5, factor=0.1, cooldown=5)```
-      <img src="results/2-4-Scheduler_test/NAdam_ReduceLROnPlateau.pn;;;g" style="width: 600px; height: 300px;"/>
+      <img src="results/2-4-Scheduler_test/.pn;;;g" style="width: 600px; height: 300px;"/>
    4. CosineAnnealingLR : ```CosineAnnealingLR(self.optimizer, T_max=20, eta_min=0.001)```
       <img src="results/2-4-Scheduler_test/NAdam_CosineAnnealingLR.png" style="width: 600px; height: 300px;"/>
    5. CosineAnnealingWarmRestarts : ```CosineAnnealingWarmRestarts(self.optimizer, T_0=14, T_mult=2, eta_max=0.002, T_up=2, gamma=0.5)```
@@ -221,7 +223,7 @@ test.transforms = ToTensor()
    2. MultiStepLR : ```MultiStepLR(self.optimizer, milestones=[50, 75], gamma=0.1)```
       <img src="results/2-4-Scheduler_test/SGD_MultiStepLR.png" style="width: 600px; height: 300px;"/>
    3. ReduceLROnPlateau : ```ReduceLROnPlateau(self.optimizer, patiance=5, factor=0.1, cooldown=5)```
-      <img src="results/2-4-Scheduler_test/SGD_ReduceLROnPlateau.pn;;;g" style="width: 600px; height: 300px;"/>
+      <img src="results/2-4-Scheduler_test/.pn;;;g" style="width: 600px; height: 300px;"/>
    4. CosineAnnealingLR : ```CosineAnnealingLR(self.optimizer, T_max=20, eta_min=0.001)```
       <img src="results/2-4-Scheduler_test/SGD_CosineAnnealingLR.png" style="width: 600px; height: 300px;"/>
    5. CosineAnnealingWarmRestarts : ```CosineAnnealingWarmRestarts(self.optimizer, T_0=14, T_mult=2, eta_max=0.1, T_up=2, gamma=0.5)```

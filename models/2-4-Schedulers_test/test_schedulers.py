@@ -166,7 +166,7 @@ class Single_model:
                 else:
                     raise NotImplementedError
 
-                if optim_name == "NAdam":
+                if optimizer_name == "NAdam":
                     self.scheduler = CosineAnnealingWarmUpRestarts(
                         self.optimizer,
                         T_0=_T_0,
@@ -175,7 +175,7 @@ class Single_model:
                         T_up=2,
                         gamma=0.5,
                     )
-                elif optim_name[:3] == "SGD":
+                elif optimizer_name[:3] == "SGD":
                     self.scheduler = CosineAnnealingWarmUpRestarts(
                         self.optimizer,
                         T_0=_T_0,
@@ -184,7 +184,7 @@ class Single_model:
                         T_up=2,
                         gamma=0.5,
                     )
-                elif optim_name[:4] == "Adam":
+                elif optimizer_name[:4] == "Adam":
                     self.scheduler = CosineAnnealingWarmUpRestarts(
                         self.optimizer,
                         T_0=_T_0,

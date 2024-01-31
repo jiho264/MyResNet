@@ -281,10 +281,10 @@ test.transforms = ToTensor()
 train = Compose(
     RandomShortestSize(min_size=range(256, 480), antialias=True),
     RandomCrop(size=224),
-    AutoAugment(policy=AutoAugmentPolicy.IMAGENET),
-    RandomHorizontalFlip(self.Randp),
     ToTensor(),
     Normalize(mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True),
+    AutoAugment(policy=AutoAugmentPolicy.IMAGENET),
+    RandomHorizontalFlip(self.Randp),
 )
 # center croped valid set
 valid = Compose(
@@ -304,9 +304,12 @@ valid  = Compose(
 
 ```
 ### 2.5.1. MyResNet34_ImageNet_256_SGD 
-> 재실험 필요함.
-- ```epochs = 100```
+- ```epochs = 150```
 - ```batch = 256```
+- ```optimizer = torch.optim.NAdam(model.parameters(), weight_decay=1e-4)```
+- ```scheduler = ReduceLROnPlateau(patiance=5, factor=0.1, cooldown=3)```
+- dataloader에서 transforms를 CPU에서 처리하는게 오래걸림에 따라, ```ImageNetdataloader.py```에서 별도로 클래스 지정 후, 실제 학습 시 반쯤 전 처리된 데이터를 GPU로 올리고 나머지를 마저 처리함. (single epoch당 소요시간 30분에서 약 21분으로 감소) 
+- valid set도 normalize 단계는 GPU에서 처리.(여기는 속도 향상 미미함.)
 
 # 3. Todo
 1. ```TenCrop 잘못했나 찾아보기. ResNet34의 test acc가 너무 낮게 나왔음.```

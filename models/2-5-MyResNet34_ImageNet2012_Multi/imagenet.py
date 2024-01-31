@@ -35,9 +35,6 @@ DATASET = "ImageNet2012"
 
 """Dataset parameters"""
 BATCH = 256
-SHUFFLE = True
-NUMOFWORKERS = 8
-PIN_MEMORY = True
 
 """optimizer parameters"""
 optim_list = [
@@ -75,7 +72,12 @@ _, _, _, COUNT_OF_CLASSES = tmp.Unpack()
 
 
 train_dataloader, valid_dataloader, test_dataloader = tmp.get_dataloader(
-    batch_size=BATCH, shuffle=SHUFFLE, num_workers=NUMOFWORKERS, pin_memory=PIN_MEMORY
+    batch_size=BATCH,
+    shuffle=True,
+    num_workers=8,
+    pin_memory=True,
+    pin_memory_device="cuda",
+    persistent_workers=True,
 )
 print("-" * 50)
 

@@ -39,16 +39,16 @@ class LoadDataset:
         - ImageNet2012 :
             - train :
                 - Compose([ToImage(), ToDtype(scale=True)])
-                - Normalize(mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True),
                 - RandomShortestSize(min_size=range(256, 480), antialias=True),
                 - RandomCrop(size=224),
+                - Normalize(mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True),
                 - AutoAugment(policy=AutoAugmentPolicy.IMAGENET),
                 - RandomHorizontalFlip(self.Randp),
             - valid (center croped valid set) :
                 - Compose([ToImage(), ToDtype(scale=True)])
-                - Normalize(mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True),
                 - RandomShortestSize(min_size=range(256, 480), antialias=True),
                 - CenterCrop(size=368),
+                - Normalize(mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True),
             - test (10-croped valid set):
                 - Define another location. Find [/src/Prediction_for_MultiScaleTest.ipynb]
     output :
@@ -138,14 +138,14 @@ class LoadDataset:
                 root=self.ImageNetRoot + "train",
                 transform=Compose(
                     [
+                        RandomShortestSize(min_size=range(256, 480), antialias=True),
+                        RandomCrop(size=224),
+                        RandomHorizontalFlip(self.Randp),
                         Compose([ToImage(), ToDtype(torch.float32, scale=True)]),
                         Normalize(
                             mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True
                         ),
-                        RandomShortestSize(min_size=range(256, 480), antialias=True),
-                        RandomCrop(size=224),
                         AutoAugment(policy=AutoAugmentPolicy.IMAGENET),
-                        RandomHorizontalFlip(self.Randp),
                     ]
                 ),
             )
@@ -153,13 +153,13 @@ class LoadDataset:
                 root=self.ImageNetRoot + "val",
                 transform=Compose(
                     [
+                        RandomShortestSize(min_size=range(256, 480), antialias=True),
+                        # VGG에서 single scale로 했을 때는 두 range의 median 값으로 crop함.
+                        CenterCrop(size=368),
                         Compose([ToImage(), ToDtype(torch.float32, scale=True)]),
                         Normalize(
                             mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True
                         ),
-                        RandomShortestSize(min_size=range(256, 480), antialias=True),
-                        # VGG에서 single scale로 했을 때는 두 range의 median 값으로 crop함.
-                        CenterCrop(size=368),
                     ]
                 ),
             )
@@ -194,11 +194,14 @@ class LoadDataset:
 
     def get_dataloader(
         self,
-        batch_size,
-        num_workers,
-        shuffle=True,
-        pin_memory=True,
-        persistent_workers=True,
+        # dataset,
+        batch_size=1,
+        shuffle=None,
+        num_workers=0,
+        pin_memory=False,
+        prefetch_factor=None,
+        persistent_workers=False,
+        pin_memory_device="",
         print_info=False,
     ):
         train_loader = DataLoader(
@@ -208,7 +211,10 @@ class LoadDataset:
             shuffle=shuffle,
             pin_memory=pin_memory,
             persistent_workers=persistent_workers,
+            prefetch_factor=prefetch_factor,
+            pin_memory_device=pin_memory_device,
         )
+
         print("train.transforms =", self.train_data.transform, train_loader.batch_size)
 
         if self.valid_data != None:
@@ -219,6 +225,8 @@ class LoadDataset:
                 shuffle=shuffle,
                 pin_memory=pin_memory,
                 persistent_workers=persistent_workers,
+                prefetch_factor=prefetch_factor,
+                pin_memory_device=pin_memory_device,
             )
             print(
                 "valid.transforms =", self.valid_data.transform, valid_loader.batch_size
@@ -234,6 +242,8 @@ class LoadDataset:
                 shuffle=shuffle,
                 pin_memory=pin_memory,
                 persistent_workers=persistent_workers,
+                prefetch_factor=prefetch_factor,
+                pin_memory_device=pin_memory_device,
             )
             print(
                 "test.transforms =",

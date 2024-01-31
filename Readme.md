@@ -139,8 +139,6 @@ test.transforms = ToTensor()
 
 
 ### 2.2.5. Conclusion
-- MultiStepLR로 논문의 학습 방법과 동일하게, 명시적인 Learning rate들을 적용함. 
-  - 명시적인 lr 감소는 경험에 기반한 것인데, 이를 알아내기 위해선 시행착오가 필요할 것으로 보임. 시행착오가 없다면, 이런 명시적이며 효과적인 LR Scheduling Method를 찾을 수 없기 때문임.
 - split한 것과의 비교
   - 간단한 Dataset이라, Validation Set으로 Learning Rate Scheduling이 기대만큼 효과적이지 않았음.
   - 오히려, Validation Set마저 학습했을 때에 가장 모델의 정확도가 높았음. 

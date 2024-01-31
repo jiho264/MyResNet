@@ -38,16 +38,16 @@ class LoadDataset:
                 - Compose([ToImage(), ToDtype(scale=True)])
         - ImageNet2012 :
             - train :
-                - Compose([ToImage(), ToDtype(scale=True)])
                 - RandomShortestSize(min_size=range(256, 480), antialias=True),
                 - RandomCrop(size=224),
+                - RandomHorizontalFlip(self.Randp),
+                - Compose([ToImage(), ToDtype(scale=True)])
                 - Normalize(mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True),
                 - AutoAugment(policy=AutoAugmentPolicy.IMAGENET),
-                - RandomHorizontalFlip(self.Randp),
             - valid (center croped valid set) :
-                - Compose([ToImage(), ToDtype(scale=True)])
                 - RandomShortestSize(min_size=range(256, 480), antialias=True),
                 - CenterCrop(size=368),
+                - Compose([ToImage(), ToDtype(scale=True)])
                 - Normalize(mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True),
             - test (10-croped valid set):
                 - Define another location. Find [/src/Prediction_for_MultiScaleTest.ipynb]
@@ -149,6 +149,17 @@ class LoadDataset:
                     ]
                 ),
             )
+            """
+            train transform 이렇게 하면 시간 2배걸림. 48분걸렸음.
+            Compose([ToImage(), ToDtype(torch.float32, scale=True)]),
+            Normalize(
+                mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True
+            ),
+            RandomShortestSize(min_size=range(256, 480), antialias=True),
+            RandomCrop(size=224),
+            AutoAugment(policy=AutoAugmentPolicy.IMAGENET),
+            RandomHorizontalFlip(self.Randp),
+            """
             self.valid_data = datasets.ImageFolder(
                 root=self.ImageNetRoot + "val",
                 transform=Compose(

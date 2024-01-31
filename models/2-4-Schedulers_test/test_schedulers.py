@@ -13,7 +13,7 @@ import tqdm
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname("src"))))
 from src.CumstomCosineAnnealingwarmRestarts import CosineAnnealingWarmUpRestarts
 from src.Mydataloader import LoadDataset
-from src.Mymodel import MyResNet_CIFAR
+from src.Mymodel import MyResNet34
 from src.Earlystopper import EarlyStopper
 
 # %%
@@ -38,28 +38,29 @@ optim_list = [
     # "AdamW_amsgrad",
     "NAdam",
 ]
-print_pad_len_optim = max([len(i) for i in optim_list])
+PRINT_PAD_OPTIM = max([len(i) for i in optim_list])
 
 scheduler_list = [
     # "ExponentialLR",
     # "MultiStepLR",
-    # "ReduceLROnPlateau",
+    "ReduceLROnPlateau",
     # "CosineAnnealingLR",
-    "CosineAnnealingWarmUpRestarts",
+    # "CosineAnnealingWarmUpRestarts",
     # "CycleLR",
+    "none",
 ]
-print_pad_len_schduler = max([len(i) for i in scheduler_list])
+PRINT_PAD_SCHDULER = max([len(i) for i in scheduler_list])
 
 """Learning rate scheduler parameters"""
-NUM_EPOCHS = 100
+NUM_EPOCHS = 120
 
 """Early stopping parameters"""
-EARLYSTOPPINGPATIENCE = NUM_EPOCHS
+EARLYSTOPPINGPATIENCE = 120
 
 # %%
 
 tmp = LoadDataset(root="../../data", seceted_dataset=DATASET)
-train_data, valid_data, test_data, COUNT_OF_CLASSES = tmp.Unpack()
+_, _, _, COUNT_OF_CLASSES = tmp.Unpack()
 
 
 train_dataloader, valid_dataloader, test_dataloader = tmp.get_dataloader(
@@ -75,9 +76,9 @@ class Single_model:
         self.optim_name = optimizer_name
         self.scheduler_name = schduler_name
         """define model"""
-        self.model = MyResNet_CIFAR(
-            num_classes=COUNT_OF_CLASSES, num_layer_factor=5
-        ).to(device)
+        self.model = MyResNet34(num_classes=COUNT_OF_CLASSES, Downsample_option="B").to(
+            device
+        )
 
         """define loss function"""
         self.criterion = nn.CrossEntropyLoss()
@@ -123,10 +124,10 @@ class Single_model:
         if schduler_name == "ExponentialLR":
             self.scheduler = ExponentialLR(self.optimizer, gamma=0.95)
         elif schduler_name == "MultiStepLR":
-            self.scheduler = MultiStepLR(self.optimizer, milestones=[50, 75], gamma=0.1)
+            self.scheduler = MultiStepLR(self.optimizer, milestones=[30, 60], gamma=0.1)
         elif schduler_name == "ReduceLROnPlateau":
             self.scheduler = ReduceLROnPlateau(
-                self.optimizer, patience=10, factor=0.1, cooldown=40
+                self.optimizer, patience=5, factor=0.1, cooldown=5
             )
         elif schduler_name == "CosineAnnealingLR":
             """
@@ -168,7 +169,9 @@ class Single_model:
                         T_up=2,
                         gamma=0.5,
                     )
-
+        elif schduler_name == "none":
+            self.scheduler = None
+            pass
         # elif schduler == "CycleLR":
         #     self.scheduler = CyclicLR(
         #         self.optimizer,
@@ -213,7 +216,7 @@ class Single_training(Single_model):
             # Create a dictionary to store the variables
             train_loss = []
             train_acc = []
-            eval_loss = []
+            valid_loss = []
             valid_acc = []
             test_loss = []
             test_acc = []
@@ -221,7 +224,7 @@ class Single_training(Single_model):
             self.logs = {
                 "train_loss": train_loss,
                 "train_acc": train_acc,
-                "valid_loss": eval_loss,
+                "valid_loss": valid_loss,
                 "valid_acc": valid_acc,
                 "test_loss": test_loss,
                 "test_acc": test_acc,
@@ -235,22 +238,58 @@ class Single_training(Single_model):
         self.running_total = 0
         self.train_acc = 0
 
+        self.valid_loss = 0.0
+        self.valid_corrects = 0
+        self.valid_total = 0
+        self.valid_acc = 0.0
+
         self.test_loss = 0.0
         self.test_corrects = 0
         self.test_total = 0
         self.test_acc = 0.0
 
-    def set_mode_train(self):
+    def set_zeros_for_epoch(self):
         self.running_loss = 0.0
         self.running_corrects = 0
         self.running_total = 0
-        self.model.train()
 
-    def set_mode_test(self):
+        self.valid_loss = 0.0
+        self.valid_corrects = 0
+        self.valid_total = 0
+
         self.test_loss = 0.0
         self.test_corrects = 0
         self.test_total = 0
-        self.model.eval()
+
+    def save_model(self):
+        self.logs["train_loss"].append(self.train_loss)
+        self.logs["train_acc"].append(self.train_acc)
+        self.logs["valid_loss"].append(self.valid_loss)
+        self.logs["valid_acc"].append(self.valid_acc)
+        self.logs["test_loss"].append(self.test_loss)
+        self.logs["test_acc"].append(self.test_acc)
+        self.logs["lr_log"].append(self.optimizer.param_groups[0]["lr"])
+
+        checkpoint = {
+            "model": self.model.state_dict(),
+            "optimizer": self.optimizer.state_dict(),
+            "scaler": self.scaler.state_dict(),
+            "scheduler": self.scheduler.state_dict(),
+            "earlystopper": self.earlystopper.state_dict(),
+            "logs": self.logs,
+        }
+        torch.save(checkpoint, self.file_name + ".pth.tar")
+
+    def print_info(self):
+        _epoch_print = f"{self.optim_name.ljust(PRINT_PAD_OPTIM)} - {self.scheduler_name.ljust(PRINT_PAD_SCHDULER)}"
+        _epoch_print += f"Train : {self.train_loss:.4f} / {self.train_acc*100:.2f}%"
+        if valid_dataloader != None:
+            _valid_print = f"Valid : {self.valid_loss:.4f} / {self.valid_acc*100:.2f}%"
+            _epoch_print += " | " + _valid_print
+        if test_dataloader != None:
+            _test_print = f"Test : {self.test_loss:.4f} / {self.test_acc*100:.2f}%"
+            _epoch_print += " | " + _test_print
+        print(_epoch_print)
 
 
 # %%
@@ -273,12 +312,11 @@ for epoch in range(NUM_EPOCHS):
         break
     print(f"[Epoch {now_epoch}/{NUM_EPOCHS}] :")
     # %% Forward_train ######################################################################################################
-    for _training in each_trainings:
-        _training.set_mode_train()
     for images, labels in tqdm.tqdm(
         train_dataloader, desc=f"{now_epoch} Train", ncols=55
     ):
         for _training in each_trainings:
+            _training.model.train()
             with torch.autocast(device_type="cuda", dtype=torch.float16, enabled=True):
                 images, labels = images.to(_training.device), labels.to(
                     _training.device
@@ -296,40 +334,55 @@ for epoch in range(NUM_EPOCHS):
             _training.running_total += labels.size(0)
             _training.running_corrects += predicted.eq(labels).sum().item()
 
-    # %% Forward_eval ######################################################################################################
-    for _training in each_trainings:
-        _training.set_mode_test()
-    for (
-        images,
-        labels,
-    ) in test_dataloader:
-        for _training in each_trainings:
-            with torch.no_grad():
-                images, labels = images.to(_training.device), labels.to(
-                    _training.device
-                )
-                outputs = _training.model(images)
-                loss = _training.criterion(outputs, labels)
+    # %% Forward_valid ######################################################################################################
+    if valid_dataloader != None:
+        for images, labels in tqdm.tqdm(
+            valid_dataloader, desc=f"{now_epoch} Valid", ncols=55
+        ):
+            for _training in each_trainings:
+                _training.model.eval()
+                with torch.no_grad():
+                    images, labels = images.to(_training.device), labels.to(
+                        _training.device
+                    )
+                    outputs = _training.model(images)
+                    loss = _training.criterion(outputs, labels)
 
-                _training.test_loss += loss.item()
-                _, predicted = outputs.max(1)
-                _training.test_total += labels.size(0)
-                _training.test_corrects += predicted.eq(labels).sum().item()
+                    _training.valid_loss += loss.item()
+                    _, predicted = outputs.max(1)
+                    _training.valid_total += labels.size(0)
+                    _training.valid_corrects += predicted.eq(labels).sum().item()
+    # %% Forward_test ######################################################################################################
+    if test_dataloader != None:
+        for images, labels in tqdm.tqdm(
+            test_dataloader, desc=f"{now_epoch} Test", ncols=55
+        ):
+            for _training in each_trainings:
+                _training.model.eval()
+                with torch.no_grad():
+                    images, labels = images.to(_training.device), labels.to(
+                        _training.device
+                    )
+                    outputs = _training.model(images)
+                    loss = _training.criterion(outputs, labels)
+
+                    _training.test_loss += loss.item()
+                    _, predicted = outputs.max(1)
+                    _training.test_total += labels.size(0)
+                    _training.test_corrects += predicted.eq(labels).sum().item()
 
     # %% summary.. ######################################################################################################
     for _training in each_trainings:
         _training.train_loss = _training.running_loss / len(train_dataloader)
         _training.train_acc = _training.running_corrects / _training.running_total
-        _training.logs["train_loss"].append(_training.train_loss)
-        _training.logs["train_acc"].append(_training.train_acc)
-        _training.test_loss = _training.test_loss / len(test_dataloader)
-        _training.test_acc = _training.test_corrects / _training.test_total
-        _training.logs["test_loss"].append(_training.test_loss)
-        _training.logs["test_acc"].append(_training.test_acc)
-        # Save checkpoint #######
-        _training.logs["lr_log"].append(_training.optimizer.param_groups[0]["lr"])
-        print(_training.optimizer.param_groups[0]["lr"])
-        # scheduler #######
+        if valid_dataloader != None:
+            _training.valid_loss = _training.valid_loss / len(valid_dataloader)
+            _training.valid_acc = _training.valid_corrects / _training.valid_total
+        if test_dataloader != None:
+            _training.test_loss = _training.test_loss / len(test_dataloader)
+            _training.test_acc = _training.test_corrects / _training.test_total
+
+        # scheduler ######################################################################################################
         if _training.scheduler.__class__.__name__ == "ReduceLROnPlateau":
             _training.scheduler.step(_training.train_loss)
         elif _training.scheduler.__class__.__name__ in (
@@ -339,27 +392,28 @@ for epoch in range(NUM_EPOCHS):
             "CosineAnnealingLR",
         ):
             _training.scheduler.step()
-        # elif _training.scheduler.__class__.__name__ == "CosineAnnealingLR":
-        #     pass
+        elif _training.scheduler_name == "none":
+            pass
         else:
             raise NotImplementedError
-        # print #######
-        print(
-            f"{_training.optim_name.ljust(print_pad_len_optim)} - {_training.scheduler_name.ljust(print_pad_len_schduler)} | train : {_training.train_loss:.4f} / {_training.train_acc*100:.2f}% | test : {_training.test_loss:.4f} / {_training.test_acc*100:.2f}%"
-        )
 
-        # Save checkpoint ####### save는 제일 나중에
-        checkpoint = {
-            "model": _training.model.state_dict(),
-            "optimizer": _training.optimizer.state_dict(),
-            "scaler": _training.scaler.state_dict(),
-            "scheduler": _training.scheduler.state_dict(),
-            "earlystopper": _training.earlystopper.state_dict(),
-            "logs": _training.logs,
-        }
-        torch.save(checkpoint, _training.file_name + ".pth.tar")
+        # print ######################################################################################################
+        _training.print_info()
+        # Save checkpoint ######################################################################################################
+        _training.save_model()
 
-        # Early stopping #######
-        if _training.earlystopper.check(_training.test_loss) == True:
-            break
+        # Early stopping ######################################################################################################
+        if valid_dataloader != None:
+            if _training.earlystopper.check(_training.valid_loss) == True:
+                break
+        elif valid_dataloader == None and test_dataloader != None:
+            if _training.earlystopper.check(_training.test_loss) == True:
+                break
+        elif valid_dataloader == None and test_dataloader == None:
+            if _training.earlystopper.check(_training.train_loss) == True:
+                break
+        else:
+            pass
+        # set zeros ######################################################################################################
+        _training.set_zeros_for_epoch()
     print("-" * 50)

@@ -13,10 +13,15 @@ class LogViewer:
         range=999999,
         title=None,
         save=False,
-        min_marker=False,
+        min_marker=True,
         last_marker=False,
+        add_lr_plot=False,
     ):
-        fig, axs = plt.subplots(ncols=2, figsize=(10, 5))
+        if add_lr_plot == False:
+            fig, axs = plt.subplots(ncols=2, figsize=(10, 5))
+        else:
+            fig, axs = plt.subplots(ncols=3, figsize=(15, 5))
+
         if range == 999999:
             min_loss_epoch = np.argmin(self.logs["test_loss"])
             min_loss = self.logs["test_loss"][min_loss_epoch]
@@ -82,6 +87,23 @@ class LogViewer:
                     xytext=(last_epoch, last_acc - 0.15),
                     arrowprops=dict(facecolor="black"),
                 )
+
+            # 3rd 그래프: lr
+            axs[2].plot(self.logs["lr_log"], label="Learning Rate")
+            axs[2].set_xlabel("Epoch")
+            axs[2].set_ylabel("Learning Rate")
+            if title == None:
+                axs[2].set_title(f"Learning Rate")
+            else:
+                axs[2].set_title(f"{title} Learning Rate")
+
+            sum_lr = np.sum(self.logs["lr_log"])
+            lrprint_y = np.max(self.logs["lr_log"])
+            axs[2].text(
+                last_epoch / 2,
+                lrprint_y,
+                f"definite integral : {sum_lr:.4f}",
+            )
 
             # 그래프를 보여줍니다.
             plt.tight_layout()

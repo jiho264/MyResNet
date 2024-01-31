@@ -133,7 +133,18 @@ class LoadDataset:
 
         elif self.dataset_name == "ImageNet2012":
             self.ImageNetRoot = root + "/" + self.dataset_name + "/"
-
+            """
+            25분걸리는 정답
+                RandomShortestSize(min_size=range(256, 480), antialias=True),
+                RandomCrop(size=224),
+                RandomHorizontalFlip(self.Randp),
+                Compose([ToImage(), ToDtype(torch.float32, scale=True)]),
+                Normalize(
+                    mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True
+                ),
+                AutoAugment(policy=AutoAugmentPolicy.IMAGENET),
+                    
+            """
             self.train_data = datasets.ImageFolder(
                 root=self.ImageNetRoot + "train",
                 transform=Compose(

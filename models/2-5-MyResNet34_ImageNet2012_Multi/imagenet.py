@@ -6,6 +6,7 @@ from torch.optim.lr_scheduler import (
     CyclicLR,
     MultiStepLR,
     ReduceLROnPlateau,
+    ConstantLR,
 )
 import sys, os
 import tqdm
@@ -13,14 +14,14 @@ import tqdm
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname("src"))))
 from src.CumstomCosineAnnealingwarmRestarts import CosineAnnealingWarmUpRestarts
 from src.Mydataloader import LoadDataset
-from src.Mymodel import MyResNet34
+from src.Mymodel import MyResNet_CIFAR, MyResNet34
 from src.Earlystopper import EarlyStopper
 
 # %%
 """Dataset selection"""
-DATASET = "CIFAR10"
+# DATASET = "CIFAR10"
 # DATASET = "CIFAR100"
-# DATASET = "ImageNet2012"
+DATASET = "ImageNet2012"
 
 """Dataset parameters"""
 BATCH = 256
@@ -41,12 +42,13 @@ optim_list = [
 PRINT_PAD_OPTIM = max([len(i) for i in optim_list])
 
 scheduler_list = [
-    # "ExponentialLR",
+    "ExponentialLR",
     "MultiStepLR",
     # "ReduceLROnPlateau",
     # "CosineAnnealingLR",
     # "CosineAnnealingWarmUpRestarts",
     # "CycleLR",
+    # "ConstantLR",
 ]
 PRINT_PAD_SCHDULER = max([len(i) for i in scheduler_list])
 
@@ -54,7 +56,7 @@ PRINT_PAD_SCHDULER = max([len(i) for i in scheduler_list])
 NUM_EPOCHS = 120
 
 """Early stopping parameters"""
-EARLYSTOPPINGPATIENCE = 120
+EARLYSTOPPINGPATIENCE = NUM_EPOCHS
 
 # %%
 
@@ -71,13 +73,20 @@ print("-" * 50)
 # %%
 class Single_model:
     def __init__(self, optimizer_name, schduler_name, device="cuda") -> None:
-        self.file_name = f"MyResNet32_{BATCH}_{optimizer_name}_{schduler_name}"
+        if DATASET == "ImageNet2012":
+            self.file_name = f"MyResNet34_{BATCH}_{optimizer_name}_{schduler_name}"
+            self.model = MyResNet34(
+                num_classes=COUNT_OF_CLASSES, Downsample_option="B"
+            ).to(device)
+        elif DATASET == "CIFAR10":
+            self.file_name = f"MyResNet32_{BATCH}_{optimizer_name}_{schduler_name}"
+            self.model = MyResNet_CIFAR(
+                num_classes=COUNT_OF_CLASSES, num_layer_factor=5
+            ).to(device)
+
         self.optim_name = optimizer_name
         self.scheduler_name = schduler_name
         """define model"""
-        self.model = MyResNet34(num_classes=COUNT_OF_CLASSES, Downsample_option="B").to(
-            device
-        )
 
         """define loss function"""
         self.criterion = nn.CrossEntropyLoss()
@@ -126,7 +135,7 @@ class Single_model:
             self.scheduler = MultiStepLR(self.optimizer, milestones=[30, 60], gamma=0.1)
         elif schduler_name == "ReduceLROnPlateau":
             self.scheduler = ReduceLROnPlateau(
-                self.optimizer, patience=10, factor=0.1, cooldown=40
+                self.optimizer, patience=5, factor=0.1, cooldown=5
             )
         elif schduler_name == "CosineAnnealingLR":
             """
@@ -137,7 +146,7 @@ class Single_model:
         elif schduler_name == "CosineAnnealingWarmUpRestarts":
             """
             초기 lr = near zero여야함.
-            - T_0 : single period,
+            - T_0 : single period, 14로 했다가, 10도 테스트 해봄.
             - T_mult : period multiply factor. 2면 다음부터 주기 2배욈
             - eta_max : max_lr. 처음 튀어 오를 lr
             - T_up : warmup period. 튀어오르는데 필요한 epochs.
@@ -149,7 +158,7 @@ class Single_model:
                 if optim_name == "NAdam":
                     self.scheduler = CosineAnnealingWarmUpRestarts(
                         self.optimizer,
-                        T_0=14,
+                        T_0=10,
                         T_mult=2,
                         eta_max=0.002,
                         T_up=2,
@@ -157,18 +166,22 @@ class Single_model:
                     )
                 elif optim_name[:3] == "SGD":
                     self.scheduler = CosineAnnealingWarmUpRestarts(
-                        self.optimizer, T_0=14, T_mult=2, eta_max=0.1, T_up=2, gamma=0.5
+                        self.optimizer, T_0=10, T_mult=2, eta_max=0.1, T_up=2, gamma=0.5
                     )
                 elif optim_name[:4] == "Adam":
                     self.scheduler = CosineAnnealingWarmUpRestarts(
                         self.optimizer,
-                        T_0=14,
+                        T_0=10,
                         T_mult=2,
                         eta_max=0.001,
                         T_up=2,
                         gamma=0.5,
                     )
-
+        elif schduler_name == "ConstantLR":
+            self.scheduler = ConstantLR(
+                self.optimizer, factor=1, total_iters=NUM_EPOCHS
+            )
+            pass
         # elif schduler == "CycleLR":
         #     self.scheduler = CyclicLR(
         #         self.optimizer,
@@ -387,11 +400,13 @@ for epoch in range(NUM_EPOCHS):
             "MultiStepLR",
             "CosineAnnealingWarmUpRestarts",
             "CosineAnnealingLR",
+            "ConstantLR",
         ):
             _training.scheduler.step()
         else:
             raise NotImplementedError
 
+    for _training in each_trainings:
         # print ######################################################################################################
         _training.print_info()
         # Save checkpoint ######################################################################################################

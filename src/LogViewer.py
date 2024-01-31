@@ -34,9 +34,9 @@ class LogViewer:
             range = len(self.logs["train_loss"])
             # 첫 번째 그래프: Training and Test Loss
             axs[0].plot(self.logs["train_loss"], label="Training Loss")
-            if len(self.logs["valid_loss"]) != 0:
+            if np.sum(self.logs["valid_loss"]) != 0:
                 axs[0].plot(self.logs["valid_loss"], label="Validation Loss")
-            if len(self.logs["test_loss"]) != 0:
+            if np.sum(self.logs["test_loss"]) != 0:
                 axs[0].plot(self.logs["test_loss"], label="Test Loss")
             axs[0].set_xlabel("Epoch")
             axs[0].set_ylabel("Loss")
@@ -62,9 +62,9 @@ class LogViewer:
 
             # 두 번째 그래프: Training and Test Accuracy
             axs[1].plot(self.logs["train_acc"], label="Training Accuracy")
-            if len(self.logs["valid_acc"]) != 0:
+            if np.sum(self.logs["valid_acc"]) != 0:
                 axs[1].plot(self.logs["valid_acc"], label="Validation Accuracy")
-            if len(self.logs["test_acc"]) != 0:
+            if np.sum(self.logs["test_acc"]) != 0:
                 axs[1].plot(self.logs["test_acc"], label="Test Accuracy")
             axs[1].set_xlabel("Epoch")
             axs[1].set_ylabel("Accuracy")

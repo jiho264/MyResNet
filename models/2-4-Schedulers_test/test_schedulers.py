@@ -44,11 +44,13 @@ PRINT_PAD_OPTIM = max([len(i) for i in optim_list])
 scheduler_list = [
     # "ExponentialLR",
     # "MultiStepLR",
-    "ReduceLROnPlateau",
+    # "ReduceLROnPlateau",
     # "CosineAnnealingLR",
-    "CosineAnnealingWarmUpRestarts",
+    "CosineAnnealingWarmUpRestarts8",
+    "CosineAnnealingWarmUpRestarts10",
+    "CosineAnnealingWarmUpRestarts14",
     # "CycleLR",
-    "ConstantLR",
+    # "ConstantLR",
 ]
 PRINT_PAD_SCHDULER = max([len(i) for i in scheduler_list])
 
@@ -135,7 +137,7 @@ class Single_model:
             self.scheduler = MultiStepLR(self.optimizer, milestones=[30, 60], gamma=0.1)
         elif schduler_name == "ReduceLROnPlateau":
             self.scheduler = ReduceLROnPlateau(
-                self.optimizer, patience=5, factor=0.1, cooldown=5
+                self.optimizer, patience=5, factor=0.1, cooldown=2
             )
         elif schduler_name == "CosineAnnealingLR":
             """
@@ -153,12 +155,21 @@ class Single_model:
             - gamma : eta_max decay factor.
             """
 
-            if schduler_name == "CosineAnnealingWarmUpRestarts":
+            if schduler_name[:29] == "CosineAnnealingWarmUpRestarts":
                 self.optimizer.param_groups[0]["lr"] = 1e-8
+                if schduler_name[2:4] == "8":
+                    _T_0 = 8
+                elif schduler_name[2:4] == "10":
+                    _T_0 = 10
+                elif schduler_name[2:4] == "14":
+                    _T_0 = 12
+                else:
+                    raise NotImplementedError
+
                 if optim_name == "NAdam":
                     self.scheduler = CosineAnnealingWarmUpRestarts(
                         self.optimizer,
-                        T_0=10,
+                        T_0=_T_0,
                         T_mult=2,
                         eta_max=0.002,
                         T_up=2,
@@ -166,12 +177,17 @@ class Single_model:
                     )
                 elif optim_name[:3] == "SGD":
                     self.scheduler = CosineAnnealingWarmUpRestarts(
-                        self.optimizer, T_0=10, T_mult=2, eta_max=0.1, T_up=2, gamma=0.5
+                        self.optimizer,
+                        T_0=_T_0,
+                        T_mult=2,
+                        eta_max=0.1,
+                        T_up=2,
+                        gamma=0.5,
                     )
                 elif optim_name[:4] == "Adam":
                     self.scheduler = CosineAnnealingWarmUpRestarts(
                         self.optimizer,
-                        T_0=10,
+                        T_0=_T_0,
                         T_mult=2,
                         eta_max=0.001,
                         T_up=2,
@@ -182,15 +198,6 @@ class Single_model:
                 self.optimizer, factor=1, total_iters=NUM_EPOCHS
             )
             pass
-        # elif schduler == "CycleLR":
-        #     self.scheduler = CyclicLR(
-        #         self.optimizer,
-        #         base_lr=0.001,
-        #         max_lr=0.1,
-        #         step_size_up=50,
-        #         step_size_down=None,
-        #         mode="triangular2",
-        #     )
 
         """define scaler"""
         self.scaler = torch.cuda.amp.GradScaler(enabled=True)
@@ -410,20 +417,20 @@ for epoch in range(NUM_EPOCHS):
         # print ######################################################################################################
         _training.print_info()
         # Save checkpoint ######################################################################################################
-        _training.save_model()
+        # _training.save_model()
 
         # Early stopping ######################################################################################################
-        if valid_dataloader != None:
-            if _training.earlystopper.check(_training.valid_loss) == True:
-                break
-        elif valid_dataloader == None and test_dataloader != None:
-            if _training.earlystopper.check(_training.test_loss) == True:
-                break
-        elif valid_dataloader == None and test_dataloader == None:
-            if _training.earlystopper.check(_training.train_loss) == True:
-                break
-        else:
-            pass
+        # if valid_dataloader != None:
+        #     if _training.earlystopper.check(_training.valid_loss) == True:
+        #         break
+        # elif valid_dataloader == None and test_dataloader != None:
+        #     if _training.earlystopper.check(_training.test_loss) == True:
+        #         break
+        # elif valid_dataloader == None and test_dataloader == None:
+        #     if _training.earlystopper.check(_training.train_loss) == True:
+        #         break
+        # else:
+        #     pass
         # set zeros ######################################################################################################
         _training.set_zeros_for_epoch()
     print("-" * 50)

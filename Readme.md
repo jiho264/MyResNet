@@ -207,29 +207,38 @@ test.transforms = ToTensor()
 
 1. ```NAdam``` : ```torch.optim.NAdam(model.parameters(), weight_decay=1e-4)```
    1. ExponentialLR : ```ExponentialLR(self.optimizer, gamma=0.95)```
-      <img src="results/2-4-Scheduler_test/NAdam_ExponentialLR.png" style="width: 600px; height: 300px;"/>
+      <img src="results/2-4-Scheduler_test/NAdam_ExponentialLR.png" style="width: 900px; height: 300px;"/>
    2. MultiStepLR : ```MultiStepLR(self.optimizer, milestones=[50, 75], gamma=0.1)```
-      <img src="results/2-4-Scheduler_test/NAdam_MultiStepLR.png" style="width: 600px; height: 300px;"/>
-   3. ReduceLROnPlateau : ```ReduceLROnPlateau(self.optimizer, patiance=5, factor=0.1, cooldown=5)```
-      <img src="results/2-4-Scheduler_test/.pn;;;g" style="width: 600px; height: 300px;"/>
+      <img src="results/2-4-Scheduler_test/NAdam_MultiStepLR.png" style="width: 900px; height: 300px;"/>
+   3. ReduceLROnPlateau : ```ReduceLROnPlateau(self.optimizer, patiance=5, factor=0.1, cooldown=2)```
+      <img src="results/2-4-Scheduler_test/NAdam_ReduceLROnPlateau.png" style="width: 900px; height: 300px;"/>
    4. CosineAnnealingLR : ```CosineAnnealingLR(self.optimizer, T_max=20, eta_min=0.001)```
-      <img src="results/2-4-Scheduler_test/NAdam_CosineAnnealingLR.png" style="width: 600px; height: 300px;"/>
-   5. CosineAnnealingWarmRestarts : ```CosineAnnealingWarmRestarts(self.optimizer, T_0=14, T_mult=2, eta_max=0.002, T_up=2, gamma=0.5)```
-      <img src="results/2-4-Scheduler_test/NAdam_CosineAnnealingWarmUpRestarts.png" style="width: 600px; height: 300px;"/>
+      <img src="results/2-4-Scheduler_test/NAdam_CosineAnnealingLR.png" style="width: 900px; height: 300px;"/>
+   5. CosineAnnealingWarmRestarts8 : ```CosineAnnealingWarmRestarts(self.optimizer, T_0=8, T_mult=2, eta_max=0.002, T_up=2, gamma=0.5)```
+      <img src="results/2-4-Scheduler_test/NAdam_CosineAnnealingWarmUpRestarts14.png" style="width: 900px; height: 300px;"/>
+   6. CosineAnnealingWarmRestarts10 : ```CosineAnnealingWarmRestarts(self.optimizer, T_0=10, T_mult=2, eta_max=0.002, T_up=2, gamma=0.5)```
+      <img src="results/2-4-Scheduler_test/NAdam_CosineAnnealingWarmUpRestarts14.png" style="width: 900px; height: 300px;"/>
+   7. CosineAnnealingWarmRestarts14 : ```CosineAnnealingWarmRestarts(self.optimizer, T_0=14, T_mult=2, eta_max=0.002, T_up=2, gamma=0.5)```
+      <img src="results/2-4-Scheduler_test/NAdam_CosineAnnealingWarmUpRestarts14.png" style="width: 900px; height: 300px;"/>
    
 2. ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)```
    1. ExponentialLR : ```ExponentialLR(self.optimizer, gamma=0.95)```
-      <img src="results/2-4-Scheduler_test/SGD_ExponentialLR.png" style="width: 600px; height: 300px;"/>
+      <img src="results/2-4-Scheduler_test/SGD_ExponentialLR.png" style="width: 900px; height: 300px;"/>
    2. MultiStepLR : ```MultiStepLR(self.optimizer, milestones=[50, 75], gamma=0.1)```
-      <img src="results/2-4-Scheduler_test/SGD_MultiStepLR.png" style="width: 600px; height: 300px;"/>
-   3. ReduceLROnPlateau : ```ReduceLROnPlateau(self.optimizer, patiance=5, factor=0.1, cooldown=5)```
-      <img src="results/2-4-Scheduler_test/.pn;;;g" style="width: 600px; height: 300px;"/>
+      <img src="results/2-4-Scheduler_test/SGD_MultiStepLR.png" style="width: 900px; height: 300px;"/>
+   3. ReduceLROnPlateau : ```ReduceLROnPlateau(self.optimizer, patiance=5, factor=0.1, cooldown=2)```
+      <img src="results/2-4-Scheduler_test/SGD_ReduceLROnPlateau.png" style="width: 900px; height: 300px;"/>
    4. CosineAnnealingLR : ```CosineAnnealingLR(self.optimizer, T_max=20, eta_min=0.001)```
-      <img src="results/2-4-Scheduler_test/SGD_CosineAnnealingLR.png" style="width: 600px; height: 300px;"/>
-   5. CosineAnnealingWarmRestarts : ```CosineAnnealingWarmRestarts(self.optimizer, T_0=14, T_mult=2, eta_max=0.1, T_up=2, gamma=0.5)```
-      <img src="results/2-4-Scheduler_test/SGD_CosineAnnealingWarmUpRestarts.png" style="width: 600px; height: 300px;"/>
+      <img src="results/2-4-Scheduler_test/SGD_CosineAnnealingLR.png" style="width: 900px; height: 300px;"/>
+   5. CosineAnnealingWarmRestarts8 : ```CosineAnnealingWarmRestarts(self.optimizer, T_0=8, T_mult=2, eta_max=0.002, T_up=2, gamma=0.5)```
+      <img src="results/2-4-Scheduler_test/SGD_CosineAnnealingWarmUpRestarts8.png" style="width: 900px; height: 300px;"/>
+   6. CosineAnnealingWarmRestarts10 : ```CosineAnnealingWarmRestarts(self.optimizer, T_0=10, T_mult=2, eta_max=0.002, T_up=2, gamma=0.5)```
+      <img src="results/2-4-Scheduler_test/SGD_CosineAnnealingWarmUpRestarts10.png" style="width: 900px; height: 300px;"/>
+   7. CosineAnnealingWarmRestarts14 : ```CosineAnnealingWarmRestarts(self.optimizer, T_0=14, T_mult=2, eta_max=0.002, T_up=2, gamma=0.5)```
+      <img src="results/2-4-Scheduler_test/SGD_CosineAnnealingWarmUpRestarts14.png" style="width: 900px; height: 300px;"/>
 ### 2.4.2. ALL
-<img src="results/2-4-Scheduler_test/all.png" style="width: 800px; height: 600px;"/>
+<img src="results/2-4-Scheduler_test/all_NAdam.png" style="width: 800px; height: 600px;"/>
+<img src="results/2-4-Scheduler_test/all_SGD.png" style="width: 800px; height: 600px;"/>
 
 ## 2.5. Best ResNet34 model on ImageNet2012
 ```py

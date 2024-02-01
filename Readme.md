@@ -176,8 +176,9 @@ test.transforms = ToTensor()
 
    
 ### 2.3.3. ALL
-<img src="results/2-3-CompareOptims/all.png" style="width: 800px; height: 600px;"/>
-
+- <img src="results/2-3-CompareOptims/all.png" style="width: 800px; height: 600px;"/>
+- <img src="results/2-3-CompareOptims/sgd_nadam.png" style="width: 800px; height: 600px;"/>
+  - 해당 figure 한정 : CIFAR10에서 NAdam이 SGD보다 더 빠른 초기 학습 속도 및 고성능을 보임.
 
 ## 2.4. Which Scheduler is the best?
 ### 2.4.1. Comparing on CIFAR10
@@ -216,8 +217,8 @@ test.transforms = ToTensor()
 - CosineAnnealingWarmRestarts14 : ```CosineAnnealingWarmRestarts(self.optimizer, T_0=14, T_mult=2, eta_max=0.002, T_up=2, gamma=0.5)```
 
 ### 2.4.2. Figures
-<img src="results/2-4-Scheduler_test/all_NAdam.png" style="width: 800px; height: 600px;"/>
-<img src="results/2-4-Scheduler_test/all_SGD.png" style="width: 800px; height: 600px;"/>
+- <img src="results/2-4-Scheduler_test/all_NAdam.png" style="width: 800px; height: 600px;"/>
+- <img src="results/2-4-Scheduler_test/all_SGD.png" style="width: 800px; height: 600px;"/>
 
 #### 2.4.2.1. NAdam
 
@@ -324,3 +325,8 @@ valid  = Compose(
 2. ```SGD말고 다른 Optimizer 적용해볼 수 있는지 알아보기.```
    1. MyResNet34_ImageNet2012_256_Multi에서 Datalodaer 1번에 두 가지 모델 병렬학습 구현 [Jan 26]. 및 AdamW, Adam with decay 학습 중.
    2. Adam에 weight decay 적용한게 AdamW임. Adam에 decay=1e-4주는거랑 똑같지만, option으로 amsgrad=True만 다름.
+3. ```NAdam```에 amsgrad 옵션
+   1. 실제로 CIFAR-10 데이터셋에 대해서는 AMSGrad가 Adam보다 뛰어난 성능을 보이긴 했지만, 기타 다른 데이터셋에 대해서는 비슷한 성능을 보여주거나 훨씬 더 안 좋은 performance를 보여주었습니다.
+   2. https://tgd.kr/c/deeplearning/19860071
+   3. 사실확인해보기
+4. ```Adam(~, weight_decay=1e-4)```와 ```AdamW(~,)```의 다른 점 비교.

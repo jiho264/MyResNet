@@ -1,12 +1,4 @@
-<style>
-  details{margin-bottom:10px;}
-  details summary{padding:0 10px; background:#000; color:#fff; height:35px; line-height:35px; font-weight:bold; cursor:pointer;}
-  details summary::marker{font-size:0;}
-  details ul{border:1px solid #aaa;}
-  details ul li a{display:block; padding:5px 10px;}
-  details ul li a:hover{background:#333; color:#fff;}
-  details .txt{border:1px solid #999; padding:5px 10px; text-align:center;}
-</style>
+
 
 # MyResNet
 ##### LEE, JIHO
@@ -142,9 +134,6 @@ test.transforms = ToTensor()
 - split한 것과의 비교
   - 간단한 Dataset이라, Validation Set으로 Learning Rate Scheduling이 기대만큼 효과적이지 않았음.
   - 오히려, Validation Set마저 학습했을 때에 가장 모델의 정확도가 높았음. 
-    
-
-
 
 ## 2.3. Which Optimizer is the best?
 ### 2.3.1. Comparing on CIFAR10
@@ -165,6 +154,15 @@ test.transforms = ToTensor()
   
   > **NAdam** - SGD - SGD_nasterov - Adam_decay - Adam_amsgrad - AdamW - Adam 
 ### 2.3.2. Figures
+<style>
+  details{margin-bottom:10px;}
+  details summary{padding:0 10px; background:#000; color:#fff; height:35px; line-height:35px; font-weight:bold; cursor:pointer;}
+  details summary::marker{font-size:0;}
+  details ul{border:1px solid #aaa;}
+  details ul li a{display:block; padding:5px 10px;}
+  details ul li a:hover{background:#333; color:#fff;}
+  details .txt{border:1px solid #999; padding:5px 10px; text-align:center;}
+</style>
 <details>
 <summary>[view figures]</summary>
 <ul>
@@ -276,15 +274,16 @@ test.transforms = ToTensor()
 ---
 
 ## 2.5. Best ResNet34 model on ImageNet2012
+### 2.5.1.1. Setup
 ```py
 # Training set
 train = Compose(
     RandomShortestSize(min_size=range(256, 480), antialias=True),
     RandomCrop(size=224),
-    ToTensor(),
+    Compose([ToImage(), ToDtype(torch.float32, scale=True)]),
     Normalize(mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True),
     AutoAugment(policy=AutoAugmentPolicy.IMAGENET),
-    RandomHorizontalFlip(self.Randp),
+    RandomHorizontalFlip(0.5),
 )
 # center croped valid set
 valid = Compose(
@@ -301,15 +300,29 @@ valid  = Compose(
     ToTensor()
     Normalize(mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True)
 )
-
 ```
-### 2.5.1. MyResNet34_ImageNet_256_SGD 
 - ```epochs = 150```
 - ```batch = 256```
+- ```earlystop = 15```
+- [Jan 31]
+  -  dataloader에서 transforms를 CPU에서 처리하는게 오래걸림에 따라, ```ImageNetdataloader.py```에서 별도로 클래스 지정 후, 실제 학습 시 반쯤 전 처리된 데이터를 GPU로 올리고 나머지를 마저 처리함. (single epoch당 소요시간 30분에서 약 21분으로 감소), 
+  -  valid set도 normalize 단계는 GPU에서 처리.(여기는 속도 향상 미미함.)
+- [Feb 1]
+  - 다만, 3가지 case 동시실험하느라 GPU 점유율 99%이므로, CPU에서 전처리 모두 수행하는 이전 코드로 변경 
+
+### 2.5.1. MyResNet34_ImageNet_256_NAdam_ReduceLROnPlateau
 - ```optimizer = torch.optim.NAdam(model.parameters(), weight_decay=1e-4)```
-- ```scheduler = ReduceLROnPlateau(patiance=5, factor=0.1, cooldown=3)```
-- dataloader에서 transforms를 CPU에서 처리하는게 오래걸림에 따라, ```ImageNetdataloader.py```에서 별도로 클래스 지정 후, 실제 학습 시 반쯤 전 처리된 데이터를 GPU로 올리고 나머지를 마저 처리함. (single epoch당 소요시간 30분에서 약 21분으로 감소) 
-- valid set도 normalize 단계는 GPU에서 처리.(여기는 속도 향상 미미함.)
+- ```scheduler = ReduceLROnPlateau(patiance=5, factor=0.1, cooldown=5)```
+   <img src="results/2-5-MyResNet34_ImageNet2012_Multi/~~~.png" style="width: 900px; height: 300px;"/>
+### 2.5.2. MyResNet34_ImageNet_256_NAdam_MultiStepLR
+- ```optimizer = torch.optim.NAdam(model.parameters(), weight_decay=1e-4)```
+- ```scheduler = MultiStepLR(optimizer, milestones=[30, 60], gamma=0.1)```
+   <img src="results/2-5-MyResNet34_ImageNet2012_Multi/~~~.png" style="width: 900px; height: 300px;"/>
+### 2.5.3. MyResNet34_ImageNet_256_SGD_MultiStepLR
+- ```optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=1e-4)```
+- ```scheduler = MultiStepLR(optimizer, milestones=[30, 60], gamma=0.1)```
+   <img src="results/2-5-MyResNet34_ImageNet2012_Multi/~~~.png" style="width: 900px; height: 300px;"/>
+
 
 # 3. Todo
 1. ```TenCrop 잘못했나 찾아보기. ResNet34의 test acc가 너무 낮게 나왔음.```

@@ -295,6 +295,9 @@ valid  = Compose(
 - ```epochs = 150```
 - ```batch = 256```
 - ```earlystop = 15```
+- [Jan 30]
+  - Dataloader.dataset.transform.transforms 내부 Compose 순서에 따라 코드의 동작속도가 많이 달라짐.
+  - 이미지를 크롭하고나서 Augmentation을 적용하는 것이 유리함.
 - [Jan 31]
   -  dataloader에서 transforms를 CPU에서 처리하는게 오래걸림에 따라, ```ImageNetdataloader.py```에서 별도로 클래스 지정 후, 실제 학습 시 반쯤 전 처리된 데이터를 GPU로 올리고 나머지를 마저 처리함. (single epoch당 소요시간 30분에서 약 21분으로 감소), 
   -  valid set도 normalize 단계는 GPU에서 처리.(여기는 속도 향상 미미함.)

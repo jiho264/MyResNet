@@ -22,7 +22,11 @@ from src.Earlystopper import EarlyStopper
 NAdam + ReduceLROnPlateau 
 patience = 5
 cooldown = 3
-earlystopping = 15
+earlystopping = 10
+
+NAdam + MultiStepLR
+milestones = [30, 60]
+earlystopping = 10
 
 """
 
@@ -49,7 +53,7 @@ PRINT_PAD_OPTIM = max([len(i) for i in optim_list])
 
 scheduler_list = [
     # "ExponentialLR",
-    # "MultiStepLR",
+    "MultiStepLR",
     "ReduceLROnPlateau",
     # "CosineAnnealingLR",
     # "CosineAnnealingWarmUpRestarts",
@@ -242,45 +246,62 @@ class Single_training(Single_model):
                 "test_acc": test_acc,
                 "lr_log": lr_log,
             }
-            print("File does not exist. Created a new log.")
+            print(self.file_name, "does not exist. Created a new log.")
 
         self.train_loss = 0.0
         self.running_loss = 0.0
-        self.running_corrects = 0
-        self.running_total = 0
-        self.train_acc = 0
+        self.running_corrects = 0.0
+        self.running_total = 0.0
+        self.train_acc = 0.0
 
         self.valid_loss = 0.0
-        self.valid_corrects = 0
-        self.valid_total = 0
+        self.valid_corrects = 0.0
+        self.valid_total = 0.0
         self.valid_acc = 0.0
 
         self.test_loss = 0.0
-        self.test_corrects = 0
-        self.test_total = 0
+        self.test_corrects = 0.0
+        self.test_total = 0.0
         self.test_acc = 0.0
 
-    def set_zeros_for_epoch(self):
-        self.running_loss = 0.0
-        self.running_corrects = 0
-        self.running_total = 0
+    def set_zeros_for_next_epoch(self, set_value=0.0):
+        self.running_loss = set_value
+        self.running_corrects = set_value
+        self.running_total = set_value
+        self.valid_loss = set_value
+        self.valid_corrects = set_value
+        self.valid_total = set_value
+        self.test_loss = set_value
+        self.test_corrects = set_value
+        self.test_total = set_value
 
-        self.valid_loss = 0.0
-        self.valid_corrects = 0
-        self.valid_total = 0
+    def compute_epoch_results(self):
+        self.train_loss = self.running_loss / len(train_dataloader)
+        self.train_acc = self.running_corrects / self.running_total
+        if valid_dataloader != None:
+            self.valid_loss = self.valid_loss / len(valid_dataloader)
+            self.valid_acc = self.valid_corrects / self.valid_total
+        if test_dataloader != None:
+            self.test_loss = self.test_loss / len(test_dataloader)
+            self.test_acc = self.test_corrects / self.test_total
 
-        self.test_loss = 0.0
-        self.test_corrects = 0
-        self.test_total = 0
-
-    def save_model(self):
-        self.logs["train_loss"].append(self.train_loss)
-        self.logs["train_acc"].append(self.train_acc)
-        self.logs["valid_loss"].append(self.valid_loss)
-        self.logs["valid_acc"].append(self.valid_acc)
-        self.logs["test_loss"].append(self.test_loss)
-        self.logs["test_acc"].append(self.test_acc)
-        self.logs["lr_log"].append(self.optimizer.param_groups[0]["lr"])
+    def save_model(self, stopflag=False):
+        if stopflag == True:
+            self.logs["train_loss"].append(-999)
+            self.logs["train_acc"].append(-999)
+            self.logs["valid_loss"].append(-999)
+            self.logs["valid_acc"].append(-999)
+            self.logs["test_loss"].append(-999)
+            self.logs["test_acc"].append(-999)
+            self.logs["lr_log"].append(-999)
+        else:
+            self.logs["train_loss"].append(self.train_loss)
+            self.logs["train_acc"].append(self.train_acc)
+            self.logs["valid_loss"].append(self.valid_loss)
+            self.logs["valid_acc"].append(self.valid_acc)
+            self.logs["test_loss"].append(self.test_loss)
+            self.logs["test_acc"].append(self.test_acc)
+            self.logs["lr_log"].append(self.optimizer.param_groups[0]["lr"])
 
         checkpoint = {
             "model": self.model.state_dict(),
@@ -293,8 +314,11 @@ class Single_training(Single_model):
         torch.save(checkpoint, self.file_name + ".pth.tar")
 
     def print_info(self):
-        _epoch_print = f"{self.optim_name.ljust(PRINT_PAD_OPTIM)} - {self.scheduler_name.ljust(PRINT_PAD_SCHDULER)}"
-        _epoch_print += f"Train : {self.train_loss:.4f} / {self.train_acc*100:.2f}%"
+        _length = len(self.logs["train_loss"])
+        _epoch_print = f"{_length}/{NUM_EPOCHS} | {self.optim_name.ljust(PRINT_PAD_OPTIM)} - {self.scheduler_name.ljust(PRINT_PAD_SCHDULER)}"
+        _epoch_print += (
+            " | " + f"Train : {self.train_loss:.4f} / {self.train_acc*100:.2f}%"
+        )
         if valid_dataloader != None:
             _valid_print = f"Valid : {self.valid_loss:.4f} / {self.valid_acc*100:.2f}%"
             _epoch_print += " | " + _valid_print
@@ -302,6 +326,49 @@ class Single_training(Single_model):
             _test_print = f"Test : {self.test_loss:.4f} / {self.test_acc*100:.2f}%"
             _epoch_print += " | " + _test_print
         print(_epoch_print)
+
+    def scheduling(self):
+        if self.scheduler.__class__.__name__ == "ReduceLROnPlateau":
+            if valid_dataloader == None and test_dataloader == None:
+                self.scheduler.step(self.train_loss)
+            elif valid_dataloader == None and test_dataloader != None:
+                self.scheduler.step(self.valid_loss)
+            elif valid_dataloader != None and test_dataloader == None:
+                self.scheduler.step(self.train_loss)
+
+        elif self.scheduler.__class__.__name__ in (
+            "ExponentialLR",
+            "MultiStepLR",
+            "CosineAnnealingWarmUpRestarts",
+            "CosineAnnealingLR",
+            "ConstantLR",
+        ):
+            self.scheduler.step()
+        else:
+            raise NotImplementedError
+
+    def earlystopping(self):
+        if valid_dataloader != None:
+            if self.earlystopper.check(self.valid_loss) == True:
+                print(f"Early stopping at {now_epoch} epoch.")
+                return True
+        elif valid_dataloader == None and test_dataloader != None:
+            # testset이 학습에 관여해서는 안 됨.
+            if self.earlystopper.check(self.train_loss) == True:
+                print(f"Early stopping at {now_epoch} epoch.")
+                return True
+        elif valid_dataloader == None and test_dataloader == None:
+            if self.earlystopper.check(self.train_loss) == True:
+                print(f"Early stopping at {now_epoch} epoch.")
+                return True
+        else:
+            return False
+
+    def is_completed(self):
+        if len(_training.logs["train_loss"]) > 1:
+            if _training.logs["train_loss"][-1] == -999:
+                return True
+        return False
 
 
 # %%
@@ -313,8 +380,8 @@ for optim_name in optim_list:
                 optimizer_name=optim_name, schduler_name=schduler_name, device="cuda"
             )
         )
+        print("-" * 50)
 
-print("-" * 50)
 # %%
 
 _MyshortCut = MyShortCut()
@@ -329,6 +396,8 @@ for epoch in range(NUM_EPOCHS):
         train_dataloader, desc=f"{now_epoch} Train", ncols=55
     ):
         for _training in each_trainings:
+            if _training.is_completed() == True:  # early stop flag
+                continue
             _training.model.train()
             with torch.autocast(device_type="cuda", dtype=torch.float16, enabled=True):
                 images, labels = images.to(_training.device), labels.to(
@@ -355,6 +424,8 @@ for epoch in range(NUM_EPOCHS):
             valid_dataloader, desc=f"{now_epoch} Valid", ncols=55
         ):
             for _training in each_trainings:
+                if _training.is_completed() == True:  # early stop flag
+                    continue
                 _training.model.eval()
                 with torch.no_grad():
                     images, labels = images.to(_training.device), labels.to(
@@ -376,6 +447,8 @@ for epoch in range(NUM_EPOCHS):
             test_dataloader, desc=f"{now_epoch} Test", ncols=55
         ):
             for _training in each_trainings:
+                if _training.is_completed() == True:  # early stop flag
+                    continue
                 _training.model.eval()
                 with torch.no_grad():
                     images, labels = images.to(_training.device), labels.to(
@@ -391,47 +464,17 @@ for epoch in range(NUM_EPOCHS):
 
     # %% summary.. ######################################################################################################
     for _training in each_trainings:
-        _training.train_loss = _training.running_loss / len(train_dataloader)
-        _training.train_acc = _training.running_corrects / _training.running_total
-        if valid_dataloader != None:
-            _training.valid_loss = _training.valid_loss / len(valid_dataloader)
-            _training.valid_acc = _training.valid_corrects / _training.valid_total
-        if test_dataloader != None:
-            _training.test_loss = _training.test_loss / len(test_dataloader)
-            _training.test_acc = _training.test_corrects / _training.test_total
-
+        _training.compute_epoch_results()
         # scheduler ######################################################################################################
-        if _training.scheduler.__class__.__name__ == "ReduceLROnPlateau":
-            _training.scheduler.step(_training.train_loss)
-        elif _training.scheduler.__class__.__name__ in (
-            "ExponentialLR",
-            "MultiStepLR",
-            "CosineAnnealingWarmUpRestarts",
-            "CosineAnnealingLR",
-            "ConstantLR",
-        ):
-            _training.scheduler.step()
-        else:
-            raise NotImplementedError
-
-    for _training in each_trainings:
+        _training.scheduling()
         # print ######################################################################################################
         _training.print_info()
         # Save checkpoint ######################################################################################################
         _training.save_model()
-
         # Early stopping ######################################################################################################
-        if valid_dataloader != None:
-            if _training.earlystopper.check(_training.valid_loss) == True:
-                break
-        elif valid_dataloader == None and test_dataloader != None:
-            if _training.earlystopper.check(_training.test_loss) == True:
-                break
-        elif valid_dataloader == None and test_dataloader == None:
-            if _training.earlystopper.check(_training.train_loss) == True:
-                break
-        else:
-            pass
+        if _training.earlystopping() == True:
+            _training.save_model(stopflag=True)
+            continue
         # set zeros ######################################################################################################
-        _training.set_zeros_for_epoch()
+        _training.set_zeros_for_next_epoch()
     print("-" * 50)

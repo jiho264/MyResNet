@@ -23,13 +23,22 @@ class LogViewer:
             fig, axs = plt.subplots(ncols=3, figsize=(15, 5))
 
         if range == 999999:
-            min_loss_epoch = np.argmin(self.logs["test_loss"])
-            min_loss = self.logs["test_loss"][min_loss_epoch]
-            min_acc = self.logs["test_acc"][min_loss_epoch]
+            if np.sum(self.logs["valid_loss"]) == 0:
+                min_loss_epoch = np.argmin(self.logs["test_loss"])
+                min_loss = self.logs["test_loss"][min_loss_epoch]
+                min_acc = self.logs["test_acc"][min_loss_epoch]
 
-            last_epoch = len(self.logs["test_loss"]) - 1
-            last_loss = self.logs["test_loss"][last_epoch]
-            last_acc = self.logs["test_acc"][last_epoch]
+                last_epoch = len(self.logs["test_loss"]) - 1
+                last_loss = self.logs["test_loss"][last_epoch]
+                last_acc = self.logs["valid_acc"][last_epoch]
+            elif np.sum(self.logs["test_loss"]) == 0:
+                min_loss_epoch = np.argmin(self.logs["valid_loss"])
+                min_loss = self.logs["valid_loss"][min_loss_epoch]
+                min_acc = self.logs["test_acc"][min_loss_epoch]
+
+                last_epoch = len(self.logs["valid_loss"]) - 1
+                last_loss = self.logs["valid_loss"][last_epoch]
+                last_acc = self.logs["valid_acc"][last_epoch]
 
             range = len(self.logs["train_loss"])
             # 첫 번째 그래프: Training and Test Loss
@@ -151,12 +160,14 @@ class LogViewer:
         print("Num of lr    logs : ", len(self.logs["lr_log"]))
 
     def print_all(self):
-        if len(self.logs["valid_loss"]) == 0 and len(self.logs["test_loss"]) != 0:
+        if np.sum(self.logs["valid_loss"]) == 0 and np.sum(self.logs["test_loss"]) != 0:
             for i in range(len(self.logs["train_loss"])):
                 print(
                     f"{i+1} epoch: train_loss={self.logs['train_loss'][i]:.4f}, train_acc={self.logs['train_acc'][i]:.4f}, test_loss={self.logs['test_loss'][i]:.4f}, test_acc={self.logs['test_acc'][i]:.4f}, lr={self.logs['lr_log'][i]:.4f}"
                 )
-        elif len(self.logs["valid_loss"]) != 0 and len(self.logs["test_loss"]) == 0:
+        elif (
+            np.sum(self.logs["valid_loss"]) != 0 and np.sum(self.logs["test_loss"]) == 0
+        ):
             for i in range(len(self.logs["train_loss"])):
                 print(
                     f"{i+1} epoch: train_loss={self.logs['train_loss'][i]:.4f}, train_acc={self.logs['train_acc'][i]:.4f}, valid_loss={self.logs['valid_loss'][i]:.4f}, valid_acc={self.logs['valid_acc'][i]:.4f}, lr={self.logs['lr_log'][i]:.4f}"

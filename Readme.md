@@ -154,15 +154,6 @@ test.transforms = ToTensor()
   
   > **NAdam** - SGD - SGD_nasterov - Adam_decay - Adam_amsgrad - AdamW - Adam 
 ### 2.3.2. Figures
-<style>
-  details{margin-bottom:10px;}
-  details summary{padding:0 10px; background:#000; color:#fff; height:35px; line-height:35px; font-weight:bold; cursor:pointer;}
-  details summary::marker{font-size:0;}
-  details ul{border:1px solid #aaa;}
-  details ul li a{display:block; padding:5px 10px;}
-  details ul li a:hover{background:#333; color:#fff;}
-  details .txt{border:1px solid #999; padding:5px 10px; text-align:center;}
-</style>
 <details>
 <summary>[view figures]</summary>
 <ul>

@@ -12,8 +12,6 @@ from torchvision.transforms.v2 import (
     CenterCrop,
     ToImage,
     ToDtype,
-    ToTensor,
-    ConvertImageDtype,
 )
 from torchvision.transforms.autoaugment import AutoAugmentPolicy
 import matplotlib.pyplot as plt
@@ -27,7 +25,6 @@ class MyShortCut:
         self.preprocessing_train = torch.nn.Sequential(
             Normalize(mean=[0.485, 0.456, 0.406], std=[1.0, 1.0, 1.0], inplace=True),
             ToDtype(torch.uint8, scale=True),
-            # ConvertImageDtype(torch.uint8),
             AutoAugment(policy=AutoAugmentPolicy.IMAGENET),
             ToDtype(torch.float32, scale=True),
             RandomHorizontalFlip(0.5),

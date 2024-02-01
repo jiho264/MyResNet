@@ -12,7 +12,9 @@ import sys, os, tqdm, time
 
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname("src"))))
 from src.CumstomCosineAnnealingwarmRestarts import CosineAnnealingWarmUpRestarts
-from MyImageNetdataloader import LoadDataset, MyShortCut
+
+# from MyImageNetdataloader import LoadDataset, MyShortCut
+from src.Mydataloader import LoadDataset
 from src.Mymodel import MyResNet_CIFAR, MyResNet34
 from src.Earlystopper import EarlyStopper
 
@@ -25,6 +27,10 @@ cooldown = 5
 earlystopping = 15
 
 NAdam + MultiStepLR
+milestones = [30, 60]
+earlystopping = 15
+
+SGD + MultiStepLR
 milestones = [30, 60]
 earlystopping = 15
 
@@ -395,7 +401,7 @@ print("-" * 50)
 
 # %%
 
-_MyshortCut = MyShortCut()
+# _MyshortCut = MyShortCut()
 
 pre_epochs = len(each_trainings[0].logs["train_loss"])
 for epoch in range(NUM_EPOCHS):
@@ -415,7 +421,7 @@ for epoch in range(NUM_EPOCHS):
                     _training.device
                 )
                 """preprocessing"""
-                _MyshortCut.preprocessing_train(images)
+                # _MyshortCut.preprocessing_train(images)
 
                 _training.optimizer.zero_grad()
                 outputs = _training.model(images)
@@ -443,7 +449,7 @@ for epoch in range(NUM_EPOCHS):
                         _training.device
                     )
                     """preprocessing"""
-                    _MyshortCut.preprocessing_valid(images)
+                    # _MyshortCut.preprocessing_valid(images)
 
                     outputs = _training.model(images)
                     loss = _training.criterion(outputs, labels)

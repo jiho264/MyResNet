@@ -21,12 +21,12 @@ from src.Earlystopper import EarlyStopper
 
 NAdam + ReduceLROnPlateau 
 patience = 5
-cooldown = 3
-earlystopping = 10
+cooldown = 5
+earlystopping = 15
 
 NAdam + MultiStepLR
 milestones = [30, 60]
-earlystopping = 10
+earlystopping = 15
 
 """
 
@@ -66,7 +66,7 @@ PRINT_PAD_SCHDULER = max([len(i) for i in scheduler_list])
 NUM_EPOCHS = 150
 
 """Early stopping parameters"""
-EARLYSTOPPINGPATIENCE = 10
+EARLYSTOPPINGPATIENCE = 15
 
 # %%
 
@@ -150,7 +150,7 @@ class Single_model:
             self.scheduler = MultiStepLR(self.optimizer, milestones=[30, 60], gamma=0.1)
         elif schduler_name == "ReduceLROnPlateau":
             self.scheduler = ReduceLROnPlateau(
-                self.optimizer, patience=5, factor=0.1, cooldown=3
+                self.optimizer, patience=5, factor=0.1, cooldown=5
             )
         elif schduler_name == "CosineAnnealingLR":
             """
@@ -170,7 +170,7 @@ class Single_model:
 
             if schduler_name == "CosineAnnealingWarmUpRestarts":
                 self.optimizer.param_groups[0]["lr"] = 1e-8
-                if optim_name == "NAdam":
+                if optimizer_name == "NAdam":
                     self.scheduler = CosineAnnealingWarmUpRestarts(
                         self.optimizer,
                         T_0=10,
@@ -179,11 +179,11 @@ class Single_model:
                         T_up=2,
                         gamma=0.5,
                     )
-                elif optim_name[:3] == "SGD":
+                elif optimizer_name[:3] == "SGD":
                     self.scheduler = CosineAnnealingWarmUpRestarts(
                         self.optimizer, T_0=10, T_mult=2, eta_max=0.1, T_up=2, gamma=0.5
                     )
-                elif optim_name[:4] == "Adam":
+                elif optimizer_name[:4] == "Adam":
                     self.scheduler = CosineAnnealingWarmUpRestarts(
                         self.optimizer,
                         T_0=10,
@@ -370,14 +370,28 @@ class Single_training(Single_model):
 
 # %%
 each_trainings = list()
-for optim_name in optim_list:
-    for schduler_name in scheduler_list:
-        each_trainings.append(
-            Single_training(
-                optimizer_name=optim_name, schduler_name=schduler_name, device="cuda"
-            )
-        )
-        print("-" * 50)
+# for optim_name in optim_list:
+#     for schduler_name in scheduler_list:
+#         each_trainings.append(
+#             Single_training(
+#                 optimizer_name=optim_name, schduler_name=schduler_name, device="cuda"
+#             )
+#         )
+#         print("-" * 50)
+each_trainings.append(
+    Single_training(
+        optimizer_name="NAdam", schduler_name="ReduceLROnPlateau", device="cuda"
+    )
+)
+print("-" * 50)
+each_trainings.append(
+    Single_training(optimizer_name="NAdam", schduler_name="MultiStepLR", device="cuda")
+)
+print("-" * 50)
+each_trainings.append(
+    Single_training(optimizer_name="SGD", schduler_name="MultiStepLR", device="cuda")
+)
+print("-" * 50)
 
 # %%
 

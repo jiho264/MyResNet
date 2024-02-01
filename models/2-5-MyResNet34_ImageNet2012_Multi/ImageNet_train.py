@@ -329,13 +329,10 @@ class Single_training(Single_model):
 
     def scheduling(self):
         if self.scheduler.__class__.__name__ == "ReduceLROnPlateau":
-            if valid_dataloader == None and test_dataloader == None:
-                self.scheduler.step(self.train_loss)
-            elif valid_dataloader == None and test_dataloader != None:
+            if valid_dataloader == None and test_dataloader != None:
                 self.scheduler.step(self.valid_loss)
-            elif valid_dataloader != None and test_dataloader == None:
+            else:
                 self.scheduler.step(self.train_loss)
-
         elif self.scheduler.__class__.__name__ in (
             "ExponentialLR",
             "MultiStepLR",

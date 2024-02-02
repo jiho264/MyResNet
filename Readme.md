@@ -304,6 +304,9 @@ valid  = Compose(
   -  valid set도 normalize 단계는 GPU에서 처리.(여기는 속도 향상 미미함.)
 - [Feb 1]
   - 다만, 3가지 case 동시실험하느라 GPU 점유율 99%이므로, CPU에서 전처리 모두 수행하는 이전 코드로 변경 
+- [Feb 2]
+  - ReduceLROnPlateau의 scheduler.step()에 버그있었음. valid loss가 아니라 train loss를 참조하고있어서, reduce가 이루어지지 않고 있었음. 실험모델 폐기 후, 해당 case 재실험.
+  - (class) Single model, SingleModelTrainingProcess -> src/utils.py 로 분리함.
 
 ### 2.5.1. MyResNet34_ImageNet_256_NAdam_ReduceLROnPlateau
 - ```optimizer = torch.optim.NAdam(model.parameters(), weight_decay=1e-4)```

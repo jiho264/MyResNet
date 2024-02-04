@@ -160,7 +160,7 @@ class SingleModelTrainingProcess(Single_model):
             device="cuda",
             kwargs=kwargs,
         )
-
+        # self.earlystopper.end_flag = False
         self.device = device
         self.train_dataloader = train_dataloader
         self.valid_dataloader = valid_dataloader
@@ -241,24 +241,15 @@ class SingleModelTrainingProcess(Single_model):
             self.test_loss = self.test_loss / len(self.test_dataloader)
             self.test_acc = self.test_corrects / self.test_total
 
-    def save_model(self, stopflag=False):
-        if stopflag == True:
-            self.logs["train_loss"].append(-999)
-            self.logs["train_acc"].append(-999)
-            self.logs["valid_loss"].append(-999)
-            self.logs["valid_acc"].append(-999)
-            self.logs["test_loss"].append(-999)
-            self.logs["test_acc"].append(-999)
-            self.logs["lr_log"].append(-999)
-        else:
-            self.logs["train_loss"].append(self.train_loss)
-            self.logs["train_acc"].append(self.train_acc)
-            self.logs["valid_loss"].append(self.valid_loss)
-            self.logs["valid_acc"].append(self.valid_acc)
-            self.logs["test_loss"].append(self.test_loss)
-            self.logs["test_acc"].append(self.test_acc)
-            self.logs["lr_log"].append(self.optimizer.param_groups[0]["lr"])
+        self.logs["train_loss"].append(self.train_loss)
+        self.logs["train_acc"].append(self.train_acc)
+        self.logs["valid_loss"].append(self.valid_loss)
+        self.logs["valid_acc"].append(self.valid_acc)
+        self.logs["test_loss"].append(self.test_loss)
+        self.logs["test_acc"].append(self.test_acc)
+        self.logs["lr_log"].append(self.optimizer.param_groups[0]["lr"])
 
+    def save_model(self):
         checkpoint = {
             "model": self.model.state_dict(),
             "optimizer": self.optimizer.state_dict(),
@@ -269,9 +260,8 @@ class SingleModelTrainingProcess(Single_model):
         }
         torch.save(checkpoint, self.file_name + ".pth.tar")
 
-    def print_info(self, num_epochs, print_pad_optim, print_pad_scheduler):
-        _length = len(self.logs["train_loss"])
-        _epoch_print = f"{_length+1}/{num_epochs} | {self.optimizer_name.ljust(print_pad_optim)} - {self.scheduler_name.ljust(print_pad_scheduler)}"
+    def print_info(self, now_epochs, num_epochs, print_pad_optim, print_pad_scheduler):
+        _epoch_print = f"{now_epochs}/{num_epochs} | {self.optimizer_name.ljust(print_pad_optim)} - {self.scheduler_name.ljust(print_pad_scheduler)}"
         _epoch_print += (
             " | " + f"Train : {self.train_loss:.4f} / {self.train_acc*100:.2f}%"
         )
@@ -303,28 +293,16 @@ class SingleModelTrainingProcess(Single_model):
         else:
             raise NotImplementedError
 
-    def earlystopping(self, now_epoch="?"):
+    def select_earlystopping_loss_and_check(self):
         if self.valid_dataloader != None:
-            if self.earlystopper.check(self.valid_loss) == True:
-                print(f"Early stopping at {now_epoch} epoch.")
-                return True
-        elif self.valid_dataloader == None and self.test_dataloader != None:
-            # testset이 학습에 관여해서는 안 됨.
-            if self.earlystopper.check(self.train_loss) == True:
-                print(f"Early stopping at {now_epoch} epoch.")
-                return True
-        elif self.valid_dataloader == None and self.test_dataloader == None:
-            if self.earlystopper.check(self.train_loss) == True:
-                print(f"Early stopping at {now_epoch} epoch.")
-                return True
+            return self.earlystopper.check(self.valid_loss)
+        elif self.valid_dataloader == None:
+            return self.earlystopper.check(self.train_loss)
         else:
-            return False
+            raise NotImplementedError
 
     def is_completed(self):
-        if len(self.logs["train_loss"]) > 1:
-            if self.logs["train_loss"][-1] == -999:
-                return True
-        return False
+        return self.earlystopper.end_flag
 
     def forward_train(self, images, labels):
         self.model.train()

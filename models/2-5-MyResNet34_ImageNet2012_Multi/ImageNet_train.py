@@ -91,21 +91,21 @@ each_trainings = list()
 #             )
 #         )
 #         print("-" * 50)
-each_trainings.append(
-    SingleModelTrainingProcess(
-        dataset=DATASET,
-        batch_size=BATCH,
-        optimizer_name="NAdam",
-        schduler_name="ReduceLROnPlateau",
-        device="cuda",
-        train_dataloader=train_dataloader,
-        valid_dataloader=valid_dataloader,
-        test_dataloader=test_dataloader,
-        Earlystopping_patiance=EARLYSTOPPINGPATIENCE,
-        ReduceLROnPlateau_patiance=ReduceLROnPlateau_patiance,
-        ReduceLROnPlateau_cooldown=ReduceLROnPlateau_cooldown,
-    )
-)
+# each_trainings.append(
+#     SingleModelTrainingProcess(
+#         dataset=DATASET,
+#         batch_size=BATCH,
+#         optimizer_name="NAdam",
+#         schduler_name="ReduceLROnPlateau",
+#         device="cuda",
+#         train_dataloader=train_dataloader,
+#         valid_dataloader=valid_dataloader,
+#         test_dataloader=test_dataloader,
+#         Earlystopping_patiance=EARLYSTOPPINGPATIENCE,
+#         ReduceLROnPlateau_patiance=ReduceLROnPlateau_patiance,
+#         ReduceLROnPlateau_cooldown=ReduceLROnPlateau_cooldown,
+#     )
+# )
 print("-" * 50)
 each_trainings.append(
     SingleModelTrainingProcess(
@@ -150,8 +150,8 @@ for epoch in range(NUM_EPOCHS):
         train_dataloader, desc=f"{now_epoch} Train", ncols=55
     ):
         for _training in each_trainings:
-            if _training.is_completed() == True:  # early stop flag
-                continue
+            if _training.is_completed() == True:
+                pass
             _training.model.train()
             _training.forward_train(images, labels)
 
@@ -161,8 +161,8 @@ for epoch in range(NUM_EPOCHS):
             valid_dataloader, desc=f"{now_epoch} Valid", ncols=55
         ):
             for _training in each_trainings:
-                if _training.is_completed() == True:  # early stop flag
-                    continue
+                if _training.is_completed() == True:
+                    pass
                 _training.model.eval()
                 _training.forward_eval(images, labels, mode="valid")
 
@@ -172,8 +172,8 @@ for epoch in range(NUM_EPOCHS):
             test_dataloader, desc=f"{now_epoch} Test", ncols=55
         ):
             for _training in each_trainings:
-                if _training.is_completed() == True:  # early stop flag
-                    continue
+                if _training.is_completed() == True:
+                    pass
                 _training.model.eval()
                 _training.forward_eval(images, labels, mode="test")
 
@@ -184,6 +184,7 @@ for epoch in range(NUM_EPOCHS):
         _training.scheduling()
         # print
         _training.print_info(
+            now_epoch=now_epoch,
             num_epochs=NUM_EPOCHS,
             print_pad_optim=PRINT_PAD_OPTIM,
             print_pad_scheduler=PRINT_PAD_SCHDULER,
@@ -191,9 +192,7 @@ for epoch in range(NUM_EPOCHS):
         # Save checkpoint
         _training.save_model()
         # Early stopping
-        if _training.earlystopping(now_epoch=now_epoch) == True:
-            _training.save_model(stopflag=True)
-            continue
+        _ = _training.select_earlystopping_loss_and_check()
         # set zeros
         _training.set_zeros_for_next_epoch()
     print("-" * 50)

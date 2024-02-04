@@ -30,23 +30,22 @@ class LogViewer:
 
                 last_epoch = len(self.logs["test_loss"]) - 1
                 last_loss = self.logs["test_loss"][last_epoch]
-                last_acc = self.logs["valid_acc"][last_epoch]
+                last_acc = self.logs["test_acc"][last_epoch]
+                axs[0].plot(self.logs["test_loss"], label="Test Loss")
+
             elif np.sum(self.logs["test_loss"]) == 0:
                 min_loss_epoch = np.argmin(self.logs["valid_loss"])
                 min_loss = self.logs["valid_loss"][min_loss_epoch]
-                min_acc = self.logs["test_acc"][min_loss_epoch]
+                min_acc = self.logs["valid_acc"][min_loss_epoch]
 
                 last_epoch = len(self.logs["valid_loss"]) - 1
                 last_loss = self.logs["valid_loss"][last_epoch]
                 last_acc = self.logs["valid_acc"][last_epoch]
+                axs[0].plot(self.logs["valid_loss"], label="Validation Loss")
 
             range = len(self.logs["train_loss"])
-            # 첫 번째 그래프: Training and Test Loss
             axs[0].plot(self.logs["train_loss"], label="Training Loss")
-            if np.sum(self.logs["valid_loss"]) != 0:
-                axs[0].plot(self.logs["valid_loss"], label="Validation Loss")
-            if np.sum(self.logs["test_loss"]) != 0:
-                axs[0].plot(self.logs["test_loss"], label="Test Loss")
+            # 첫 번째 그래프: Training and Test Loss
             axs[0].set_xlabel("Epoch")
             axs[0].set_ylabel("Loss")
             if title == None:

@@ -23,6 +23,9 @@ class LogViewer:
             fig, axs = plt.subplots(ncols=3, figsize=(15, 5))
 
         if range == 999999:
+            range = len(self.logs["train_loss"])
+            axs[0].plot(self.logs["train_loss"], label="Training Loss")
+
             if np.sum(self.logs["valid_loss"]) == 0:
                 min_loss_epoch = np.argmin(self.logs["test_loss"])
                 min_loss = self.logs["test_loss"][min_loss_epoch]
@@ -43,8 +46,6 @@ class LogViewer:
                 last_acc = self.logs["valid_acc"][last_epoch]
                 axs[0].plot(self.logs["valid_loss"], label="Validation Loss")
 
-            range = len(self.logs["train_loss"])
-            axs[0].plot(self.logs["train_loss"], label="Training Loss")
             # 첫 번째 그래프: Training and Test Loss
             axs[0].set_xlabel("Epoch")
             axs[0].set_ylabel("Loss")

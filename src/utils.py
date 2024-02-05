@@ -186,6 +186,8 @@ class SingleModelTrainingProcess(Single_model):
             print(self.file_name)
             print(f"Current epoch is {len(self.logs['train_loss'])}")
             print(f"Current learning rate: {self.optimizer.param_groups[0]['lr']}")
+            print(f"Current best valid loss: {min(self.logs['valid_loss'])}")
+            print(f"Current best model loss: {self.earlystopper.best_eval_loss}")
         else:
             # Create a dictionary to store the variables
             train_loss = []

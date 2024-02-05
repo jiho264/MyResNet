@@ -1,0 +1,63 @@
+Dataset ImageFolder
+    Number of datapoints: 50000
+    Root location: ../../data/ImageNet2012/val
+    StandardTransform
+Transform: Compose(
+                 RandomShortestSize(min_size=[225], interpolation=InterpolationMode.BILINEAR, antialias=True)
+                 TenCrop(size=(224, 224), vertical_flip=False)
+                 Compose(
+                   ToImage()
+                   ToDtype(scale=True)
+             )
+           ) 196 50000 256
+Dataset ImageFolder
+    Number of datapoints: 50000
+    Root location: ../../data/ImageNet2012/val
+    StandardTransform
+Transform: Compose(
+                 RandomShortestSize(min_size=[257], interpolation=InterpolationMode.BILINEAR, antialias=True)
+                 TenCrop(size=(256, 256), vertical_flip=False)
+                 Compose(
+                   ToImage()
+                   ToDtype(scale=True)
+             )
+           ) 391 50000 128
+Dataset ImageFolder
+    Number of datapoints: 50000
+    Root location: ../../data/ImageNet2012/val
+    StandardTransform
+Transform: Compose(
+                 RandomShortestSize(min_size=[385], interpolation=InterpolationMode.BILINEAR, antialias=True)
+                 TenCrop(size=(384, 384), vertical_flip=False)
+                 Compose(
+                   ToImage()
+                   ToDtype(scale=True)
+             )
+           ) 521 50000 96
+Dataset ImageFolder
+    Number of datapoints: 50000
+    Root location: ../../data/ImageNet2012/val
+    StandardTransform
+Transform: Compose(
+                 RandomShortestSize(min_size=[481], interpolation=InterpolationMode.BILINEAR, antialias=True)
+                 TenCrop(size=(480, 480), vertical_flip=False)
+                 Compose(
+                   ToImage()
+                   ToDtype(scale=True)
+             )
+           ) 782 50000 64
+Dataset ImageFolder
+    Number of datapoints: 50000
+    Root location: ../../data/ImageNet2012/val
+    StandardTransform
+Transform: Compose(
+                 RandomShortestSize(min_size=[641], interpolation=InterpolationMode.BILINEAR, antialias=True)
+                 TenCrop(size=(640, 640), vertical_flip=False)
+                 Compose(
+                   ToImage()
+                   ToDtype(scale=True)
+             )
+           ) 1786 50000 28
+ResNet-34 for ImageNet2012 is loaded.
+Model is loaded from MyResNet34_256_SGD_MultiStepLR.pth
+Dataset 256: Loss: 5.216906206096922, Top-1 Acc: 0.194934, Top-5 Acc: 0.352782

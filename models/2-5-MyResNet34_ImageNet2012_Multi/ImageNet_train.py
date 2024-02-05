@@ -4,8 +4,9 @@ import sys, os, tqdm, time
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname("src"))))
 
 # from MyImageNetdataloader import LoadDataset, MyShortCut
-from src.Mydataloader import LoadDataset
+# from src.Mydataloader import LoadDataset
 from src.utils import SingleModelTrainingProcess
+from MyImageNetdataloader import MyShortCut, LoadDataset
 
 # %% memo
 """
@@ -106,20 +107,20 @@ each_trainings = list()
 #         ReduceLROnPlateau_cooldown=ReduceLROnPlateau_cooldown,
 #     )
 # )
-print("-" * 50)
-each_trainings.append(
-    SingleModelTrainingProcess(
-        dataset=DATASET,
-        batch_size=BATCH,
-        optimizer_name="NAdam",
-        schduler_name="MultiStepLR",
-        device="cuda",
-        train_dataloader=train_dataloader,
-        valid_dataloader=valid_dataloader,
-        test_dataloader=test_dataloader,
-        Earlystopping_patiance=EARLYSTOPPINGPATIENCE,
-    )
-)
+# print("-" * 50)
+# each_trainings.append(
+#     SingleModelTrainingProcess(
+#         dataset=DATASET,
+#         batch_size=BATCH,
+#         optimizer_name="NAdam",
+#         schduler_name="MultiStepLR",
+#         device="cuda",
+#         train_dataloader=train_dataloader,
+#         valid_dataloader=valid_dataloader,
+#         test_dataloader=test_dataloader,
+#         Earlystopping_patiance=EARLYSTOPPINGPATIENCE,
+#     )
+# )
 print("-" * 50)
 each_trainings.append(
     SingleModelTrainingProcess(
@@ -138,7 +139,7 @@ print("-" * 50)
 
 # %%
 
-# _MyshortCut = MyShortCut()
+_MyshortCut = MyShortCut()
 
 pre_epochs = len(each_trainings[0].logs["train_loss"])
 for epoch in range(NUM_EPOCHS):
@@ -153,6 +154,7 @@ for epoch in range(NUM_EPOCHS):
             if _training.is_completed() == True:
                 pass
             _training.model.train()
+            _MyshortCut.preprocessing_train(images.to("cuda"))
             _training.forward_train(images, labels)
 
     # %% Forward_valid ######################################################################################################

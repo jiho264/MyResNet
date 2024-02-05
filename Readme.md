@@ -295,7 +295,6 @@ valid  = Compose(
 ```
 - ```epochs = 150```
 - ```batch = 256```
-- ```earlystop = 15```
 - [Jan 30]
   - Dataloader.dataset.transform.transforms 내부 Compose 순서에 따라 코드의 동작속도가 많이 달라짐.
   - 이미지를 크롭하고나서 Augmentation을 적용하는 것이 유리함.
@@ -311,7 +310,9 @@ valid  = Compose(
 ### 2.5.1. MyResNet34_ImageNet_256_NAdam_ReduceLROnPlateau
 - ```optimizer = torch.optim.NAdam(model.parameters(), weight_decay=1e-4)```
 - ```scheduler = ReduceLROnPlateau(patiance=5, factor=0.1, cooldown=5)```
-   <img src="results/2-5-MyResNet34_ImageNet2012_Multi/~~~.png" style="width: 900px; height: 300px;"/>
+- 효과적인 학습이 이루어지지 않음.
+   <img src="results/2-5-MyResNet34_ImageNet2012_Multi/NAdam_ReduceLROnPlateau_tmp.png" style="width: 900px; height: 300px;"/>
+
 ### 2.5.2. MyResNet34_ImageNet_256_NAdam_MultiStepLR
 - ```optimizer = torch.optim.NAdam(model.parameters(), weight_decay=1e-4)```
 - ```scheduler = MultiStepLR(optimizer, milestones=[30, 60], gamma=0.1)```

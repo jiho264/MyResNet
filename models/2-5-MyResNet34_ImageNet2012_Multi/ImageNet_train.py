@@ -62,7 +62,7 @@ scheduler_list = [
 PRINT_PAD_SCHDULER = max([len(i) for i in scheduler_list])
 
 """Learning rate scheduler parameters"""
-NUM_EPOCHS = 150
+NUM_EPOCHS = 120
 
 """Early stopping parameters"""
 EARLYSTOPPINGPATIENCE = 15
@@ -142,12 +142,12 @@ print("-" * 50)
 
 pre_epochs = len(each_trainings[0].logs["train_loss"])
 for epoch in range(NUM_EPOCHS):
-    now_epoch = epoch + 1 + pre_epochs
-    if now_epoch > NUM_EPOCHS:
+    now_epochs = epoch + 1 + pre_epochs
+    if now_epochs > NUM_EPOCHS:
         break
     # %% Forward_train ######################################################################################################
     for images, labels in tqdm.tqdm(
-        train_dataloader, desc=f"{now_epoch} Train", ncols=55
+        train_dataloader, desc=f"{now_epochs} Train", ncols=55
     ):
         for _training in each_trainings:
             if _training.is_completed() == True:
@@ -158,7 +158,7 @@ for epoch in range(NUM_EPOCHS):
     # %% Forward_valid ######################################################################################################
     if valid_dataloader != None:
         for images, labels in tqdm.tqdm(
-            valid_dataloader, desc=f"{now_epoch} Valid", ncols=55
+            valid_dataloader, desc=f"{now_epochs} Valid", ncols=55
         ):
             for _training in each_trainings:
                 if _training.is_completed() == True:
@@ -169,7 +169,7 @@ for epoch in range(NUM_EPOCHS):
     # %% Forward_test ######################################################################################################
     if test_dataloader != None:
         for images, labels in tqdm.tqdm(
-            test_dataloader, desc=f"{now_epoch} Test", ncols=55
+            test_dataloader, desc=f"{now_epochs} Test", ncols=55
         ):
             for _training in each_trainings:
                 if _training.is_completed() == True:
@@ -184,7 +184,7 @@ for epoch in range(NUM_EPOCHS):
         _training.scheduling()
         # print
         _training.print_info(
-            now_epoch=now_epoch,
+            now_epochs=now_epochs,
             num_epochs=NUM_EPOCHS,
             print_pad_optim=PRINT_PAD_OPTIM,
             print_pad_scheduler=PRINT_PAD_SCHDULER,

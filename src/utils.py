@@ -72,12 +72,13 @@ class Single_model:
                 self.model.parameters(), weight_decay=1e-4
             )
 
-        """define earlystopper"""
-        self.earlystopper = EarlyStopper(
-            patience=kwargs["kwargs"]["Earlystopping_patiance"],
-            model=self.model,
-            file_name=self.file_name,
-        )
+        if kwargs["kwargs"]["Earlystopping_patiance"] > 0:
+            """define earlystopper"""
+            self.earlystopper = EarlyStopper(
+                patience=kwargs["kwargs"]["Earlystopping_patiance"],
+                model=self.model,
+                file_name=self.file_name,
+            )
 
         """define learning rate scheduler"""
         if schduler_name == "ExponentialLR":
@@ -177,7 +178,8 @@ class SingleModelTrainingProcess(Single_model):
             self.optimizer.load_state_dict(checkpoint["optimizer"])
             self.scaler.load_state_dict(checkpoint["scaler"])
             self.scheduler.load_state_dict(checkpoint["scheduler"])
-            self.earlystopper.load_state_dict(checkpoint["earlystopper"])
+            if kwargs["Earlystopping_patiance"] > 0:
+                self.earlystopper.load_state_dict(checkpoint["earlystopper"])
             self.logs = checkpoint["logs"]
 
             print("Suceessfully loaded the All setting and Log file.")

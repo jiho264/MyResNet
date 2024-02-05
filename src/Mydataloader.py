@@ -76,7 +76,7 @@ class LoadDataset:
                         std=[1, 1, 1],
                         inplace=True,
                     ),
-                    AutoAugment(policy=AutoAugmentPolicy.CIFAR10),
+                    # AutoAugment(policy=AutoAugmentPolicy.CIFAR10),
                     RandomCrop(
                         size=32,
                         padding=4,

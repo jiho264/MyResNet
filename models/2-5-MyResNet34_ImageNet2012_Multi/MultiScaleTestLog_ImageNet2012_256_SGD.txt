@@ -10,6 +10,7 @@ Transform: Compose(
                    ToDtype(scale=True)
              )
            ) 196 50000 256
+--------------------------------------------------
 Dataset ImageFolder
     Number of datapoints: 50000
     Root location: ../../data/ImageNet2012/val
@@ -22,6 +23,7 @@ Transform: Compose(
                    ToDtype(scale=True)
              )
            ) 391 50000 128
+--------------------------------------------------
 Dataset ImageFolder
     Number of datapoints: 50000
     Root location: ../../data/ImageNet2012/val
@@ -33,7 +35,8 @@ Transform: Compose(
                    ToImage()
                    ToDtype(scale=True)
              )
-           ) 521 50000 96
+           ) 1563 50000 32
+--------------------------------------------------
 Dataset ImageFolder
     Number of datapoints: 50000
     Root location: ../../data/ImageNet2012/val
@@ -45,7 +48,8 @@ Transform: Compose(
                    ToImage()
                    ToDtype(scale=True)
              )
-           ) 782 50000 64
+           ) 3125 50000 16
+--------------------------------------------------
 Dataset ImageFolder
     Number of datapoints: 50000
     Root location: ../../data/ImageNet2012/val
@@ -57,7 +61,13 @@ Transform: Compose(
                    ToImage()
                    ToDtype(scale=True)
              )
-           ) 1786 50000 28
+           ) 3125 50000 16
+--------------------------------------------------
 ResNet-34 for ImageNet2012 is loaded.
 Model is loaded from MyResNet34_256_SGD_MultiStepLR.pth
-Dataset 256: Loss: 5.216906206096922, Top-1 Acc: 0.194934, Top-5 Acc: 0.352782
+--------------------------------------------------
+Dataset 224: Loss: 1.588962, Top-1 Acc: 62.63%, Top-5 Acc: 84.19%
+Dataset 256: Loss: 1.486167, Top-1 Acc: 64.96%, Top-5 Acc: 85.98%
+Dataset 384: Loss: 1.646390, Top-1 Acc: 66.75%, Top-5 Acc: 87.28%
+Dataset 480: Loss: 1.966453, Top-1 Acc: 64.15%, Top-5 Acc: 85.53%
+Dataset 640: Loss: 2.550962, Top-1 Acc: 56.51%, Top-5 Acc: 80.22%

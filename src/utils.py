@@ -14,6 +14,7 @@ import sys, os, tqdm, time
 from src.CumstomCosineAnnealingwarmRestarts import CosineAnnealingWarmUpRestarts
 from src.Mymodel import MyResNet_CIFAR, MyResNet34
 from src.Earlystopper import EarlyStopper
+from src.resnet import resnet32
 
 
 class Single_model:
@@ -32,6 +33,11 @@ class Single_model:
         elif dataset == "CIFAR10":
             self.file_name = f"MyResNet32_{batch_size}_{optimizer_name}_{schduler_name}"
             self.model = MyResNet_CIFAR(num_classes=10, num_layer_factor=5).to(device)
+        elif dataset == "other":
+            self.file_name = (
+                f"Ref_ResNet32_{batch_size}_{optimizer_name}_{schduler_name}"
+            )
+            self.model = resnet32().to(device)
 
         self.optimizer_name = optimizer_name
         self.scheduler_name = schduler_name
@@ -84,7 +90,51 @@ class Single_model:
         if schduler_name == "ExponentialLR":
             self.scheduler = ExponentialLR(self.optimizer, gamma=0.95)
         elif schduler_name == "MultiStepLR":
-            self.scheduler = MultiStepLR(self.optimizer, milestones=[30, 60], gamma=0.1)
+            if dataset == "CIFAR10":
+                """
+                =======================================================
+                if batch = 256
+                =======================================================
+                non-split [single epoch = 196 iter] : milestones = [164, 246]
+                - 1 ~ 164 epochs == 1 ~ 32k iter >> lr = 0.1
+                - 165~246 epochs == 32k ~ 48k iter >> lr = 0.01
+                - 247~328(?) epochs == 48k ~ 64k iter >> lr = 0.001
+                =======================================================
+                split to 45k/5k [single epoch = 176 iter]: milestones = [182, 273]
+                - 1~182 epochs == 1 ~ 32k iter >> lr = 0.1
+                - 182~273 epochs == 32k ~ 48k iter >> lr = 0.01
+                - 273~364(?) epochs == 48k ~ 64k iter >> lr = 0.001
+                =======================================================
+                if batch = 128
+                =======================================================
+                non-split [signle epoch = 391 iter]: milestones = [82, 123]
+                - 1 ~ 82 epochs == 1 ~ 32k iter >> lr = 0.1
+                - 83~123 epochs == 32k ~ 48k iter >> lr = 0.01
+                - 124~(164) epochs == 48k ~ 64k iter >> lr = 0.001
+                =======================================================
+                split to 45k/5k [signle epoch = 352 iter]: milestones = [91, 137]
+                - 1~91 epochs == 1 ~ 32k iter >> lr = 0.1
+                - 92~137 epochs == 32k ~ 48k iter >> lr = 0.01
+                - 138~(183) epochs == 48k ~ 64k iter >> lr = 0.001
+                =======================================================
+                """
+                self.scheduler = MultiStepLR(
+                    # self.optimizer, milestones=[82, 123], gamma=0.1
+                    self.optimizer,
+                    milestones=[100, 150],
+                    gamma=0.1,
+                )
+            elif dataset == "ImageNet2012":
+                self.scheduler = MultiStepLR(
+                    self.optimizer, milestones=[30, 60], gamma=0.1
+                )
+            else:
+                self.scheduler = MultiStepLR(
+                    # self.optimizer, milestones=[82, 123], gamma=0.1
+                    self.optimizer,
+                    milestones=[100, 150],
+                    gamma=0.1,
+                )
         elif schduler_name == "ReduceLROnPlateau":
             self.scheduler = ReduceLROnPlateau(
                 self.optimizer,

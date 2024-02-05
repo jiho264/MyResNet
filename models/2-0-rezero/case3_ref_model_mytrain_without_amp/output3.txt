@@ -1,0 +1,473 @@
+Files already downloaded and verified
+Files already downloaded and verified
+   epoch : 1 | train_loss : 1.7057 | train_acc : 38.51%
+   epoch : 1 |  test_loss : 1.8156 |  test_acc : 38.55%
+ └ Updated best eval loss : 1.7057
+   epoch : 2 | train_loss : 1.1076 | train_acc : 59.96%
+   epoch : 2 |  test_loss : 1.0476 |  test_acc : 62.47%
+ └ Updated best eval loss : 1.1076
+   epoch : 3 | train_loss : 0.8366 | train_acc : 70.09%
+   epoch : 3 |  test_loss : 0.8658 |  test_acc : 69.15%
+ └ Updated best eval loss : 0.8366
+   epoch : 4 | train_loss : 0.6783 | train_acc : 76.15%
+   epoch : 4 |  test_loss : 0.7733 |  test_acc : 72.80%
+ └ Updated best eval loss : 0.6783
+   epoch : 5 | train_loss : 0.5739 | train_acc : 79.99%
+   epoch : 5 |  test_loss : 0.8474 |  test_acc : 70.37%
+ └ Updated best eval loss : 0.5739
+   epoch : 6 | train_loss : 0.4994 | train_acc : 82.58%
+   epoch : 6 |  test_loss : 0.6557 |  test_acc : 77.13%
+ └ Updated best eval loss : 0.4994
+   epoch : 7 | train_loss : 0.4399 | train_acc : 84.69%
+   epoch : 7 |  test_loss : 0.6549 |  test_acc : 77.75%
+ └ Updated best eval loss : 0.4399
+   epoch : 8 | train_loss : 0.3897 | train_acc : 86.53%
+   epoch : 8 |  test_loss : 0.7716 |  test_acc : 75.64%
+ └ Updated best eval loss : 0.3897
+   epoch : 9 | train_loss : 0.3492 | train_acc : 87.75%
+   epoch : 9 |  test_loss : 0.6799 |  test_acc : 78.62%
+ └ Updated best eval loss : 0.3492
+   epoch : 10 | train_loss : 0.3130 | train_acc : 89.00%
+   epoch : 10 |  test_loss : 0.7088 |  test_acc : 78.72%
+ └ Updated best eval loss : 0.3130
+   epoch : 11 | train_loss : 0.2870 | train_acc : 90.01%
+   epoch : 11 |  test_loss : 0.6718 |  test_acc : 78.70%
+ └ Updated best eval loss : 0.2870
+   epoch : 12 | train_loss : 0.2539 | train_acc : 90.99%
+   epoch : 12 |  test_loss : 0.6697 |  test_acc : 79.59%
+ └ Updated best eval loss : 0.2539
+   epoch : 13 | train_loss : 0.2375 | train_acc : 91.50%
+   epoch : 13 |  test_loss : 0.7855 |  test_acc : 77.17%
+ └ Updated best eval loss : 0.2375
+   epoch : 14 | train_loss : 0.2078 | train_acc : 92.67%
+   epoch : 14 |  test_loss : 0.8994 |  test_acc : 75.63%
+ └ Updated best eval loss : 0.2078
+   epoch : 15 | train_loss : 0.1964 | train_acc : 93.05%
+   epoch : 15 |  test_loss : 0.8191 |  test_acc : 77.19%
+ └ Updated best eval loss : 0.1964
+   epoch : 16 | train_loss : 0.1820 | train_acc : 93.50%
+   epoch : 16 |  test_loss : 0.8816 |  test_acc : 76.29%
+ └ Updated best eval loss : 0.1820
+   epoch : 17 | train_loss : 0.1742 | train_acc : 93.77%
+   epoch : 17 |  test_loss : 0.7189 |  test_acc : 79.49%
+ └ Updated best eval loss : 0.1742
+   epoch : 18 | train_loss : 0.1560 | train_acc : 94.41%
+   epoch : 18 |  test_loss : 0.8026 |  test_acc : 79.54%
+ └ Updated best eval loss : 0.1560
+   epoch : 19 | train_loss : 0.1436 | train_acc : 94.84%
+   epoch : 19 |  test_loss : 0.7698 |  test_acc : 79.11%
+ └ Updated best eval loss : 0.1436
+   epoch : 20 | train_loss : 0.1315 | train_acc : 95.49%
+   epoch : 20 |  test_loss : 0.9160 |  test_acc : 77.42%
+ └ Updated best eval loss : 0.1315
+   epoch : 21 | train_loss : 0.1309 | train_acc : 95.34%
+   epoch : 21 |  test_loss : 0.9247 |  test_acc : 77.75%
+ └ Updated best eval loss : 0.1309
+   epoch : 22 | train_loss : 0.1346 | train_acc : 95.14%
+   epoch : 22 |  test_loss : 1.0448 |  test_acc : 75.84%
+   epoch : 23 | train_loss : 0.1199 | train_acc : 95.81%
+   epoch : 23 |  test_loss : 0.8680 |  test_acc : 78.57%
+ └ Updated best eval loss : 0.1199
+   epoch : 24 | train_loss : 0.1155 | train_acc : 96.03%
+   epoch : 24 |  test_loss : 0.7834 |  test_acc : 80.15%
+ └ Updated best eval loss : 0.1155
+   epoch : 25 | train_loss : 0.1158 | train_acc : 95.83%
+   epoch : 25 |  test_loss : 0.9016 |  test_acc : 78.95%
+   epoch : 26 | train_loss : 0.1023 | train_acc : 96.39%
+   epoch : 26 |  test_loss : 1.0664 |  test_acc : 76.65%
+ └ Updated best eval loss : 0.1023
+   epoch : 27 | train_loss : 0.1049 | train_acc : 96.29%
+   epoch : 27 |  test_loss : 1.2603 |  test_acc : 72.38%
+   epoch : 28 | train_loss : 0.1052 | train_acc : 96.31%
+   epoch : 28 |  test_loss : 1.0652 |  test_acc : 77.02%
+   epoch : 29 | train_loss : 0.0969 | train_acc : 96.63%
+   epoch : 29 |  test_loss : 0.8661 |  test_acc : 80.25%
+ └ Updated best eval loss : 0.0969
+   epoch : 30 | train_loss : 0.1028 | train_acc : 96.36%
+   epoch : 30 |  test_loss : 0.8768 |  test_acc : 79.86%
+   epoch : 31 | train_loss : 0.1004 | train_acc : 96.52%
+   epoch : 31 |  test_loss : 1.0649 |  test_acc : 75.80%
+   epoch : 32 | train_loss : 0.0984 | train_acc : 96.55%
+   epoch : 32 |  test_loss : 0.9055 |  test_acc : 78.35%
+   epoch : 33 | train_loss : 0.0990 | train_acc : 96.58%
+   epoch : 33 |  test_loss : 0.9037 |  test_acc : 79.50%
+   epoch : 34 | train_loss : 0.0889 | train_acc : 96.87%
+   epoch : 34 |  test_loss : 1.0529 |  test_acc : 76.08%
+ └ Updated best eval loss : 0.0889
+   epoch : 35 | train_loss : 0.0981 | train_acc : 96.54%
+   epoch : 35 |  test_loss : 0.8689 |  test_acc : 79.75%
+   epoch : 36 | train_loss : 0.0861 | train_acc : 96.96%
+   epoch : 36 |  test_loss : 1.0627 |  test_acc : 76.61%
+ └ Updated best eval loss : 0.0861
+   epoch : 37 | train_loss : 0.0956 | train_acc : 96.66%
+   epoch : 37 |  test_loss : 0.8728 |  test_acc : 79.74%
+   epoch : 38 | train_loss : 0.0828 | train_acc : 97.16%
+   epoch : 38 |  test_loss : 0.9030 |  test_acc : 79.45%
+ └ Updated best eval loss : 0.0828
+   epoch : 39 | train_loss : 0.0909 | train_acc : 96.77%
+   epoch : 39 |  test_loss : 0.9551 |  test_acc : 78.08%
+   epoch : 40 | train_loss : 0.0889 | train_acc : 96.83%
+   epoch : 40 |  test_loss : 0.9373 |  test_acc : 79.15%
+   epoch : 41 | train_loss : 0.0929 | train_acc : 96.75%
+   epoch : 41 |  test_loss : 0.9424 |  test_acc : 78.58%
+   epoch : 42 | train_loss : 0.0876 | train_acc : 96.97%
+   epoch : 42 |  test_loss : 0.9154 |  test_acc : 79.45%
+   epoch : 43 | train_loss : 0.0918 | train_acc : 96.74%
+   epoch : 43 |  test_loss : 1.0202 |  test_acc : 77.58%
+   epoch : 44 | train_loss : 0.0802 | train_acc : 97.16%
+   epoch : 44 |  test_loss : 0.9381 |  test_acc : 78.96%
+ └ Updated best eval loss : 0.0802
+   epoch : 45 | train_loss : 0.0844 | train_acc : 96.99%
+   epoch : 45 |  test_loss : 0.7530 |  test_acc : 82.04%
+   epoch : 46 | train_loss : 0.0776 | train_acc : 97.32%
+   epoch : 46 |  test_loss : 0.9986 |  test_acc : 78.39%
+ └ Updated best eval loss : 0.0776
+   epoch : 47 | train_loss : 0.0851 | train_acc : 97.06%
+   epoch : 47 |  test_loss : 0.8138 |  test_acc : 80.81%
+   epoch : 48 | train_loss : 0.0945 | train_acc : 96.69%
+   epoch : 48 |  test_loss : 0.8139 |  test_acc : 80.45%
+   epoch : 49 | train_loss : 0.0828 | train_acc : 97.20%
+   epoch : 49 |  test_loss : 0.9359 |  test_acc : 78.51%
+   epoch : 50 | train_loss : 0.0726 | train_acc : 97.51%
+   epoch : 50 |  test_loss : 0.8486 |  test_acc : 80.99%
+ └ Updated best eval loss : 0.0726
+   epoch : 51 | train_loss : 0.0830 | train_acc : 97.07%
+   epoch : 51 |  test_loss : 0.9019 |  test_acc : 79.25%
+   epoch : 52 | train_loss : 0.0891 | train_acc : 96.82%
+   epoch : 52 |  test_loss : 1.2888 |  test_acc : 74.17%
+   epoch : 53 | train_loss : 0.0862 | train_acc : 97.03%
+   epoch : 53 |  test_loss : 1.0604 |  test_acc : 76.85%
+   epoch : 54 | train_loss : 0.0837 | train_acc : 97.02%
+   epoch : 54 |  test_loss : 1.0620 |  test_acc : 77.13%
+   epoch : 55 | train_loss : 0.0851 | train_acc : 96.96%
+   epoch : 55 |  test_loss : 0.9072 |  test_acc : 78.25%
+   epoch : 56 | train_loss : 0.0860 | train_acc : 96.99%
+   epoch : 56 |  test_loss : 1.0620 |  test_acc : 76.21%
+   epoch : 57 | train_loss : 0.0727 | train_acc : 97.49%
+   epoch : 57 |  test_loss : 0.8983 |  test_acc : 79.63%
+   epoch : 58 | train_loss : 0.0797 | train_acc : 97.24%
+   epoch : 58 |  test_loss : 0.8855 |  test_acc : 79.00%
+   epoch : 59 | train_loss : 0.0743 | train_acc : 97.41%
+   epoch : 59 |  test_loss : 0.8736 |  test_acc : 79.51%
+   epoch : 60 | train_loss : 0.0887 | train_acc : 96.92%
+   epoch : 60 |  test_loss : 1.0773 |  test_acc : 76.30%
+   epoch : 61 | train_loss : 0.0714 | train_acc : 97.61%
+   epoch : 61 |  test_loss : 1.0313 |  test_acc : 77.76%
+ └ Updated best eval loss : 0.0714
+   epoch : 62 | train_loss : 0.0858 | train_acc : 96.96%
+   epoch : 62 |  test_loss : 0.9897 |  test_acc : 78.12%
+   epoch : 63 | train_loss : 0.0730 | train_acc : 97.46%
+   epoch : 63 |  test_loss : 0.9787 |  test_acc : 78.91%
+   epoch : 64 | train_loss : 0.0902 | train_acc : 96.82%
+   epoch : 64 |  test_loss : 0.8894 |  test_acc : 80.30%
+   epoch : 65 | train_loss : 0.0833 | train_acc : 97.10%
+   epoch : 65 |  test_loss : 0.9265 |  test_acc : 79.06%
+   epoch : 66 | train_loss : 0.0725 | train_acc : 97.44%
+   epoch : 66 |  test_loss : 0.8041 |  test_acc : 81.23%
+   epoch : 67 | train_loss : 0.0794 | train_acc : 97.20%
+   epoch : 67 |  test_loss : 0.8077 |  test_acc : 80.35%
+   epoch : 68 | train_loss : 0.0683 | train_acc : 97.62%
+   epoch : 68 |  test_loss : 0.8666 |  test_acc : 79.26%
+ └ Updated best eval loss : 0.0683
+   epoch : 69 | train_loss : 0.0683 | train_acc : 97.61%
+   epoch : 69 |  test_loss : 1.0090 |  test_acc : 78.27%
+   epoch : 70 | train_loss : 0.0871 | train_acc : 97.01%
+   epoch : 70 |  test_loss : 1.0309 |  test_acc : 75.84%
+   epoch : 71 | train_loss : 0.0755 | train_acc : 97.41%
+   epoch : 71 |  test_loss : 0.9346 |  test_acc : 79.40%
+   epoch : 72 | train_loss : 0.0800 | train_acc : 97.15%
+   epoch : 72 |  test_loss : 0.9743 |  test_acc : 77.79%
+   epoch : 73 | train_loss : 0.0800 | train_acc : 97.24%
+   epoch : 73 |  test_loss : 1.0898 |  test_acc : 76.04%
+   epoch : 74 | train_loss : 0.0754 | train_acc : 97.33%
+   epoch : 74 |  test_loss : 0.8374 |  test_acc : 80.35%
+   epoch : 75 | train_loss : 0.0788 | train_acc : 97.32%
+   epoch : 75 |  test_loss : 0.8703 |  test_acc : 80.27%
+   epoch : 76 | train_loss : 0.0663 | train_acc : 97.74%
+   epoch : 76 |  test_loss : 1.0386 |  test_acc : 76.75%
+ └ Updated best eval loss : 0.0663
+   epoch : 77 | train_loss : 0.0754 | train_acc : 97.34%
+   epoch : 77 |  test_loss : 1.1008 |  test_acc : 77.05%
+   epoch : 78 | train_loss : 0.0730 | train_acc : 97.52%
+   epoch : 78 |  test_loss : 0.9557 |  test_acc : 79.00%
+   epoch : 79 | train_loss : 0.0770 | train_acc : 97.31%
+   epoch : 79 |  test_loss : 0.8530 |  test_acc : 79.66%
+   epoch : 80 | train_loss : 0.0887 | train_acc : 96.88%
+   epoch : 80 |  test_loss : 0.9273 |  test_acc : 79.41%
+   epoch : 81 | train_loss : 0.0717 | train_acc : 97.44%
+   epoch : 81 |  test_loss : 0.8459 |  test_acc : 79.82%
+   epoch : 82 | train_loss : 0.0717 | train_acc : 97.51%
+   epoch : 82 |  test_loss : 0.9489 |  test_acc : 79.50%
+   epoch : 83 | train_loss : 0.0654 | train_acc : 97.72%
+   epoch : 83 |  test_loss : 0.8894 |  test_acc : 80.77%
+ └ Updated best eval loss : 0.0654
+   epoch : 84 | train_loss : 0.0797 | train_acc : 97.21%
+   epoch : 84 |  test_loss : 0.9847 |  test_acc : 78.81%
+   epoch : 85 | train_loss : 0.0778 | train_acc : 97.28%
+   epoch : 85 |  test_loss : 0.9089 |  test_acc : 79.08%
+   epoch : 86 | train_loss : 0.0735 | train_acc : 97.44%
+   epoch : 86 |  test_loss : 0.8918 |  test_acc : 81.08%
+   epoch : 87 | train_loss : 0.0740 | train_acc : 97.52%
+   epoch : 87 |  test_loss : 0.8436 |  test_acc : 80.17%
+   epoch : 88 | train_loss : 0.0728 | train_acc : 97.46%
+   epoch : 88 |  test_loss : 0.9080 |  test_acc : 79.76%
+   epoch : 89 | train_loss : 0.0644 | train_acc : 97.75%
+   epoch : 89 |  test_loss : 0.9227 |  test_acc : 79.20%
+ └ Updated best eval loss : 0.0644
+   epoch : 90 | train_loss : 0.0748 | train_acc : 97.38%
+   epoch : 90 |  test_loss : 0.9163 |  test_acc : 78.98%
+   epoch : 91 | train_loss : 0.0815 | train_acc : 97.15%
+   epoch : 91 |  test_loss : 1.0308 |  test_acc : 76.62%
+   epoch : 92 | train_loss : 0.0854 | train_acc : 97.00%
+   epoch : 92 |  test_loss : 1.0735 |  test_acc : 76.12%
+   epoch : 93 | train_loss : 0.0691 | train_acc : 97.65%
+   epoch : 93 |  test_loss : 1.0057 |  test_acc : 78.39%
+   epoch : 94 | train_loss : 0.0670 | train_acc : 97.76%
+   epoch : 94 |  test_loss : 0.9331 |  test_acc : 79.42%
+   epoch : 95 | train_loss : 0.0746 | train_acc : 97.43%
+   epoch : 95 |  test_loss : 0.9250 |  test_acc : 79.40%
+   epoch : 96 | train_loss : 0.0662 | train_acc : 97.71%
+   epoch : 96 |  test_loss : 0.8707 |  test_acc : 80.06%
+   epoch : 97 | train_loss : 0.0750 | train_acc : 97.39%
+   epoch : 97 |  test_loss : 0.8609 |  test_acc : 80.66%
+   epoch : 98 | train_loss : 0.0717 | train_acc : 97.47%
+   epoch : 98 |  test_loss : 0.9012 |  test_acc : 79.18%
+   epoch : 99 | train_loss : 0.0749 | train_acc : 97.39%
+   epoch : 99 |  test_loss : 0.9360 |  test_acc : 80.08%
+   epoch : 100 | train_loss : 0.0640 | train_acc : 97.77%
+   epoch : 100 |  test_loss : 0.9065 |  test_acc : 79.40%
+ └ Updated best eval loss : 0.0640
+   epoch : 101 | train_loss : 0.0228 | train_acc : 99.32%
+   epoch : 101 |  test_loss : 0.6784 |  test_acc : 84.43%
+ └ Updated best eval loss : 0.0228
+   epoch : 102 | train_loss : 0.0064 | train_acc : 99.94%
+   epoch : 102 |  test_loss : 0.6756 |  test_acc : 84.64%
+ └ Updated best eval loss : 0.0064
+   epoch : 103 | train_loss : 0.0043 | train_acc : 99.98%
+   epoch : 103 |  test_loss : 0.6816 |  test_acc : 84.68%
+ └ Updated best eval loss : 0.0043
+   epoch : 104 | train_loss : 0.0033 | train_acc : 99.99%
+   epoch : 104 |  test_loss : 0.6856 |  test_acc : 84.80%
+ └ Updated best eval loss : 0.0033
+   epoch : 105 | train_loss : 0.0028 | train_acc : 100.00%
+   epoch : 105 |  test_loss : 0.6800 |  test_acc : 84.82%
+ └ Updated best eval loss : 0.0028
+   epoch : 106 | train_loss : 0.0025 | train_acc : 100.00%
+   epoch : 106 |  test_loss : 0.6802 |  test_acc : 84.90%
+ └ Updated best eval loss : 0.0025
+   epoch : 107 | train_loss : 0.0023 | train_acc : 99.99%
+   epoch : 107 |  test_loss : 0.6792 |  test_acc : 84.85%
+ └ Updated best eval loss : 0.0023
+   epoch : 108 | train_loss : 0.0020 | train_acc : 100.00%
+   epoch : 108 |  test_loss : 0.6827 |  test_acc : 85.01%
+ └ Updated best eval loss : 0.0020
+   epoch : 109 | train_loss : 0.0018 | train_acc : 100.00%
+   epoch : 109 |  test_loss : 0.6776 |  test_acc : 84.85%
+ └ Updated best eval loss : 0.0018
+   epoch : 110 | train_loss : 0.0017 | train_acc : 100.00%
+   epoch : 110 |  test_loss : 0.6788 |  test_acc : 84.88%
+ └ Updated best eval loss : 0.0017
+   epoch : 111 | train_loss : 0.0016 | train_acc : 100.00%
+   epoch : 111 |  test_loss : 0.6803 |  test_acc : 84.93%
+ └ Updated best eval loss : 0.0016
+   epoch : 112 | train_loss : 0.0015 | train_acc : 100.00%
+   epoch : 112 |  test_loss : 0.6799 |  test_acc : 84.77%
+ └ Updated best eval loss : 0.0015
+   epoch : 113 | train_loss : 0.0015 | train_acc : 100.00%
+   epoch : 113 |  test_loss : 0.6850 |  test_acc : 85.05%
+   epoch : 114 | train_loss : 0.0014 | train_acc : 100.00%
+   epoch : 114 |  test_loss : 0.6784 |  test_acc : 84.98%
+ └ Updated best eval loss : 0.0014
+   epoch : 115 | train_loss : 0.0014 | train_acc : 100.00%
+   epoch : 115 |  test_loss : 0.6764 |  test_acc : 84.87%
+ └ Updated best eval loss : 0.0014
+   epoch : 116 | train_loss : 0.0013 | train_acc : 100.00%
+   epoch : 116 |  test_loss : 0.6742 |  test_acc : 84.93%
+ └ Updated best eval loss : 0.0013
+   epoch : 117 | train_loss : 0.0013 | train_acc : 100.00%
+   epoch : 117 |  test_loss : 0.6812 |  test_acc : 85.03%
+ └ Updated best eval loss : 0.0013
+   epoch : 118 | train_loss : 0.0012 | train_acc : 100.00%
+   epoch : 118 |  test_loss : 0.6740 |  test_acc : 84.97%
+ └ Updated best eval loss : 0.0012
+   epoch : 119 | train_loss : 0.0012 | train_acc : 100.00%
+   epoch : 119 |  test_loss : 0.6690 |  test_acc : 85.03%
+   epoch : 120 | train_loss : 0.0012 | train_acc : 100.00%
+   epoch : 120 |  test_loss : 0.6752 |  test_acc : 84.92%
+ └ Updated best eval loss : 0.0012
+   epoch : 121 | train_loss : 0.0012 | train_acc : 100.00%
+   epoch : 121 |  test_loss : 0.6734 |  test_acc : 84.80%
+ └ Updated best eval loss : 0.0012
+   epoch : 122 | train_loss : 0.0012 | train_acc : 100.00%
+   epoch : 122 |  test_loss : 0.6700 |  test_acc : 84.88%
+   epoch : 123 | train_loss : 0.0011 | train_acc : 100.00%
+   epoch : 123 |  test_loss : 0.6691 |  test_acc : 85.01%
+ └ Updated best eval loss : 0.0011
+   epoch : 124 | train_loss : 0.0011 | train_acc : 100.00%
+   epoch : 124 |  test_loss : 0.6689 |  test_acc : 84.86%
+ └ Updated best eval loss : 0.0011
+   epoch : 125 | train_loss : 0.0010 | train_acc : 100.00%
+   epoch : 125 |  test_loss : 0.6672 |  test_acc : 84.94%
+ └ Updated best eval loss : 0.0010
+   epoch : 126 | train_loss : 0.0011 | train_acc : 100.00%
+   epoch : 126 |  test_loss : 0.6711 |  test_acc : 85.07%
+   epoch : 127 | train_loss : 0.0011 | train_acc : 100.00%
+   epoch : 127 |  test_loss : 0.6643 |  test_acc : 85.01%
+   epoch : 128 | train_loss : 0.0010 | train_acc : 100.00%
+   epoch : 128 |  test_loss : 0.6631 |  test_acc : 85.04%
+ └ Updated best eval loss : 0.0010
+   epoch : 129 | train_loss : 0.0010 | train_acc : 100.00%
+   epoch : 129 |  test_loss : 0.6646 |  test_acc : 84.91%
+   epoch : 130 | train_loss : 0.0011 | train_acc : 100.00%
+   epoch : 130 |  test_loss : 0.6651 |  test_acc : 85.08%
+   epoch : 131 | train_loss : 0.0010 | train_acc : 100.00%
+   epoch : 131 |  test_loss : 0.6605 |  test_acc : 84.98%
+   epoch : 132 | train_loss : 0.0010 | train_acc : 100.00%
+   epoch : 132 |  test_loss : 0.6575 |  test_acc : 85.07%
+ └ Updated best eval loss : 0.0010
+   epoch : 133 | train_loss : 0.0010 | train_acc : 100.00%
+   epoch : 133 |  test_loss : 0.6572 |  test_acc : 85.14%
+   epoch : 134 | train_loss : 0.0010 | train_acc : 100.00%
+   epoch : 134 |  test_loss : 0.6560 |  test_acc : 84.86%
+ └ Updated best eval loss : 0.0010
+   epoch : 135 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 135 |  test_loss : 0.6563 |  test_acc : 85.06%
+ └ Updated best eval loss : 0.0009
+   epoch : 136 | train_loss : 0.0010 | train_acc : 100.00%
+   epoch : 136 |  test_loss : 0.6557 |  test_acc : 85.02%
+   epoch : 137 | train_loss : 0.0010 | train_acc : 100.00%
+   epoch : 137 |  test_loss : 0.6534 |  test_acc : 85.15%
+   epoch : 138 | train_loss : 0.0010 | train_acc : 100.00%
+   epoch : 138 |  test_loss : 0.6555 |  test_acc : 85.13%
+   epoch : 139 | train_loss : 0.0010 | train_acc : 100.00%
+   epoch : 139 |  test_loss : 0.6514 |  test_acc : 85.13%
+   epoch : 140 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 140 |  test_loss : 0.6484 |  test_acc : 85.04%
+ └ Updated best eval loss : 0.0009
+   epoch : 141 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 141 |  test_loss : 0.6493 |  test_acc : 85.15%
+   epoch : 142 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 142 |  test_loss : 0.6435 |  test_acc : 85.12%
+   epoch : 143 | train_loss : 0.0010 | train_acc : 100.00%
+   epoch : 143 |  test_loss : 0.6472 |  test_acc : 85.05%
+   epoch : 144 | train_loss : 0.0010 | train_acc : 100.00%
+   epoch : 144 |  test_loss : 0.6416 |  test_acc : 85.10%
+   epoch : 145 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 145 |  test_loss : 0.6434 |  test_acc : 85.10%
+ └ Updated best eval loss : 0.0009
+   epoch : 146 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 146 |  test_loss : 0.6427 |  test_acc : 85.05%
+ └ Updated best eval loss : 0.0009
+   epoch : 147 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 147 |  test_loss : 0.6405 |  test_acc : 85.09%
+   epoch : 148 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 148 |  test_loss : 0.6391 |  test_acc : 85.14%
+ └ Updated best eval loss : 0.0009
+   epoch : 149 | train_loss : 0.0010 | train_acc : 100.00%
+   epoch : 149 |  test_loss : 0.6390 |  test_acc : 85.14%
+   epoch : 150 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 150 |  test_loss : 0.6361 |  test_acc : 85.01%
+   epoch : 151 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 151 |  test_loss : 0.6342 |  test_acc : 85.14%
+   epoch : 152 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 152 |  test_loss : 0.6349 |  test_acc : 85.26%
+   epoch : 153 | train_loss : 0.0010 | train_acc : 100.00%
+   epoch : 153 |  test_loss : 0.6376 |  test_acc : 85.07%
+   epoch : 154 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 154 |  test_loss : 0.6359 |  test_acc : 85.20%
+   epoch : 155 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 155 |  test_loss : 0.6378 |  test_acc : 85.25%
+   epoch : 156 | train_loss : 0.0010 | train_acc : 100.00%
+   epoch : 156 |  test_loss : 0.6395 |  test_acc : 85.27%
+   epoch : 157 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 157 |  test_loss : 0.6341 |  test_acc : 85.11%
+   epoch : 158 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 158 |  test_loss : 0.6386 |  test_acc : 85.24%
+   epoch : 159 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 159 |  test_loss : 0.6353 |  test_acc : 85.10%
+   epoch : 160 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 160 |  test_loss : 0.6353 |  test_acc : 85.14%
+ └ Updated best eval loss : 0.0009
+   epoch : 161 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 161 |  test_loss : 0.6338 |  test_acc : 85.19%
+   epoch : 162 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 162 |  test_loss : 0.6372 |  test_acc : 85.20%
+   epoch : 163 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 163 |  test_loss : 0.6365 |  test_acc : 85.17%
+   epoch : 164 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 164 |  test_loss : 0.6362 |  test_acc : 85.10%
+   epoch : 165 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 165 |  test_loss : 0.6369 |  test_acc : 85.19%
+ └ Updated best eval loss : 0.0009
+   epoch : 166 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 166 |  test_loss : 0.6361 |  test_acc : 85.24%
+   epoch : 167 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 167 |  test_loss : 0.6358 |  test_acc : 85.04%
+   epoch : 168 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 168 |  test_loss : 0.6331 |  test_acc : 85.25%
+   epoch : 169 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 169 |  test_loss : 0.6385 |  test_acc : 85.08%
+   epoch : 170 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 170 |  test_loss : 0.6296 |  test_acc : 85.17%
+   epoch : 171 | train_loss : 0.0010 | train_acc : 100.00%
+   epoch : 171 |  test_loss : 0.6391 |  test_acc : 85.23%
+   epoch : 172 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 172 |  test_loss : 0.6341 |  test_acc : 85.09%
+   epoch : 173 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 173 |  test_loss : 0.6352 |  test_acc : 85.19%
+   epoch : 174 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 174 |  test_loss : 0.6367 |  test_acc : 84.92%
+   epoch : 175 | train_loss : 0.0010 | train_acc : 100.00%
+   epoch : 175 |  test_loss : 0.6324 |  test_acc : 85.12%
+   epoch : 176 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 176 |  test_loss : 0.6360 |  test_acc : 85.05%
+   epoch : 177 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 177 |  test_loss : 0.6331 |  test_acc : 85.22%
+   epoch : 178 | train_loss : 0.0010 | train_acc : 100.00%
+   epoch : 178 |  test_loss : 0.6353 |  test_acc : 85.30%
+   epoch : 179 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 179 |  test_loss : 0.6323 |  test_acc : 85.26%
+   epoch : 180 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 180 |  test_loss : 0.6355 |  test_acc : 85.26%
+   epoch : 181 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 181 |  test_loss : 0.6352 |  test_acc : 85.22%
+   epoch : 182 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 182 |  test_loss : 0.6363 |  test_acc : 85.23%
+   epoch : 183 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 183 |  test_loss : 0.6374 |  test_acc : 85.18%
+   epoch : 184 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 184 |  test_loss : 0.6344 |  test_acc : 85.15%
+   epoch : 185 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 185 |  test_loss : 0.6349 |  test_acc : 85.32%
+   epoch : 186 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 186 |  test_loss : 0.6354 |  test_acc : 85.18%
+   epoch : 187 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 187 |  test_loss : 0.6317 |  test_acc : 85.17%
+   epoch : 188 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 188 |  test_loss : 0.6366 |  test_acc : 85.18%
+   epoch : 189 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 189 |  test_loss : 0.6328 |  test_acc : 85.25%
+   epoch : 190 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 190 |  test_loss : 0.6319 |  test_acc : 85.17%
+   epoch : 191 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 191 |  test_loss : 0.6329 |  test_acc : 85.16%
+   epoch : 192 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 192 |  test_loss : 0.6351 |  test_acc : 85.10%
+   epoch : 193 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 193 |  test_loss : 0.6326 |  test_acc : 85.18%
+   epoch : 194 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 194 |  test_loss : 0.6334 |  test_acc : 85.14%
+   epoch : 195 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 195 |  test_loss : 0.6313 |  test_acc : 85.31%
+   epoch : 196 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 196 |  test_loss : 0.6327 |  test_acc : 85.13%
+ └ Updated best eval loss : 0.0009
+   epoch : 197 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 197 |  test_loss : 0.6317 |  test_acc : 85.15%
+   epoch : 198 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 198 |  test_loss : 0.6349 |  test_acc : 85.28%
+   epoch : 199 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 199 |  test_loss : 0.6348 |  test_acc : 85.27%
+   epoch : 200 | train_loss : 0.0009 | train_acc : 100.00%
+   epoch : 200 |  test_loss : 0.6354 |  test_acc : 85.11%
+Finished training

@@ -1,0 +1,757 @@
+Files already downloaded and verified
+Files already downloaded and verified
+--------------------------------------------------
+MyResNet32_128_SGD_MultiStepLR does not exist. Created a new log.
+--------------------------------------------------
+Ref_ResNet32_128_SGD_MultiStepLR does not exist. Created a new log.
+--------------------------------------------------
+1/200 | SGD   - MultiStepLR       | Train : 2.0940 / 27.00% | Test : 1.5286 / 43.10%
+ └ Updated best eval loss : 2.0940
+1/200 | SGD   - MultiStepLR       | Train : 1.9711 / 29.89% | Test : 1.9383 / 35.24%
+ └ Updated best eval loss : 1.9711
+--------------------------------------------------
+2/200 | SGD   - MultiStepLR       | Train : 1.3455 / 50.98% | Test : 1.2515 / 55.34%
+ └ Updated best eval loss : 1.3455
+2/200 | SGD   - MultiStepLR       | Train : 1.2927 / 53.11% | Test : 1.1638 / 58.04%
+ └ Updated best eval loss : 1.2927
+--------------------------------------------------
+3/200 | SGD   - MultiStepLR       | Train : 1.0262 / 63.28% | Test : 1.0101 / 64.88%
+ └ Updated best eval loss : 1.0262
+3/200 | SGD   - MultiStepLR       | Train : 0.9508 / 66.21% | Test : 0.9789 / 65.95%
+ └ Updated best eval loss : 0.9508
+--------------------------------------------------
+4/200 | SGD   - MultiStepLR       | Train : 0.8471 / 69.91% | Test : 1.0191 / 65.82%
+ └ Updated best eval loss : 0.8471
+4/200 | SGD   - MultiStepLR       | Train : 0.7620 / 73.15% | Test : 0.8038 / 72.35%
+ └ Updated best eval loss : 0.7620
+--------------------------------------------------
+5/200 | SGD   - MultiStepLR       | Train : 0.7329 / 74.29% | Test : 0.8958 / 69.32%
+ └ Updated best eval loss : 0.7329
+5/200 | SGD   - MultiStepLR       | Train : 0.6373 / 77.81% | Test : 0.7756 / 72.45%
+ └ Updated best eval loss : 0.6373
+--------------------------------------------------
+6/200 | SGD   - MultiStepLR       | Train : 0.6431 / 77.40% | Test : 0.8841 / 70.45%
+ └ Updated best eval loss : 0.6431
+6/200 | SGD   - MultiStepLR       | Train : 0.5563 / 80.65% | Test : 0.8013 / 73.26%
+ └ Updated best eval loss : 0.5563
+--------------------------------------------------
+7/200 | SGD   - MultiStepLR       | Train : 0.5788 / 79.73% | Test : 0.8855 / 70.95%
+ └ Updated best eval loss : 0.5788
+7/200 | SGD   - MultiStepLR       | Train : 0.4871 / 83.03% | Test : 0.7679 / 74.74%
+ └ Updated best eval loss : 0.4871
+--------------------------------------------------
+8/200 | SGD   - MultiStepLR       | Train : 0.5183 / 81.85% | Test : 0.9145 / 70.00%
+ └ Updated best eval loss : 0.5183
+8/200 | SGD   - MultiStepLR       | Train : 0.4351 / 84.88% | Test : 0.6666 / 77.13%
+ └ Updated best eval loss : 0.4351
+--------------------------------------------------
+9/200 | SGD   - MultiStepLR       | Train : 0.4649 / 83.60% | Test : 0.7422 / 74.79%
+ └ Updated best eval loss : 0.4649
+9/200 | SGD   - MultiStepLR       | Train : 0.3870 / 86.33% | Test : 0.7750 / 74.46%
+ └ Updated best eval loss : 0.3870
+--------------------------------------------------
+10/200 | SGD   - MultiStepLR       | Train : 0.4255 / 85.08% | Test : 0.8797 / 73.41%
+ └ Updated best eval loss : 0.4255
+10/200 | SGD   - MultiStepLR       | Train : 0.3484 / 87.83% | Test : 0.7112 / 77.11%
+ └ Updated best eval loss : 0.3484
+--------------------------------------------------
+11/200 | SGD   - MultiStepLR       | Train : 0.3916 / 86.11% | Test : 0.7768 / 75.38%
+ └ Updated best eval loss : 0.3916
+11/200 | SGD   - MultiStepLR       | Train : 0.3128 / 89.05% | Test : 0.6817 / 78.90%
+ └ Updated best eval loss : 0.3128
+--------------------------------------------------
+12/200 | SGD   - MultiStepLR       | Train : 0.3568 / 87.47% | Test : 0.7844 / 75.72%
+ └ Updated best eval loss : 0.3568
+12/200 | SGD   - MultiStepLR       | Train : 0.2806 / 90.01% | Test : 0.8392 / 76.12%
+ └ Updated best eval loss : 0.2806
+--------------------------------------------------
+13/200 | SGD   - MultiStepLR       | Train : 0.3275 / 88.39% | Test : 0.7257 / 77.96%
+ └ Updated best eval loss : 0.3275
+13/200 | SGD   - MultiStepLR       | Train : 0.2567 / 90.92% | Test : 0.6663 / 79.40%
+ └ Updated best eval loss : 0.2567
+--------------------------------------------------
+14/200 | SGD   - MultiStepLR       | Train : 0.3054 / 89.19% | Test : 0.8641 / 75.24%
+ └ Updated best eval loss : 0.3054
+14/200 | SGD   - MultiStepLR       | Train : 0.2305 / 91.87% | Test : 0.7234 / 79.39%
+ └ Updated best eval loss : 0.2305
+--------------------------------------------------
+15/200 | SGD   - MultiStepLR       | Train : 0.2787 / 90.01% | Test : 0.9074 / 74.25%
+ └ Updated best eval loss : 0.2787
+15/200 | SGD   - MultiStepLR       | Train : 0.2171 / 92.24% | Test : 0.7168 / 79.18%
+ └ Updated best eval loss : 0.2171
+--------------------------------------------------
+16/200 | SGD   - MultiStepLR       | Train : 0.2545 / 90.96% | Test : 1.0225 / 72.17%
+ └ Updated best eval loss : 0.2545
+16/200 | SGD   - MultiStepLR       | Train : 0.1873 / 93.37% | Test : 0.9411 / 77.36%
+ └ Updated best eval loss : 0.1873
+--------------------------------------------------
+17/200 | SGD   - MultiStepLR       | Train : 0.2412 / 91.41% | Test : 0.8726 / 75.45%
+ └ Updated best eval loss : 0.2412
+17/200 | SGD   - MultiStepLR       | Train : 0.1855 / 93.37% | Test : 0.8038 / 78.08%
+ └ Updated best eval loss : 0.1855
+--------------------------------------------------
+18/200 | SGD   - MultiStepLR       | Train : 0.2222 / 92.00% | Test : 0.7894 / 77.93%
+ └ Updated best eval loss : 0.2222
+18/200 | SGD   - MultiStepLR       | Train : 0.1648 / 94.21% | Test : 0.8399 / 78.43%
+ └ Updated best eval loss : 0.1648
+--------------------------------------------------
+19/200 | SGD   - MultiStepLR       | Train : 0.2059 / 92.58% | Test : 0.8360 / 76.43%
+ └ Updated best eval loss : 0.2059
+19/200 | SGD   - MultiStepLR       | Train : 0.1539 / 94.51% | Test : 0.9439 / 75.85%
+ └ Updated best eval loss : 0.1539
+--------------------------------------------------
+20/200 | SGD   - MultiStepLR       | Train : 0.2026 / 92.71% | Test : 1.0321 / 73.86%
+ └ Updated best eval loss : 0.2026
+20/200 | SGD   - MultiStepLR       | Train : 0.1538 / 94.47% | Test : 1.0195 / 75.16%
+ └ Updated best eval loss : 0.1538
+--------------------------------------------------
+21/200 | SGD   - MultiStepLR       | Train : 0.1819 / 93.58% | Test : 0.9161 / 76.88%
+ └ Updated best eval loss : 0.1819
+21/200 | SGD   - MultiStepLR       | Train : 0.1377 / 95.09% | Test : 0.8682 / 77.68%
+ └ Updated best eval loss : 0.1377
+--------------------------------------------------
+22/200 | SGD   - MultiStepLR       | Train : 0.1712 / 93.97% | Test : 0.9596 / 75.45%
+ └ Updated best eval loss : 0.1712
+22/200 | SGD   - MultiStepLR       | Train : 0.1345 / 95.16% | Test : 0.8883 / 77.69%
+ └ Updated best eval loss : 0.1345
+--------------------------------------------------
+23/200 | SGD   - MultiStepLR       | Train : 0.1748 / 93.70% | Test : 1.2100 / 71.09%
+23/200 | SGD   - MultiStepLR       | Train : 0.1302 / 95.38% | Test : 1.0633 / 76.30%
+ └ Updated best eval loss : 0.1302
+--------------------------------------------------
+24/200 | SGD   - MultiStepLR       | Train : 0.1587 / 94.41% | Test : 1.0710 / 74.40%
+ └ Updated best eval loss : 0.1587
+24/200 | SGD   - MultiStepLR       | Train : 0.1149 / 95.96% | Test : 0.9195 / 77.14%
+ └ Updated best eval loss : 0.1149
+--------------------------------------------------
+25/200 | SGD   - MultiStepLR       | Train : 0.1484 / 94.69% | Test : 1.0686 / 73.32%
+ └ Updated best eval loss : 0.1484
+25/200 | SGD   - MultiStepLR       | Train : 0.1127 / 95.99% | Test : 1.0175 / 76.27%
+ └ Updated best eval loss : 0.1127
+--------------------------------------------------
+26/200 | SGD   - MultiStepLR       | Train : 0.1482 / 94.74% | Test : 0.8919 / 77.33%
+ └ Updated best eval loss : 0.1482
+26/200 | SGD   - MultiStepLR       | Train : 0.1162 / 96.02% | Test : 0.7988 / 79.91%
+--------------------------------------------------
+27/200 | SGD   - MultiStepLR       | Train : 0.1407 / 95.04% | Test : 1.2650 / 72.23%
+ └ Updated best eval loss : 0.1407
+27/200 | SGD   - MultiStepLR       | Train : 0.1001 / 96.57% | Test : 0.8371 / 79.88%
+ └ Updated best eval loss : 0.1001
+--------------------------------------------------
+28/200 | SGD   - MultiStepLR       | Train : 0.1395 / 95.04% | Test : 1.0395 / 75.16%
+ └ Updated best eval loss : 0.1395
+28/200 | SGD   - MultiStepLR       | Train : 0.1080 / 96.22% | Test : 1.0870 / 75.09%
+--------------------------------------------------
+29/200 | SGD   - MultiStepLR       | Train : 0.1366 / 95.23% | Test : 1.0305 / 75.62%
+ └ Updated best eval loss : 0.1366
+29/200 | SGD   - MultiStepLR       | Train : 0.0978 / 96.48% | Test : 0.8302 / 79.38%
+ └ Updated best eval loss : 0.0978
+--------------------------------------------------
+30/200 | SGD   - MultiStepLR       | Train : 0.1246 / 95.61% | Test : 1.1620 / 73.19%
+ └ Updated best eval loss : 0.1246
+30/200 | SGD   - MultiStepLR       | Train : 0.1162 / 95.89% | Test : 1.0466 / 75.38%
+--------------------------------------------------
+31/200 | SGD   - MultiStepLR       | Train : 0.1229 / 95.73% | Test : 1.0431 / 75.96%
+ └ Updated best eval loss : 0.1229
+31/200 | SGD   - MultiStepLR       | Train : 0.1001 / 96.50% | Test : 0.8316 / 78.91%
+--------------------------------------------------
+32/200 | SGD   - MultiStepLR       | Train : 0.1231 / 95.63% | Test : 1.0088 / 76.09%
+32/200 | SGD   - MultiStepLR       | Train : 0.0923 / 96.66% | Test : 1.0531 / 76.78%
+ └ Updated best eval loss : 0.0923
+--------------------------------------------------
+33/200 | SGD   - MultiStepLR       | Train : 0.1206 / 95.82% | Test : 1.0288 / 76.42%
+ └ Updated best eval loss : 0.1206
+33/200 | SGD   - MultiStepLR       | Train : 0.1078 / 96.19% | Test : 1.0814 / 75.99%
+--------------------------------------------------
+34/200 | SGD   - MultiStepLR       | Train : 0.1222 / 95.78% | Test : 1.0738 / 75.73%
+34/200 | SGD   - MultiStepLR       | Train : 0.1014 / 96.39% | Test : 0.8767 / 78.84%
+--------------------------------------------------
+35/200 | SGD   - MultiStepLR       | Train : 0.1126 / 96.02% | Test : 1.1101 / 75.43%
+ └ Updated best eval loss : 0.1126
+35/200 | SGD   - MultiStepLR       | Train : 0.0865 / 96.97% | Test : 0.8541 / 80.05%
+ └ Updated best eval loss : 0.0865
+--------------------------------------------------
+36/200 | SGD   - MultiStepLR       | Train : 0.1206 / 95.80% | Test : 1.3033 / 72.50%
+36/200 | SGD   - MultiStepLR       | Train : 0.0875 / 97.00% | Test : 1.0964 / 76.56%
+--------------------------------------------------
+37/200 | SGD   - MultiStepLR       | Train : 0.1180 / 95.79% | Test : 1.0017 / 77.31%
+37/200 | SGD   - MultiStepLR       | Train : 0.0995 / 96.46% | Test : 0.9882 / 77.44%
+--------------------------------------------------
+38/200 | SGD   - MultiStepLR       | Train : 0.1133 / 95.98% | Test : 1.5947 / 68.04%
+38/200 | SGD   - MultiStepLR       | Train : 0.0875 / 97.02% | Test : 0.9139 / 79.41%
+--------------------------------------------------
+39/200 | SGD   - MultiStepLR       | Train : 0.1159 / 95.91% | Test : 1.0788 / 76.22%
+39/200 | SGD   - MultiStepLR       | Train : 0.0842 / 97.08% | Test : 0.8529 / 79.49%
+ └ Updated best eval loss : 0.0842
+--------------------------------------------------
+40/200 | SGD   - MultiStepLR       | Train : 0.1156 / 95.91% | Test : 1.0807 / 76.27%
+40/200 | SGD   - MultiStepLR       | Train : 0.0930 / 96.70% | Test : 0.9024 / 78.68%
+--------------------------------------------------
+41/200 | SGD   - MultiStepLR       | Train : 0.1041 / 96.38% | Test : 1.3887 / 71.56%
+ └ Updated best eval loss : 0.1041
+41/200 | SGD   - MultiStepLR       | Train : 0.0879 / 96.96% | Test : 0.9117 / 79.77%
+--------------------------------------------------
+42/200 | SGD   - MultiStepLR       | Train : 0.1083 / 96.09% | Test : 1.0974 / 75.11%
+42/200 | SGD   - MultiStepLR       | Train : 0.0875 / 96.93% | Test : 0.8893 / 78.90%
+--------------------------------------------------
+43/200 | SGD   - MultiStepLR       | Train : 0.1080 / 96.15% | Test : 1.0235 / 76.75%
+43/200 | SGD   - MultiStepLR       | Train : 0.0899 / 96.85% | Test : 0.7967 / 80.02%
+--------------------------------------------------
+44/200 | SGD   - MultiStepLR       | Train : 0.1017 / 96.49% | Test : 1.0915 / 76.65%
+ └ Updated best eval loss : 0.1017
+44/200 | SGD   - MultiStepLR       | Train : 0.0831 / 97.19% | Test : 0.9804 / 77.87%
+ └ Updated best eval loss : 0.0831
+--------------------------------------------------
+45/200 | SGD   - MultiStepLR       | Train : 0.0976 / 96.56% | Test : 1.0652 / 76.46%
+ └ Updated best eval loss : 0.0976
+45/200 | SGD   - MultiStepLR       | Train : 0.0691 / 97.63% | Test : 1.1797 / 75.53%
+ └ Updated best eval loss : 0.0691
+--------------------------------------------------
+46/200 | SGD   - MultiStepLR       | Train : 0.1116 / 96.02% | Test : 1.0040 / 76.67%
+46/200 | SGD   - MultiStepLR       | Train : 0.0933 / 96.72% | Test : 0.9011 / 79.09%
+--------------------------------------------------
+47/200 | SGD   - MultiStepLR       | Train : 0.1072 / 96.28% | Test : 1.0278 / 76.22%
+47/200 | SGD   - MultiStepLR       | Train : 0.0880 / 96.95% | Test : 0.9473 / 78.31%
+--------------------------------------------------
+48/200 | SGD   - MultiStepLR       | Train : 0.1060 / 96.22% | Test : 0.9647 / 77.60%
+48/200 | SGD   - MultiStepLR       | Train : 0.0887 / 96.90% | Test : 0.8988 / 78.71%
+--------------------------------------------------
+49/200 | SGD   - MultiStepLR       | Train : 0.0955 / 96.57% | Test : 1.2364 / 74.15%
+ └ Updated best eval loss : 0.0955
+49/200 | SGD   - MultiStepLR       | Train : 0.0882 / 96.94% | Test : 0.9373 / 79.33%
+--------------------------------------------------
+50/200 | SGD   - MultiStepLR       | Train : 0.0968 / 96.64% | Test : 1.0498 / 76.45%
+50/200 | SGD   - MultiStepLR       | Train : 0.0754 / 97.39% | Test : 0.9669 / 78.73%
+--------------------------------------------------
+51/200 | SGD   - MultiStepLR       | Train : 0.1138 / 95.98% | Test : 0.9773 / 77.02%
+51/200 | SGD   - MultiStepLR       | Train : 0.0920 / 96.64% | Test : 0.9292 / 78.95%
+--------------------------------------------------
+52/200 | SGD   - MultiStepLR       | Train : 0.0891 / 96.86% | Test : 1.0648 / 75.97%
+ └ Updated best eval loss : 0.0891
+52/200 | SGD   - MultiStepLR       | Train : 0.0912 / 96.81% | Test : 0.9863 / 77.69%
+--------------------------------------------------
+53/200 | SGD   - MultiStepLR       | Train : 0.0994 / 96.53% | Test : 1.0524 / 76.85%
+53/200 | SGD   - MultiStepLR       | Train : 0.0831 / 97.14% | Test : 0.8658 / 79.27%
+--------------------------------------------------
+54/200 | SGD   - MultiStepLR       | Train : 0.1169 / 95.88% | Test : 1.0590 / 76.31%
+54/200 | SGD   - MultiStepLR       | Train : 0.0722 / 97.48% | Test : 1.0610 / 77.73%
+--------------------------------------------------
+55/200 | SGD   - MultiStepLR       | Train : 0.0768 / 97.33% | Test : 1.1214 / 75.35%
+ └ Updated best eval loss : 0.0768
+55/200 | SGD   - MultiStepLR       | Train : 0.0885 / 96.97% | Test : 1.2296 / 74.72%
+--------------------------------------------------
+56/200 | SGD   - MultiStepLR       | Train : 0.1061 / 96.30% | Test : 0.9800 / 77.17%
+56/200 | SGD   - MultiStepLR       | Train : 0.0786 / 97.33% | Test : 0.8883 / 80.55%
+--------------------------------------------------
+57/200 | SGD   - MultiStepLR       | Train : 0.0924 / 96.69% | Test : 1.2168 / 72.64%
+57/200 | SGD   - MultiStepLR       | Train : 0.0789 / 97.23% | Test : 0.8292 / 80.30%
+--------------------------------------------------
+58/200 | SGD   - MultiStepLR       | Train : 0.1013 / 96.35% | Test : 0.9072 / 78.38%
+58/200 | SGD   - MultiStepLR       | Train : 0.0829 / 97.10% | Test : 1.0698 / 76.75%
+--------------------------------------------------
+59/200 | SGD   - MultiStepLR       | Train : 0.0992 / 96.48% | Test : 1.0417 / 75.94%
+59/200 | SGD   - MultiStepLR       | Train : 0.0824 / 97.16% | Test : 0.9671 / 79.22%
+--------------------------------------------------
+60/200 | SGD   - MultiStepLR       | Train : 0.0989 / 96.56% | Test : 1.0842 / 76.49%
+60/200 | SGD   - MultiStepLR       | Train : 0.0660 / 97.72% | Test : 1.0474 / 78.05%
+ └ Updated best eval loss : 0.0660
+--------------------------------------------------
+61/200 | SGD   - MultiStepLR       | Train : 0.1052 / 96.29% | Test : 1.0535 / 76.65%
+61/200 | SGD   - MultiStepLR       | Train : 0.0852 / 97.03% | Test : 0.9401 / 78.42%
+--------------------------------------------------
+62/200 | SGD   - MultiStepLR       | Train : 0.0992 / 96.52% | Test : 0.9275 / 77.70%
+62/200 | SGD   - MultiStepLR       | Train : 0.0790 / 97.28% | Test : 0.9810 / 78.85%
+--------------------------------------------------
+63/200 | SGD   - MultiStepLR       | Train : 0.0801 / 97.28% | Test : 0.9845 / 77.72%
+63/200 | SGD   - MultiStepLR       | Train : 0.0751 / 97.43% | Test : 0.9760 / 78.32%
+--------------------------------------------------
+64/200 | SGD   - MultiStepLR       | Train : 0.0955 / 96.72% | Test : 1.1191 / 75.15%
+64/200 | SGD   - MultiStepLR       | Train : 0.0921 / 96.82% | Test : 1.0689 / 76.18%
+--------------------------------------------------
+65/200 | SGD   - MultiStepLR       | Train : 0.1059 / 96.19% | Test : 0.8989 / 78.33%
+65/200 | SGD   - MultiStepLR       | Train : 0.0800 / 97.22% | Test : 0.9878 / 78.17%
+--------------------------------------------------
+66/200 | SGD   - MultiStepLR       | Train : 0.0935 / 96.75% | Test : 1.1724 / 75.34%
+66/200 | SGD   - MultiStepLR       | Train : 0.0818 / 97.16% | Test : 1.0034 / 78.45%
+--------------------------------------------------
+67/200 | SGD   - MultiStepLR       | Train : 0.0963 / 96.68% | Test : 1.0528 / 75.84%
+67/200 | SGD   - MultiStepLR       | Train : 0.0737 / 97.41% | Test : 1.0721 / 77.91%
+--------------------------------------------------
+68/200 | SGD   - MultiStepLR       | Train : 0.0876 / 96.99% | Test : 0.9803 / 77.84%
+68/200 | SGD   - MultiStepLR       | Train : 0.0793 / 97.30% | Test : 0.8936 / 79.56%
+--------------------------------------------------
+69/200 | SGD   - MultiStepLR       | Train : 0.0927 / 96.84% | Test : 1.1186 / 76.78%
+69/200 | SGD   - MultiStepLR       | Train : 0.0709 / 97.55% | Test : 1.0765 / 77.89%
+--------------------------------------------------
+70/200 | SGD   - MultiStepLR       | Train : 0.0961 / 96.55% | Test : 1.4711 / 69.38%
+70/200 | SGD   - MultiStepLR       | Train : 0.0830 / 97.15% | Test : 0.8803 / 79.77%
+--------------------------------------------------
+71/200 | SGD   - MultiStepLR       | Train : 0.0962 / 96.71% | Test : 1.2784 / 73.63%
+71/200 | SGD   - MultiStepLR       | Train : 0.0854 / 96.98% | Test : 0.8991 / 78.29%
+--------------------------------------------------
+72/200 | SGD   - MultiStepLR       | Train : 0.0975 / 96.65% | Test : 1.2852 / 74.03%
+72/200 | SGD   - MultiStepLR       | Train : 0.0662 / 97.65% | Test : 1.1436 / 77.48%
+--------------------------------------------------
+73/200 | SGD   - MultiStepLR       | Train : 0.0910 / 96.83% | Test : 0.9626 / 77.20%
+73/200 | SGD   - MultiStepLR       | Train : 0.0774 / 97.32% | Test : 0.8079 / 80.49%
+--------------------------------------------------
+74/200 | SGD   - MultiStepLR       | Train : 0.0882 / 96.89% | Test : 1.3776 / 72.20%
+74/200 | SGD   - MultiStepLR       | Train : 0.0789 / 97.23% | Test : 0.8932 / 79.50%
+--------------------------------------------------
+75/200 | SGD   - MultiStepLR       | Train : 0.0930 / 96.81% | Test : 0.9816 / 77.12%
+75/200 | SGD   - MultiStepLR       | Train : 0.0739 / 97.38% | Test : 0.8798 / 79.26%
+--------------------------------------------------
+76/200 | SGD   - MultiStepLR       | Train : 0.0942 / 96.69% | Test : 1.0214 / 76.98%
+76/200 | SGD   - MultiStepLR       | Train : 0.0759 / 97.38% | Test : 0.8824 / 78.73%
+--------------------------------------------------
+77/200 | SGD   - MultiStepLR       | Train : 0.0874 / 96.92% | Test : 0.9082 / 79.01%
+77/200 | SGD   - MultiStepLR       | Train : 0.0689 / 97.60% | Test : 0.9152 / 78.80%
+--------------------------------------------------
+78/200 | SGD   - MultiStepLR       | Train : 0.0885 / 96.97% | Test : 1.1014 / 77.33%
+78/200 | SGD   - MultiStepLR       | Train : 0.0723 / 97.51% | Test : 0.8489 / 80.79%
+--------------------------------------------------
+79/200 | SGD   - MultiStepLR       | Train : 0.0812 / 97.11% | Test : 1.1435 / 75.91%
+79/200 | SGD   - MultiStepLR       | Train : 0.0798 / 97.30% | Test : 0.9439 / 78.33%
+--------------------------------------------------
+80/200 | SGD   - MultiStepLR       | Train : 0.0965 / 96.58% | Test : 1.0557 / 76.75%
+80/200 | SGD   - MultiStepLR       | Train : 0.0855 / 97.06% | Test : 0.8329 / 79.97%
+--------------------------------------------------
+81/200 | SGD   - MultiStepLR       | Train : 0.0904 / 96.78% | Test : 0.9238 / 78.12%
+81/200 | SGD   - MultiStepLR       | Train : 0.0804 / 97.24% | Test : 0.9596 / 78.69%
+--------------------------------------------------
+82/200 | SGD   - MultiStepLR       | Train : 0.0899 / 96.85% | Test : 1.2727 / 73.13%
+82/200 | SGD   - MultiStepLR       | Train : 0.0576 / 98.04% | Test : 0.8175 / 81.47%
+ └ Updated best eval loss : 0.0576
+--------------------------------------------------
+83/200 | SGD   - MultiStepLR       | Train : 0.0924 / 96.78% | Test : 1.1470 / 74.52%
+83/200 | SGD   - MultiStepLR       | Train : 0.0738 / 97.46% | Test : 1.0377 / 77.99%
+--------------------------------------------------
+84/200 | SGD   - MultiStepLR       | Train : 0.0928 / 96.76% | Test : 0.9265 / 77.31%
+84/200 | SGD   - MultiStepLR       | Train : 0.0835 / 97.18% | Test : 0.8725 / 79.59%
+--------------------------------------------------
+85/200 | SGD   - MultiStepLR       | Train : 0.0900 / 96.84% | Test : 0.8963 / 79.07%
+85/200 | SGD   - MultiStepLR       | Train : 0.0760 / 97.32% | Test : 1.0916 / 76.68%
+--------------------------------------------------
+86/200 | SGD   - MultiStepLR       | Train : 0.0812 / 97.19% | Test : 1.0807 / 76.40%
+86/200 | SGD   - MultiStepLR       | Train : 0.0693 / 97.54% | Test : 0.8604 / 79.78%
+--------------------------------------------------
+87/200 | SGD   - MultiStepLR       | Train : 0.0790 / 97.16% | Test : 1.0653 / 76.81%
+87/200 | SGD   - MultiStepLR       | Train : 0.0602 / 97.93% | Test : 0.9003 / 79.79%
+--------------------------------------------------
+88/200 | SGD   - MultiStepLR       | Train : 0.0959 / 96.63% | Test : 1.1221 / 75.08%
+88/200 | SGD   - MultiStepLR       | Train : 0.0882 / 96.84% | Test : 0.9497 / 77.55%
+--------------------------------------------------
+89/200 | SGD   - MultiStepLR       | Train : 0.0926 / 96.75% | Test : 0.8679 / 79.37%
+89/200 | SGD   - MultiStepLR       | Train : 0.0721 / 97.59% | Test : 1.1629 / 76.65%
+--------------------------------------------------
+90/200 | SGD   - MultiStepLR       | Train : 0.0871 / 96.92% | Test : 0.9667 / 77.57%
+90/200 | SGD   - MultiStepLR       | Train : 0.0710 / 97.52% | Test : 1.1729 / 75.25%
+--------------------------------------------------
+91/200 | SGD   - MultiStepLR       | Train : 0.0832 / 97.09% | Test : 0.9358 / 78.90%
+91/200 | SGD   - MultiStepLR       | Train : 0.0697 / 97.62% | Test : 0.9210 / 80.25%
+--------------------------------------------------
+92/200 | SGD   - MultiStepLR       | Train : 0.0857 / 97.00% | Test : 1.1046 / 75.14%
+92/200 | SGD   - MultiStepLR       | Train : 0.0840 / 97.10% | Test : 1.0394 / 77.54%
+--------------------------------------------------
+93/200 | SGD   - MultiStepLR       | Train : 0.0968 / 96.61% | Test : 1.0340 / 77.61%
+93/200 | SGD   - MultiStepLR       | Train : 0.0752 / 97.42% | Test : 1.0232 / 77.91%
+--------------------------------------------------
+94/200 | SGD   - MultiStepLR       | Train : 0.0874 / 96.90% | Test : 1.0543 / 77.12%
+94/200 | SGD   - MultiStepLR       | Train : 0.0684 / 97.58% | Test : 0.9793 / 78.41%
+--------------------------------------------------
+95/200 | SGD   - MultiStepLR       | Train : 0.0880 / 96.90% | Test : 1.1129 / 75.67%
+95/200 | SGD   - MultiStepLR       | Train : 0.0675 / 97.73% | Test : 1.1416 / 75.10%
+--------------------------------------------------
+96/200 | SGD   - MultiStepLR       | Train : 0.0894 / 96.89% | Test : 1.0075 / 78.61%
+96/200 | SGD   - MultiStepLR       | Train : 0.0759 / 97.29% | Test : 0.8280 / 80.12%
+--------------------------------------------------
+97/200 | SGD   - MultiStepLR       | Train : 0.0760 / 97.35% | Test : 1.0030 / 78.30%
+ └ Updated best eval loss : 0.0760
+97/200 | SGD   - MultiStepLR       | Train : 0.0863 / 97.07% | Test : 0.8097 / 80.21%
+--------------------------------------------------
+98/200 | SGD   - MultiStepLR       | Train : 0.0831 / 97.11% | Test : 0.9693 / 77.79%
+98/200 | SGD   - MultiStepLR       | Train : 0.0617 / 97.90% | Test : 0.8889 / 80.67%
+--------------------------------------------------
+99/200 | SGD   - MultiStepLR       | Train : 0.0832 / 97.21% | Test : 1.1882 / 76.05%
+99/200 | SGD   - MultiStepLR       | Train : 0.0551 / 98.16% | Test : 0.8984 / 80.05%
+ └ Updated best eval loss : 0.0551
+--------------------------------------------------
+100/200 | SGD   - MultiStepLR       | Train : 0.0934 / 96.67% | Test : 1.0083 / 76.97%
+100/200 | SGD   - MultiStepLR       | Train : 0.0828 / 97.17% | Test : 1.0456 / 77.30%
+--------------------------------------------------
+101/200 | SGD   - MultiStepLR       | Train : 0.0315 / 99.08% | Test : 0.7473 / 82.65%
+ └ Updated best eval loss : 0.0315
+101/200 | SGD   - MultiStepLR       | Train : 0.0285 / 99.16% | Test : 0.6577 / 84.05%
+ └ Updated best eval loss : 0.0285
+--------------------------------------------------
+102/200 | SGD   - MultiStepLR       | Train : 0.0093 / 99.92% | Test : 0.7381 / 82.81%
+ └ Updated best eval loss : 0.0093
+102/200 | SGD   - MultiStepLR       | Train : 0.0078 / 99.92% | Test : 0.6491 / 84.23%
+ └ Updated best eval loss : 0.0078
+--------------------------------------------------
+103/200 | SGD   - MultiStepLR       | Train : 0.0065 / 99.96% | Test : 0.7559 / 82.92%
+ └ Updated best eval loss : 0.0065
+103/200 | SGD   - MultiStepLR       | Train : 0.0051 / 99.98% | Test : 0.6645 / 84.47%
+ └ Updated best eval loss : 0.0051
+--------------------------------------------------
+104/200 | SGD   - MultiStepLR       | Train : 0.0051 / 99.99% | Test : 0.7551 / 82.79%
+ └ Updated best eval loss : 0.0051
+104/200 | SGD   - MultiStepLR       | Train : 0.0041 / 99.99% | Test : 0.6593 / 84.48%
+ └ Updated best eval loss : 0.0041
+--------------------------------------------------
+105/200 | SGD   - MultiStepLR       | Train : 0.0042 / 100.00% | Test : 0.7527 / 83.00%
+ └ Updated best eval loss : 0.0042
+105/200 | SGD   - MultiStepLR       | Train : 0.0034 / 100.00% | Test : 0.6593 / 84.54%
+ └ Updated best eval loss : 0.0034
+--------------------------------------------------
+106/200 | SGD   - MultiStepLR       | Train : 0.0036 / 99.99% | Test : 0.7591 / 83.08%
+ └ Updated best eval loss : 0.0036
+106/200 | SGD   - MultiStepLR       | Train : 0.0029 / 100.00% | Test : 0.6726 / 84.65%
+ └ Updated best eval loss : 0.0029
+--------------------------------------------------
+107/200 | SGD   - MultiStepLR       | Train : 0.0030 / 100.00% | Test : 0.7718 / 83.00%
+ └ Updated best eval loss : 0.0030
+107/200 | SGD   - MultiStepLR       | Train : 0.0025 / 100.00% | Test : 0.6687 / 84.72%
+ └ Updated best eval loss : 0.0025
+--------------------------------------------------
+108/200 | SGD   - MultiStepLR       | Train : 0.0027 / 100.00% | Test : 0.7614 / 83.02%
+ └ Updated best eval loss : 0.0027
+108/200 | SGD   - MultiStepLR       | Train : 0.0023 / 100.00% | Test : 0.6606 / 84.74%
+ └ Updated best eval loss : 0.0023
+--------------------------------------------------
+109/200 | SGD   - MultiStepLR       | Train : 0.0025 / 100.00% | Test : 0.7676 / 83.01%
+ └ Updated best eval loss : 0.0025
+109/200 | SGD   - MultiStepLR       | Train : 0.0021 / 100.00% | Test : 0.6612 / 84.72%
+ └ Updated best eval loss : 0.0021
+--------------------------------------------------
+110/200 | SGD   - MultiStepLR       | Train : 0.0023 / 100.00% | Test : 0.7741 / 82.93%
+ └ Updated best eval loss : 0.0023
+110/200 | SGD   - MultiStepLR       | Train : 0.0020 / 100.00% | Test : 0.6608 / 84.90%
+ └ Updated best eval loss : 0.0020
+--------------------------------------------------
+111/200 | SGD   - MultiStepLR       | Train : 0.0023 / 100.00% | Test : 0.7733 / 82.97%
+ └ Updated best eval loss : 0.0023
+111/200 | SGD   - MultiStepLR       | Train : 0.0019 / 100.00% | Test : 0.6647 / 84.72%
+ └ Updated best eval loss : 0.0019
+--------------------------------------------------
+112/200 | SGD   - MultiStepLR       | Train : 0.0021 / 100.00% | Test : 0.7679 / 82.94%
+ └ Updated best eval loss : 0.0021
+112/200 | SGD   - MultiStepLR       | Train : 0.0018 / 100.00% | Test : 0.6664 / 84.89%
+ └ Updated best eval loss : 0.0018
+--------------------------------------------------
+113/200 | SGD   - MultiStepLR       | Train : 0.0020 / 100.00% | Test : 0.7675 / 83.14%
+ └ Updated best eval loss : 0.0020
+113/200 | SGD   - MultiStepLR       | Train : 0.0017 / 100.00% | Test : 0.6566 / 84.86%
+ └ Updated best eval loss : 0.0017
+--------------------------------------------------
+114/200 | SGD   - MultiStepLR       | Train : 0.0019 / 100.00% | Test : 0.7690 / 83.01%
+ └ Updated best eval loss : 0.0019
+114/200 | SGD   - MultiStepLR       | Train : 0.0017 / 100.00% | Test : 0.6631 / 84.93%
+--------------------------------------------------
+115/200 | SGD   - MultiStepLR       | Train : 0.0018 / 100.00% | Test : 0.7584 / 83.09%
+ └ Updated best eval loss : 0.0018
+115/200 | SGD   - MultiStepLR       | Train : 0.0015 / 100.00% | Test : 0.6550 / 84.87%
+ └ Updated best eval loss : 0.0015
+--------------------------------------------------
+116/200 | SGD   - MultiStepLR       | Train : 0.0018 / 100.00% | Test : 0.7634 / 83.09%
+116/200 | SGD   - MultiStepLR       | Train : 0.0015 / 100.00% | Test : 0.6646 / 84.84%
+--------------------------------------------------
+117/200 | SGD   - MultiStepLR       | Train : 0.0016 / 100.00% | Test : 0.7779 / 83.14%
+ └ Updated best eval loss : 0.0016
+117/200 | SGD   - MultiStepLR       | Train : 0.0014 / 100.00% | Test : 0.6601 / 84.90%
+ └ Updated best eval loss : 0.0014
+--------------------------------------------------
+118/200 | SGD   - MultiStepLR       | Train : 0.0017 / 100.00% | Test : 0.7727 / 83.09%
+118/200 | SGD   - MultiStepLR       | Train : 0.0015 / 100.00% | Test : 0.6610 / 85.06%
+--------------------------------------------------
+119/200 | SGD   - MultiStepLR       | Train : 0.0015 / 100.00% | Test : 0.7708 / 83.00%
+ └ Updated best eval loss : 0.0015
+119/200 | SGD   - MultiStepLR       | Train : 0.0014 / 100.00% | Test : 0.6608 / 84.96%
+ └ Updated best eval loss : 0.0014
+--------------------------------------------------
+120/200 | SGD   - MultiStepLR       | Train : 0.0015 / 100.00% | Test : 0.7761 / 82.92%
+ └ Updated best eval loss : 0.0015
+120/200 | SGD   - MultiStepLR       | Train : 0.0014 / 100.00% | Test : 0.6549 / 85.01%
+--------------------------------------------------
+121/200 | SGD   - MultiStepLR       | Train : 0.0015 / 100.00% | Test : 0.7781 / 82.97%
+ └ Updated best eval loss : 0.0015
+121/200 | SGD   - MultiStepLR       | Train : 0.0013 / 100.00% | Test : 0.6566 / 85.04%
+ └ Updated best eval loss : 0.0013
+--------------------------------------------------
+122/200 | SGD   - MultiStepLR       | Train : 0.0015 / 100.00% | Test : 0.7637 / 83.21%
+122/200 | SGD   - MultiStepLR       | Train : 0.0013 / 100.00% | Test : 0.6483 / 85.06%
+--------------------------------------------------
+123/200 | SGD   - MultiStepLR       | Train : 0.0014 / 100.00% | Test : 0.7609 / 83.15%
+ └ Updated best eval loss : 0.0014
+123/200 | SGD   - MultiStepLR       | Train : 0.0012 / 100.00% | Test : 0.6471 / 85.04%
+ └ Updated best eval loss : 0.0012
+--------------------------------------------------
+124/200 | SGD   - MultiStepLR       | Train : 0.0013 / 100.00% | Test : 0.7600 / 83.03%
+ └ Updated best eval loss : 0.0013
+124/200 | SGD   - MultiStepLR       | Train : 0.0012 / 100.00% | Test : 0.6423 / 85.11%
+ └ Updated best eval loss : 0.0012
+--------------------------------------------------
+125/200 | SGD   - MultiStepLR       | Train : 0.0013 / 100.00% | Test : 0.7656 / 83.15%
+ └ Updated best eval loss : 0.0013
+125/200 | SGD   - MultiStepLR       | Train : 0.0012 / 100.00% | Test : 0.6448 / 85.06%
+--------------------------------------------------
+126/200 | SGD   - MultiStepLR       | Train : 0.0013 / 100.00% | Test : 0.7626 / 83.09%
+ └ Updated best eval loss : 0.0013
+126/200 | SGD   - MultiStepLR       | Train : 0.0012 / 100.00% | Test : 0.6535 / 85.11%
+ └ Updated best eval loss : 0.0012
+--------------------------------------------------
+127/200 | SGD   - MultiStepLR       | Train : 0.0013 / 100.00% | Test : 0.7605 / 83.01%
+ └ Updated best eval loss : 0.0013
+127/200 | SGD   - MultiStepLR       | Train : 0.0012 / 100.00% | Test : 0.6444 / 85.16%
+ └ Updated best eval loss : 0.0012
+--------------------------------------------------
+128/200 | SGD   - MultiStepLR       | Train : 0.0013 / 100.00% | Test : 0.7578 / 83.18%
+ └ Updated best eval loss : 0.0013
+128/200 | SGD   - MultiStepLR       | Train : 0.0012 / 100.00% | Test : 0.6454 / 85.07%
+ └ Updated best eval loss : 0.0012
+--------------------------------------------------
+129/200 | SGD   - MultiStepLR       | Train : 0.0013 / 100.00% | Test : 0.7670 / 83.11%
+129/200 | SGD   - MultiStepLR       | Train : 0.0012 / 100.00% | Test : 0.6529 / 85.16%
+--------------------------------------------------
+130/200 | SGD   - MultiStepLR       | Train : 0.0013 / 100.00% | Test : 0.7622 / 83.21%
+ └ Updated best eval loss : 0.0013
+130/200 | SGD   - MultiStepLR       | Train : 0.0012 / 100.00% | Test : 0.6438 / 85.18%
+--------------------------------------------------
+131/200 | SGD   - MultiStepLR       | Train : 0.0012 / 100.00% | Test : 0.7577 / 83.03%
+ └ Updated best eval loss : 0.0012
+131/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.6368 / 85.14%
+ └ Updated best eval loss : 0.0011
+--------------------------------------------------
+132/200 | SGD   - MultiStepLR       | Train : 0.0012 / 100.00% | Test : 0.7653 / 83.14%
+ └ Updated best eval loss : 0.0012
+132/200 | SGD   - MultiStepLR       | Train : 0.0012 / 100.00% | Test : 0.6479 / 85.13%
+--------------------------------------------------
+133/200 | SGD   - MultiStepLR       | Train : 0.0012 / 100.00% | Test : 0.7644 / 83.02%
+133/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.6436 / 85.16%
+ └ Updated best eval loss : 0.0011
+--------------------------------------------------
+134/200 | SGD   - MultiStepLR       | Train : 0.0012 / 100.00% | Test : 0.7558 / 83.12%
+ └ Updated best eval loss : 0.0012
+134/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.6350 / 85.12%
+ └ Updated best eval loss : 0.0011
+--------------------------------------------------
+135/200 | SGD   - MultiStepLR       | Train : 0.0012 / 100.00% | Test : 0.7577 / 82.94%
+ └ Updated best eval loss : 0.0012
+135/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.6364 / 85.26%
+ └ Updated best eval loss : 0.0011
+--------------------------------------------------
+136/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.7520 / 83.14%
+ └ Updated best eval loss : 0.0011
+136/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.6386 / 85.11%
+ └ Updated best eval loss : 0.0011
+--------------------------------------------------
+137/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.7534 / 83.17%
+ └ Updated best eval loss : 0.0011
+137/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6374 / 85.13%
+ └ Updated best eval loss : 0.0010
+--------------------------------------------------
+138/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.7576 / 83.18%
+ └ Updated best eval loss : 0.0011
+138/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.6370 / 85.19%
+--------------------------------------------------
+139/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.7584 / 83.24%
+139/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.6348 / 85.21%
+--------------------------------------------------
+140/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.7534 / 83.01%
+140/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.6299 / 85.30%
+--------------------------------------------------
+141/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.7435 / 83.16%
+141/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.6357 / 85.21%
+--------------------------------------------------
+142/200 | SGD   - MultiStepLR       | Train : 0.0012 / 100.00% | Test : 0.7654 / 83.09%
+142/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.6382 / 85.21%
+--------------------------------------------------
+143/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.7498 / 82.93%
+ └ Updated best eval loss : 0.0011
+143/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.6237 / 85.25%
+--------------------------------------------------
+144/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.7425 / 83.17%
+ └ Updated best eval loss : 0.0011
+144/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6207 / 85.27%
+--------------------------------------------------
+145/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.7440 / 83.06%
+ └ Updated best eval loss : 0.0011
+145/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6248 / 85.17%
+ └ Updated best eval loss : 0.0010
+--------------------------------------------------
+146/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.7417 / 83.16%
+ └ Updated best eval loss : 0.0011
+146/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6213 / 85.22%
+--------------------------------------------------
+147/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.7387 / 83.04%
+147/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6215 / 85.31%
+--------------------------------------------------
+148/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.7537 / 83.19%
+148/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.6251 / 85.34%
+--------------------------------------------------
+149/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.7338 / 83.16%
+ └ Updated best eval loss : 0.0010
+149/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6134 / 85.24%
+--------------------------------------------------
+150/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.7485 / 83.03%
+150/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6267 / 85.37%
+--------------------------------------------------
+151/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.7531 / 83.12%
+ └ Updated best eval loss : 0.0010
+151/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6347 / 85.22%
+ └ Updated best eval loss : 0.0010
+--------------------------------------------------
+152/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.7496 / 82.95%
+152/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.6245 / 85.36%
+--------------------------------------------------
+153/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.7440 / 83.06%
+153/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6148 / 85.37%
+--------------------------------------------------
+154/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.7314 / 83.21%
+154/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6191 / 85.28%
+--------------------------------------------------
+155/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.7463 / 83.13%
+155/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6277 / 85.30%
+--------------------------------------------------
+156/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.7404 / 83.10%
+156/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6189 / 85.36%
+--------------------------------------------------
+157/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.7569 / 82.96%
+ └ Updated best eval loss : 0.0010
+157/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6252 / 85.36%
+ └ Updated best eval loss : 0.0010
+--------------------------------------------------
+158/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.7397 / 83.14%
+158/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6161 / 85.37%
+--------------------------------------------------
+159/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.7448 / 83.10%
+159/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6232 / 85.36%
+--------------------------------------------------
+160/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.7581 / 83.01%
+160/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6287 / 85.17%
+--------------------------------------------------
+161/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.7407 / 83.06%
+161/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6225 / 85.20%
+--------------------------------------------------
+162/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.7389 / 82.97%
+162/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6277 / 85.22%
+--------------------------------------------------
+163/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.7386 / 83.19%
+163/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6124 / 85.34%
+--------------------------------------------------
+164/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.7424 / 83.09%
+164/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6156 / 85.37%
+--------------------------------------------------
+165/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.7616 / 83.19%
+165/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6307 / 85.38%
+--------------------------------------------------
+166/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.7431 / 83.09%
+166/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6188 / 85.31%
+--------------------------------------------------
+167/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.7341 / 83.07%
+167/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6172 / 85.41%
+--------------------------------------------------
+168/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.7376 / 83.13%
+168/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6143 / 85.27%
+--------------------------------------------------
+169/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.7395 / 83.07%
+169/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6225 / 85.32%
+--------------------------------------------------
+170/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.7459 / 83.08%
+170/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6249 / 85.40%
+--------------------------------------------------
+171/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.7326 / 83.16%
+171/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6125 / 85.34%
+--------------------------------------------------
+172/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.7543 / 83.10%
+172/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6190 / 85.28%
+--------------------------------------------------
+173/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.7378 / 83.12%
+173/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6210 / 85.33%
+--------------------------------------------------
+174/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.7368 / 83.09%
+174/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6176 / 85.30%
+--------------------------------------------------
+175/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.7508 / 83.16%
+175/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6287 / 85.26%
+--------------------------------------------------
+176/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.7389 / 82.98%
+176/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6170 / 85.32%
+--------------------------------------------------
+177/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.7327 / 83.16%
+177/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6126 / 85.48%
+--------------------------------------------------
+178/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.7416 / 83.16%
+178/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6206 / 85.42%
+--------------------------------------------------
+179/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.7543 / 83.09%
+179/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6275 / 85.34%
+--------------------------------------------------
+180/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.7356 / 83.00%
+180/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6143 / 85.26%
+--------------------------------------------------
+181/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.7258 / 82.98%
+181/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6058 / 85.40%
+--------------------------------------------------
+182/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.7432 / 82.94%
+182/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6177 / 85.34%
+--------------------------------------------------
+183/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.7404 / 83.03%
+183/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6123 / 85.41%
+--------------------------------------------------
+184/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.7280 / 83.11%
+184/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6108 / 85.43%
+--------------------------------------------------
+185/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.7304 / 83.10%
+185/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6168 / 85.27%
+--------------------------------------------------
+186/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.7419 / 83.15%
+186/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6143 / 85.40%
+--------------------------------------------------
+187/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.7425 / 83.13%
+187/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6111 / 85.34%
+--------------------------------------------------
+188/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.7369 / 83.18%
+188/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6143 / 85.28%
+--------------------------------------------------
+189/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.7338 / 83.10%
+189/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6099 / 85.42%
+--------------------------------------------------
+190/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.7368 / 83.16%
+190/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6152 / 85.28%
+--------------------------------------------------
+191/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.7379 / 83.04%
+191/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6134 / 85.39%
+--------------------------------------------------
+192/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.7307 / 83.08%
+192/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6119 / 85.32%
+--------------------------------------------------
+193/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.7385 / 83.10%
+193/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6208 / 85.27%
+--------------------------------------------------
+194/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.7315 / 83.13%
+194/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6088 / 85.36%
+--------------------------------------------------
+195/200 | SGD   - MultiStepLR       | Train : 0.0011 / 100.00% | Test : 0.7280 / 83.11%
+195/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6120 / 85.36%
+--------------------------------------------------
+196/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.7380 / 83.12%
+196/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6101 / 85.39%
+--------------------------------------------------
+197/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.7281 / 83.17%
+197/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6098 / 85.24%
+--------------------------------------------------
+198/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.7370 / 83.08%
+198/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6141 / 85.30%
+--------------------------------------------------
+199/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.7325 / 83.07%
+199/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6127 / 85.38%
+--------------------------------------------------
+200/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.7411 / 83.13%
+200/200 | SGD   - MultiStepLR       | Train : 0.0010 / 100.00% | Test : 0.6201 / 85.43%
+--------------------------------------------------
+
+
+MyResNet이랑 ref ResNet이랑
+동일한 기존 학습 코드에서 실햄
+> normalize 숫자만 바꿈.

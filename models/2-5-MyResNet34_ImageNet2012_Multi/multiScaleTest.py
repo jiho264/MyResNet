@@ -124,12 +124,12 @@ test_data = tmp.test_data_list
 
 # %%
 # Redirect the output to a file
-sys.stdout = open(f"MultiScaleTestLog_{DATASET}_{BATCH}_{OPTIMIZER}.txt", "w")
+# sys.stdout = open(f"MultiScaleTestLog_{DATASET}_{BATCH}_{OPTIMIZER}.txt", "w")
 
 # %%
 scales = [224, 256, 384, 480, 640]
 test_dataloader_list = list()
-batch_size_list = [256, 128, 96, 64, 28]
+batch_size_list = [256, 128, 64, 16, 16]
 num_workers_list = [8, 8, 8, 8, 8]
 
 for i in range(5):
@@ -144,20 +144,20 @@ for i in range(5):
             persistent_workers=True,
         )
     )
-    # print(
-    #     test_dataloader_list[i].dataset,
-    #     len(test_dataloader_list[i]),
-    #     len(test_dataloader_list[i].dataset),
-    #     test_dataloader_list[i].batch_size,
-    # )
+
+    print(
+        test_dataloader_list[i].dataset,
+        len(test_dataloader_list[i]),
+        len(test_dataloader_list[i].dataset),
+        test_dataloader_list[i].batch_size,
+    )
+    print("-" * 50)
 
 # %%
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 if DATASET == "ImageNet2012":
     model = MyResNet34(num_classes=COUNT_OF_CLASSES, Downsample_option="B").to(device)
-    # model = models.resnet34(pretrained=True).to(device)
-    # model = models.resnet34(pretrained=False).to(device)
     print(f"ResNet-34 for {DATASET} is loaded.")
 else:
     model = MyResNet_CIFAR(
@@ -167,6 +167,8 @@ else:
 
 model.load_state_dict(torch.load(file_path + ".pth"))
 print(f"Model is loaded from {file_path}.pth")
+model.eval()
+print("-" * 50)
 # %%
 _MyShortCut = MyShortCut()
 
@@ -177,6 +179,7 @@ avg_top1_acc = 0
 avg_top5_acc = 0
 
 for i in range(len(scales)):
+    i = 4
     with torch.no_grad():
         test_loss = 0.0
         correct_top1 = 0
@@ -210,7 +213,7 @@ for i in range(len(scales)):
         test_top5_acc = correct_top5 / total
 
         print(
-            f"Dataset {batch_size_list[i]}: Loss: {test_loss}, Top-1 Acc: {test_top1_acc}, Top-5 Acc: {test_top5_acc}"
+            f"Dataset {scales[i]}: Loss: {test_loss:.6f}, Top-1 Acc: {test_top1_acc*100:.2f}%, Top-5 Acc: {test_top5_acc*100:.2f}%"
         )
 
         avg_loss += test_loss
@@ -222,8 +225,8 @@ avg_top1_acc /= len(scales)
 avg_top5_acc /= len(scales)
 
 print(
-    f"Avg Loss: {avg_loss}, Avg Top-1 Acc: {avg_top1_acc}, Avg Top-5 Acc: {avg_top5_acc}"
+    f"Avg Loss: {avg_loss:.6f}, Avg Top-1 Acc: {avg_top1_acc*100:.2f}%, Avg Top-5 Acc: {avg_top5_acc*100:.2f}%"
 )
 
 # Close the file
-sys.stdout.close()
+# sys.stdout.close()

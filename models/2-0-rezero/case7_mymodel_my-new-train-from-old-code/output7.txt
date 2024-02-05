@@ -1,0 +1,39 @@
+Files already downloaded and verified
+Files already downloaded and verified
+--------------------------------------------------
+MyResNet32_128_SGD_MultiStepLR does not exist. Created a new log.
+--------------------------------------------------
+--------------------------------------------------
+1/200 | SGD - MultiStepLR | Train : 2.2526 / 21.58% | Test : 1.8021 / 32.80%
+ └ Updated best eval loss : 2.2526
+--------------------------------------------------
+2/200 | SGD - MultiStepLR | Train : 1.5327 / 43.25% | Test : 1.3884 / 49.35%
+ └ Updated best eval loss : 1.5327
+--------------------------------------------------
+3/200 | SGD - MultiStepLR | Train : 1.1515 / 58.42% | Test : 1.2171 / 57.52%
+ └ Updated best eval loss : 1.1515
+--------------------------------------------------
+4/200 | SGD - MultiStepLR | Train : 0.9051 / 68.00% | Test : 0.8926 / 68.64%
+ └ Updated best eval loss : 0.9051
+--------------------------------------------------
+5/200 | SGD - MultiStepLR | Train : 0.7505 / 73.69% | Test : 0.7901 / 72.79%
+ └ Updated best eval loss : 0.7505
+--------------------------------------------------
+6/200 | SGD - MultiStepLR | Train : 0.6417 / 77.45% | Test : 0.7317 / 75.06%
+ └ Updated best eval loss : 0.6417
+--------------------------------------------------
+7/200 | SGD - MultiStepLR | Train : 0.5568 / 80.63% | Test : 0.7563 / 75.01%
+ └ Updated best eval loss : 0.5568
+--------------------------------------------------
+8/200 | SGD - MultiStepLR | Train : 0.4976 / 82.67% | Test : 0.6246 / 78.58%
+ └ Updated best eval loss : 0.4976
+--------------------------------------------------
+9/200 | SGD - MultiStepLR | Train : 0.4390 / 84.67% | Test : 0.7628 / 75.59%
+ └ Updated best eval loss : 0.4390
+--------------------------------------------------
+10/200 | SGD - MultiStepLR | Train : 0.3993 / 86.06% | Test : 0.6834 / 77.33%
+ └ Updated best eval loss : 0.3993
+--------------------------------------------------
+11/200 | SGD - MultiStepLR | Train : 0.3589 / 87.37% | Test : 0.7305 / 77.04%
+ └ Updated best eval loss : 0.3589
+--------------------------------------------------

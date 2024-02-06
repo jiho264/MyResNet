@@ -102,7 +102,7 @@ each_trainings.append(
         optimizer_name="SGD",
         schduler_name="MultiStepLR",
         device="cuda",
-        use_amp=False,
+        # use_amp=False,
         train_dataloader=train_dataloader,
         valid_dataloader=valid_dataloader,
         test_dataloader=test_dataloader,

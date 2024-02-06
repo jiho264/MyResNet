@@ -388,11 +388,6 @@ class SingleModelTrainingProcess(Single_model):
             loss.backward()  # D
             self.optimizer.step()  # E
 
-            self.train_loss += loss.item()  # F
-            _, predicted = outputs.max(1)  # G
-            self.train_total += labels.size(0)  # H
-            self.train_corrects += predicted.eq(labels).sum().item()  # I
-
         else:
             with torch.autocast(device_type="cuda", dtype=torch.float16, enabled=True):
                 self.optimizer.zero_grad()
@@ -403,10 +398,10 @@ class SingleModelTrainingProcess(Single_model):
             self.scaler.step(self.optimizer)
             self.scaler.update()
 
-            self.train_loss += loss.item()  # F
-            _, predicted = outputs.max(1)  # G
-            self.train_total += labels.size(0)  # H
-            self.train_corrects += predicted.eq(labels).sum().item()  # I
+        self.train_loss += loss.item()  # F
+        _, predicted = outputs.max(1)  # G
+        self.train_total += labels.size(0)  # H
+        self.train_corrects += predicted.eq(labels).sum().item()  # I
 
     def forward_eval(self, images, labels, mode):
         self.model.eval()

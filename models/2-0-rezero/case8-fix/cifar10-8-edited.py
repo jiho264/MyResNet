@@ -161,7 +161,7 @@ class MyShortCut:
 
 
 _MyshortCut = MyShortCut()
-
+_training = each_trainings[0]
 pre_epochs = len(each_trainings[0].logs["train_loss"])
 for epoch in range(NUM_EPOCHS):
     now_epochs = epoch + 1 + pre_epochs
@@ -171,43 +171,72 @@ for epoch in range(NUM_EPOCHS):
     for images, labels in tqdm.tqdm(
         train_dataloader, desc=f"{now_epochs} Train", ncols=55
     ):
-        images, labels = images.to("cuda"), labels.to("cuda")
-        for _training in each_trainings:
-            # if _training.is_completed() == True:
-            #     pass
 
-            _MyshortCut.preprocessing_train(images)
-            _training.forward_train(images, labels)
+        images, labels = images.to("cuda"), labels.to("cuda")
+        # if _training.is_completed() == True:
+        #     pass
+        _MyshortCut.preprocessing_train(images)
+
+        # _training.forward_train(images, labels)
+        _training.model.train()
+        outputs = _training.model(images)  # A
+        loss = _training.criterion(outputs, labels)  # B
+
+        _training.optimizer.zero_grad()  # C
+        loss.backward()  # D
+        _training.optimizer.step()  # E
+
+        _training.train_loss += loss.item()  # F
+        _, predicted = outputs.max(1)  # G
+        _training.train_total += labels.size(0)  # H
+        _training.train_corrects += predicted.eq(labels).sum().item()  # I
 
     # %% Forward_test ######################################################################################################
-    if test_dataloader != None:
-        for images, labels in tqdm.tqdm(
-            test_dataloader, desc=f"{now_epochs} Test", ncols=55
-        ):
-            images, labels = images.to("cuda"), labels.to("cuda")
-            for _training in each_trainings:
-                # if _training.is_completed() == True:
-                #     pass
+    # if test_dataloader != None:
+    for images, labels in tqdm.tqdm(
+        test_dataloader, desc=f"{now_epochs} Test", ncols=55
+    ):
+        images, labels = images.to("cuda"), labels.to("cuda")
+        # if _training.is_completed() == True:
+        #     pass
+        _MyshortCut.preprocessing_test(images)
 
-                _MyshortCut.preprocessing_test(images)
-                _training.forward_eval(images, labels, mode="test")
+        # _training.forward_eval(images, labels, mode="test")
+        _training.model.eval()
+        with torch.no_grad():
+            outputs = _training.model(images)  # A
+            _, predicted = outputs.max(1)  # B
+            _training.test_total += labels.size(0)  # C
+            _training.test_corrects += predicted.eq(labels).sum().item()  # D
+            _training.test_loss += _training.criterion(outputs, labels).item()  # E
 
     # %% summary.. ######################################################################################################
-    for _training in each_trainings:
-        _training.compute_epoch_results()
-        # scheduler
-        _training.scheduling()
-        # print
-        _training.print_info(
-            now_epochs=now_epochs,
-            num_epochs=NUM_EPOCHS,
-            print_pad_optim=PRINT_PAD_OPTIM,
-            print_pad_scheduler=PRINT_PAD_SCHDULER,
-        )
-        # Save checkpoint
-        # _training.save_model()
-        # Early stopping
-        # _ = _training.select_earlystopping_loss_and_check()
-        # set zeros
-        _training.set_zeros_for_next_epoch()
+    # _training.compute_epoch_results()
+    _training.train_loss /= len(train_dataloader)
+    _training.train_acc = _training.train_corrects / _training.train_total
+    _training.test_loss /= len(test_dataloader)
+    _training.test_acc = _training.test_corrects / _training.test_total
+
+    # scheduler
+    _training.scheduling()
+    # print
+    _training.print_info(
+        now_epochs=now_epochs,
+        num_epochs=NUM_EPOCHS,
+        print_pad_optim=PRINT_PAD_OPTIM,
+        print_pad_scheduler=PRINT_PAD_SCHDULER,
+    )
+
+    _training.train_loss = 0
+    _training.train_corrects = 0
+    _training.train_total = 0
+    _training.test_loss = 0
+    _training.test_corrects = 0
+    _training.test_total = 0
+    # Save checkpoint
+    # _training.save_model()
+    # Early stopping
+    # _ = _training.select_earlystopping_loss_and_check()
+    # set zeros
+    # _training.set_zeros_for_next_epoch()
     print("-" * 50)

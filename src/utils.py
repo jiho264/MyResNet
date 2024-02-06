@@ -283,16 +283,16 @@ class SingleModelTrainingProcess(Single_model):
         self.test_total = 0
         self.test_acc = 0
 
-    def set_zeros_for_next_epoch(self, set_value=0):
-        self.train_loss = set_value
-        self.train_corrects = set_value
-        self.train_total = set_value
-        self.valid_loss = set_value
-        self.valid_corrects = set_value
-        self.valid_total = set_value
-        self.test_loss = set_value
-        self.test_corrects = set_value
-        self.test_total = set_value
+    def set_zeros_for_next_epoch(self):
+        self.train_loss = 0
+        self.train_corrects = 0
+        self.train_total = 0
+        self.valid_loss = 0
+        self.valid_corrects = 0
+        self.valid_total = 0
+        self.test_loss = 0
+        self.test_corrects = 0
+        self.test_total = 0
 
     def save_model(self):
         if self.scaler == None:
@@ -419,12 +419,12 @@ class SingleModelTrainingProcess(Single_model):
             if mode == "valid":
                 _, predicted = outputs.max(1)  # B
                 self.valid_total += labels.size(0)  # C
-                self.valid_loss += self.criterion(outputs, labels).item()  # E
                 self.valid_corrects += predicted.eq(labels).sum().item()  # D
+                self.valid_loss += self.criterion(outputs, labels).item()  # E
             elif mode == "test":
                 _, predicted = outputs.max(1)  # B
                 self.test_total += labels.size(0)  # C
-                self.test_loss += self.criterion(outputs, labels).item()  # E
                 self.test_corrects += predicted.eq(labels).sum().item()  # D
+                self.test_loss += self.criterion(outputs, labels).item()  # E
             else:
                 raise NotImplementedError

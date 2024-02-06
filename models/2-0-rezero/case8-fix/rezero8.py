@@ -219,10 +219,10 @@ test_dataloader = torch.utils.data.DataLoader(
 )
 
 criterion = torch.nn.CrossEntropyLoss()
-# model = MyResNet_CIFAR(num_classes=10, num_layer_factor=5, Downsample_option="A").to(
-#     "cuda"
-# )
-model = resnet32().to("cuda")
+model = MyResNet_CIFAR(num_classes=10, num_layer_factor=5, Downsample_option="A").to(
+    "cuda"
+)
+# model = resnet32().to("cuda")
 optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=1e-4)
 scheduler = torch.optim.lr_scheduler.MultiStepLR(
     optimizer, milestones=[82, 123], gamma=0.1
@@ -234,9 +234,9 @@ for epoch in tqdm.tqdm(range(NUM_EPOCHS)):
     train_correct = 0
     train_total = 0
 
-    for i, (inputs, labels) in enumerate(train_dataloader):
-        inputs, labels = inputs.to("cuda"), labels.to("cuda")
-        outputs = model(inputs)  # A
+    for i, (images, labels) in enumerate(train_dataloader):
+        images, labels = images.to("cuda"), labels.to("cuda")
+        outputs = model(images)  # A
         loss = criterion(outputs, labels)  # B
 
         optimizer.zero_grad()  # C
@@ -253,9 +253,9 @@ for epoch in tqdm.tqdm(range(NUM_EPOCHS)):
     test_correct = 0
     test_total = 0
     with torch.no_grad():
-        for i, (inputs, labels) in enumerate(test_dataloader):
-            inputs, labels = inputs.to("cuda"), labels.to("cuda")
-            outputs = model(inputs)  # A
+        for i, (images, labels) in enumerate(test_dataloader):
+            images, labels = images.to("cuda"), labels.to("cuda")
+            outputs = model(images)  # A
             _, predicted = outputs.max(1)  # B
             test_total += labels.size(0)  # C
             test_correct += predicted.eq(labels).sum().item()  # D

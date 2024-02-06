@@ -77,6 +77,7 @@ class LoadDataset:
                         inplace=True,
                     ),
                     # AutoAugment(policy=AutoAugmentPolicy.CIFAR10),
+                    # Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
                     RandomCrop(
                         size=32,
                         padding=4,
@@ -102,7 +103,21 @@ class LoadDataset:
                 root=root,
                 train=False,
                 download=False,
-                transform=Compose([ToImage(), ToDtype(torch.float32, scale=True)]),
+                transform=Compose(
+                    [
+                        ToImage(),
+                        ToDtype(torch.float32, scale=True),
+                        Normalize(
+                            mean=[0.49139968, 0.48215827, 0.44653124],
+                            std=[1, 1, 1],
+                            inplace=True,
+                        ),
+                        # Normalize(
+                        #     mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]
+                        # ),
+                    ]
+                ),
+                # transform=Compose([ToImage(), ToDtype(torch.float32, scale=True)]),
             )
 
             if self.split_ratio != 0:

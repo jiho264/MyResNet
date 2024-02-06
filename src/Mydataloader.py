@@ -17,6 +17,56 @@ from torchvision.transforms.autoaugment import AutoAugmentPolicy
 import matplotlib.pyplot as plt
 import numpy as np
 
+from sklearn.decomposition import PCA
+
+
+class PCAColorAugmentation_for_CIFAR10(object):
+    """
+    Apply PCA color augmentation to the input image.
+
+    Args:
+    - n_components (int): Number of principal components to keep for PCA transformation.
+
+    """
+
+    def __init__(self, n_components=3):
+        self.n_components = n_components
+
+    def __call__(self, image):
+        """
+        Apply PCA color augmentation to the input image.
+
+        Args:
+        - image (torch.Tensor): Input image tensor of shape (C, H, W) where C is the number of channels (e.g., 3 for RGB).
+
+        Returns:
+        - transformed_image (torch.Tensor): Transformed image tensor after applying PCA color augmentation.
+        """
+
+        # Ensure the image tensor is in the format (H, W, C)
+        image = image.permute(1, 2, 0)
+
+        # Flatten the image tensor
+        flattened_image = image.view(-1, image.shape[-1]).numpy()
+
+        # Apply PCA to the flattened image data
+        pca = PCA(n_components=self.n_components)
+        pca.fit(flattened_image)
+        transformed_flattened_image = pca.transform(flattened_image)
+
+        # Inverse transform to obtain the image in the original space
+        inverted_transformed_image = pca.inverse_transform(transformed_flattened_image)
+
+        # Reshape the inverted transformed image to the original shape
+        transformed_image = torch.tensor(
+            inverted_transformed_image.reshape(image.shape)
+        )
+
+        # Ensure the transformed image tensor is in the format (C, H, W)
+        transformed_image = transformed_image.permute(2, 0, 1)
+
+        return transformed_image
+
 
 class LoadDataset:
     """
@@ -76,6 +126,7 @@ class LoadDataset:
                         std=[1, 1, 1],
                         inplace=True,
                     ),
+                    PCAColorAugmentation_for_CIFAR10(),
                     # AutoAugment(policy=AutoAugmentPolicy.CIFAR10),
                     # Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
                     RandomCrop(

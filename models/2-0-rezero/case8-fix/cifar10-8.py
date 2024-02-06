@@ -58,20 +58,13 @@ NUM_EPOCHS = 200
 """Early stopping parameters"""
 EARLYSTOPPINGPATIENCE = 9999
 
-train_data = datasets.CIFAR10(
-    root="../../../data",
-    train=True,
-    transform=Compose([ToImage(), ToDtype(torch.float32, scale=True)]),
-    download=True,
-)
-test_data = datasets.CIFAR10(
-    root="../../../data",
-    train=False,
-    transform=Compose([ToImage(), ToDtype(torch.float32, scale=True)]),
-    download=True,
-)
 train_dataloader = torch.utils.data.DataLoader(
-    train_data,
+    datasets.CIFAR10(
+        root="../../../data",
+        train=True,
+        transform=Compose([ToImage(), ToDtype(torch.float32, scale=True)]),
+        download=False,
+    ),
     batch_size=BATCH,
     shuffle=True,
     num_workers=8,
@@ -80,9 +73,14 @@ train_dataloader = torch.utils.data.DataLoader(
     persistent_workers=True,
 )
 test_dataloader = torch.utils.data.DataLoader(
-    test_data,
+    datasets.CIFAR10(
+        root="../../../data",
+        train=False,
+        transform=Compose([ToImage(), ToDtype(torch.float32, scale=True)]),
+        download=False,
+    ),
     batch_size=BATCH,
-    shuffle=True,
+    shuffle=False,
     num_workers=8,
     pin_memory=True,
     pin_memory_device="cuda",
@@ -98,26 +96,19 @@ each_trainings.append(
         optimizer_name="SGD",
         schduler_name="MultiStepLR",
         device="cuda",
+        use_amp=False,
         train_dataloader=train_dataloader,
         valid_dataloader=None,
         test_dataloader=test_dataloader,
         Earlystopping_patiance=EARLYSTOPPINGPATIENCE,
+        MultiStepLR_milestones=[100, 150],
     )
 )
 print("-" * 50)
-# each_trainings.append(
-#     SingleModelTrainingProcess(
-#         dataset="other",
-#         batch_size=BATCH,
-#         optimizer_name="SGD",
-#         schduler_name="MultiStepLR",
-#         device="cuda",
-#         train_dataloader=train_dataloader,
-#         valid_dataloader=None,
-#         test_dataloader=test_dataloader,
-#         Earlystopping_patiance=EARLYSTOPPINGPATIENCE,
-#     )
-# )
+print(f"optimizer : ", each_trainings[0].optimizer)
+print(f"scheduler : ", each_trainings[0].scheduler)
+print(f"scheduler milestone : ", each_trainings[0].scheduler.milestones)
+print(f"scheduler gamma : ", each_trainings[0].scheduler.gamma)
 print("-" * 50)
 """
 =======================================================
@@ -154,14 +145,17 @@ class MyShortCut:
 
     def __init__(self) -> None:
         self.preprocessing_train = torch.nn.Sequential(
+            # Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+            # RandomCrop(
+            #     size=32,
+            #     padding=4,
+            #     fill=0,
+            #     padding_mode="constant",
+            # ),
+            # RandomHorizontalFlip(p=0.5),
+            RandomHorizontalFlip(),
+            RandomCrop(32, 4),
             Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-            RandomCrop(
-                size=32,
-                padding=4,
-                fill=0,
-                padding_mode="constant",
-            ),
-            RandomHorizontalFlip(p=0.5),
         )
         self.preprocessing_test = torch.nn.Sequential(
             Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
@@ -180,11 +174,12 @@ for epoch in range(NUM_EPOCHS):
     for images, labels in tqdm.tqdm(
         train_dataloader, desc=f"{now_epochs} Train", ncols=55
     ):
+        images, labels = images.to("cuda"), labels.to("cuda")
         for _training in each_trainings:
             if _training.is_completed() == True:
                 pass
-            _training.model.train()
-            _MyshortCut.preprocessing_train(images.to("cuda"))
+
+            _MyshortCut.preprocessing_train(images)
             _training.forward_train(images, labels)
 
     # %% Forward_test ######################################################################################################
@@ -192,11 +187,12 @@ for epoch in range(NUM_EPOCHS):
         for images, labels in tqdm.tqdm(
             test_dataloader, desc=f"{now_epochs} Test", ncols=55
         ):
+            images, labels = images.to("cuda"), labels.to("cuda")
             for _training in each_trainings:
                 if _training.is_completed() == True:
                     pass
-                _training.model.eval()
-                _MyshortCut.preprocessing_test(images.to("cuda"))
+
+                _MyshortCut.preprocessing_test(images)
                 _training.forward_eval(images, labels, mode="test")
 
     # %% summary.. ######################################################################################################
@@ -212,9 +208,9 @@ for epoch in range(NUM_EPOCHS):
             print_pad_scheduler=PRINT_PAD_SCHDULER,
         )
         # Save checkpoint
-        _training.save_model()
+        # _training.save_model()
         # Early stopping
-        _ = _training.select_earlystopping_loss_and_check()
+        # _ = _training.select_earlystopping_loss_and_check()
         # set zeros
         _training.set_zeros_for_next_epoch()
     print("-" * 50)

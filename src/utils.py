@@ -25,6 +25,7 @@ class Single_model:
         optimizer_name,
         schduler_name,
         device="cuda",
+        use_amp=True,
         **kwargs,
     ) -> None:
         if dataset == "ImageNet2012":
@@ -90,6 +91,7 @@ class Single_model:
         if schduler_name == "ExponentialLR":
             self.scheduler = ExponentialLR(self.optimizer, gamma=0.95)
         elif schduler_name == "MultiStepLR":
+
             if dataset == "CIFAR10":
                 """
                 =======================================================
@@ -118,23 +120,25 @@ class Single_model:
                 - 138~(183) epochs == 48k ~ 64k iter >> lr = 0.001
                 =======================================================
                 """
-                self.scheduler = MultiStepLR(
-                    # self.optimizer, milestones=[82, 123], gamma=0.1
-                    self.optimizer,
-                    milestones=[100, 150],
-                    gamma=0.1,
-                )
+                if "MultiStepLR_milestones" in kwargs["kwargs"]:
+                    self.scheduler = MultiStepLR(
+                        self.optimizer,
+                        milestones=kwargs["kwargs"]["MultiStepLR_milestones"],
+                        gamma=0.1,
+                    )
+                else:
+                    self.scheduler = MultiStepLR(
+                        # self.optimizer, milestones=[82, 123], gamma=0.1
+                        self.optimizer,
+                        milestones=[82, 123],
+                        gamma=0.1,
+                    )
             elif dataset == "ImageNet2012":
                 self.scheduler = MultiStepLR(
                     self.optimizer, milestones=[30, 60], gamma=0.1
                 )
             else:
-                self.scheduler = MultiStepLR(
-                    # self.optimizer, milestones=[82, 123], gamma=0.1
-                    self.optimizer,
-                    milestones=[100, 150],
-                    gamma=0.1,
-                )
+                raise NotImplementedError
         elif schduler_name == "ReduceLROnPlateau":
             self.scheduler = ReduceLROnPlateau(
                 self.optimizer,
@@ -187,7 +191,10 @@ class Single_model:
             pass
 
         """define scaler"""
-        self.scaler = torch.cuda.amp.GradScaler(enabled=True)
+        if use_amp:
+            self.scaler = torch.cuda.amp.GradScaler(enabled=True)
+        else:
+            self.scaler = None
 
 
 class SingleModelTrainingProcess(Single_model):
@@ -198,6 +205,7 @@ class SingleModelTrainingProcess(Single_model):
         optimizer_name,
         schduler_name,
         device="cuda",
+        use_amp=True,
         train_dataloader=None,
         valid_dataloader=None,
         test_dataloader=None,
@@ -209,6 +217,7 @@ class SingleModelTrainingProcess(Single_model):
             optimizer_name,
             schduler_name,
             device="cuda",
+            use_amp=use_amp,
             kwargs=kwargs,
         )
         # self.earlystopper.end_flag = False
@@ -285,34 +294,27 @@ class SingleModelTrainingProcess(Single_model):
         self.test_corrects = set_value
         self.test_total = set_value
 
-    def compute_epoch_results(self):
-        self.train_loss = self.running_loss / len(self.train_dataloader)
-        self.train_acc = self.running_corrects / self.running_total
-        if self.valid_dataloader != None:
-            self.valid_loss = self.valid_loss / len(self.valid_dataloader)
-            self.valid_acc = self.valid_corrects / self.valid_total
-        if self.test_dataloader != None:
-            self.test_loss = self.test_loss / len(self.test_dataloader)
-            self.test_acc = self.test_corrects / self.test_total
-
-        self.logs["train_loss"].append(self.train_loss)
-        self.logs["train_acc"].append(self.train_acc)
-        self.logs["valid_loss"].append(self.valid_loss)
-        self.logs["valid_acc"].append(self.valid_acc)
-        self.logs["test_loss"].append(self.test_loss)
-        self.logs["test_acc"].append(self.test_acc)
-        self.logs["lr_log"].append(self.optimizer.param_groups[0]["lr"])
-
     def save_model(self):
-        checkpoint = {
-            "model": self.model.state_dict(),
-            "optimizer": self.optimizer.state_dict(),
-            "scaler": self.scaler.state_dict(),
-            "scheduler": self.scheduler.state_dict(),
-            "earlystopper": self.earlystopper.state_dict(),
-            "logs": self.logs,
-        }
-        torch.save(checkpoint, self.file_name + ".pth.tar")
+        if self.scaler == None:
+            checkpoint = {
+                "model": self.model.state_dict(),
+                "optimizer": self.optimizer.state_dict(),
+                # "scaler": self.scaler.state_dict(),
+                "scheduler": self.scheduler.state_dict(),
+                "earlystopper": self.earlystopper.state_dict(),
+                "logs": self.logs,
+            }
+            torch.save(checkpoint, self.file_name + ".pth.tar")
+        else:
+            checkpoint = {
+                "model": self.model.state_dict(),
+                "optimizer": self.optimizer.state_dict(),
+                "scaler": self.scaler.state_dict(),
+                "scheduler": self.scheduler.state_dict(),
+                "earlystopper": self.earlystopper.state_dict(),
+                "logs": self.logs,
+            }
+            torch.save(checkpoint, self.file_name + ".pth.tar")
 
     def print_info(self, now_epochs, num_epochs, print_pad_optim, print_pad_scheduler):
         _epoch_print = f"{now_epochs}/{num_epochs} | {self.optimizer_name.ljust(print_pad_optim)} - {self.scheduler_name.ljust(print_pad_scheduler)}"
@@ -358,20 +360,50 @@ class SingleModelTrainingProcess(Single_model):
     def is_completed(self):
         return self.earlystopper.end_flag
 
+    def compute_epoch_results(self):
+        self.train_loss = self.running_loss / len(self.train_dataloader)
+        self.train_acc = self.running_corrects / self.running_total
+        if self.valid_dataloader != None:
+            self.valid_loss = self.valid_loss / len(self.valid_dataloader)
+            self.valid_acc = self.valid_corrects / self.valid_total
+        if self.test_dataloader != None:
+            self.test_loss = self.test_loss / len(self.test_dataloader)
+            self.test_acc = self.test_corrects / self.test_total
+
+        self.logs["train_loss"].append(self.train_loss)
+        self.logs["train_acc"].append(self.train_acc)
+        self.logs["valid_loss"].append(self.valid_loss)
+        self.logs["valid_acc"].append(self.valid_acc)
+        self.logs["test_loss"].append(self.test_loss)
+        self.logs["test_acc"].append(self.test_acc)
+        self.logs["lr_log"].append(self.optimizer.param_groups[0]["lr"])
+
     def forward_train(self, images, labels):
-        self.model.train()
-        with torch.autocast(device_type="cuda", dtype=torch.float16, enabled=True):
-            images, labels = images.to(self.device), labels.to(self.device)
+        if self.scaler == None:
+            self.model.train()
             """preprocessing"""
             # _MyshortCut.preprocessing_train(images)
-
+            # 이거 상위 루프에서 작동.
             self.optimizer.zero_grad()
             outputs = self.model(images)
             loss = self.criterion(outputs, labels)
 
-        self.scaler.scale(loss).backward()
-        self.scaler.step(self.optimizer)
-        self.scaler.update()
+            loss.backward()
+            self.optimizer.step()
+
+        else:
+            self.model.train()
+            with torch.autocast(device_type="cuda", dtype=torch.float16, enabled=True):
+                """preprocessing"""
+                # _MyshortCut.preprocessing_train(images)
+
+                self.optimizer.zero_grad()
+                outputs = self.model(images)
+                loss = self.criterion(outputs, labels)
+
+            self.scaler.scale(loss).backward()
+            self.scaler.step(self.optimizer)
+            self.scaler.update()
 
         self.running_loss += loss.item()
         _, predicted = outputs.max(1)
@@ -381,7 +413,6 @@ class SingleModelTrainingProcess(Single_model):
     def forward_eval(self, images, labels, mode):
         self.model.eval()
         with torch.no_grad():
-            images, labels = images.to(self.device), labels.to(self.device)
             """preprocessing"""
             # _MyshortCut.preprocessing_valid(images)
 

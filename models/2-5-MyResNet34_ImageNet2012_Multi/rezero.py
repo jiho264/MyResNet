@@ -85,7 +85,9 @@ train_dataloader = DataLoader(
                 RandomShortestSize(min_size=range(256, 480), antialias=True),
                 RandomCrop(size=224),
                 Compose([ToImage(), ToDtype(torch.float32, scale=True)]),
-                Normalize(mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True),
+                Normalize(
+                    mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225], inplace=True
+                ),
                 PCAColorAugmentation_for_CIFAR10(),
                 RandomHorizontalFlip(),
             ]
@@ -108,7 +110,9 @@ valid_dataloader = DataLoader(
                 # VGG에서 single scale로 했을 때는 두 range의 median 값으로 crop함.
                 CenterCrop(size=368),
                 Compose([ToImage(), ToDtype(torch.float32, scale=True)]),
-                Normalize(mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True),
+                Normalize(
+                    mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225], inplace=True
+                ),
             ]
         ),
     ),

@@ -53,7 +53,7 @@ scheduler_list = [
 PRINT_PAD_SCHDULER = max([len(i) for i in scheduler_list])
 
 """Learning rate scheduler parameters"""
-NUM_EPOCHS = 200
+NUM_EPOCHS = 180
 
 """Early stopping parameters"""
 EARLYSTOPPINGPATIENCE = 9999
@@ -101,7 +101,7 @@ each_trainings.append(
         valid_dataloader=None,
         test_dataloader=test_dataloader,
         Earlystopping_patiance=EARLYSTOPPINGPATIENCE,
-        MultiStepLR_milestones=[100, 150],
+        MultiStepLR_milestones=[82, 123],
     )
 )
 print("-" * 50)
@@ -145,17 +145,14 @@ class MyShortCut:
 
     def __init__(self) -> None:
         self.preprocessing_train = torch.nn.Sequential(
-            # Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-            # RandomCrop(
-            #     size=32,
-            #     padding=4,
-            #     fill=0,
-            #     padding_mode="constant",
-            # ),
-            # RandomHorizontalFlip(p=0.5),
-            RandomHorizontalFlip(),
-            RandomCrop(32, 4),
             Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+            RandomCrop(
+                size=32,
+                padding=4,
+                fill=0,
+                padding_mode="constant",
+            ),
+            RandomHorizontalFlip(p=0.5),
         )
         self.preprocessing_test = torch.nn.Sequential(
             Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
@@ -176,8 +173,8 @@ for epoch in range(NUM_EPOCHS):
     ):
         images, labels = images.to("cuda"), labels.to("cuda")
         for _training in each_trainings:
-            if _training.is_completed() == True:
-                pass
+            # if _training.is_completed() == True:
+            #     pass
 
             _MyshortCut.preprocessing_train(images)
             _training.forward_train(images, labels)
@@ -189,8 +186,8 @@ for epoch in range(NUM_EPOCHS):
         ):
             images, labels = images.to("cuda"), labels.to("cuda")
             for _training in each_trainings:
-                if _training.is_completed() == True:
-                    pass
+                # if _training.is_completed() == True:
+                #     pass
 
                 _MyshortCut.preprocessing_test(images)
                 _training.forward_eval(images, labels, mode="test")

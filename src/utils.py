@@ -267,26 +267,26 @@ class SingleModelTrainingProcess(Single_model):
             }
             print(self.file_name, "does not exist. Created a new log.")
 
-        self.train_loss = 0.0
-        self.running_loss = 0.0
-        self.running_corrects = 0.0
-        self.running_total = 0.0
-        self.train_acc = 0.0
+        self.train_loss = 0
+        self.train_loss = 0
+        self.train_corrects = 0
+        self.train_total = 0
+        self.train_acc = 0
 
-        self.valid_loss = 0.0
-        self.valid_corrects = 0.0
-        self.valid_total = 0.0
-        self.valid_acc = 0.0
+        self.valid_loss = 0
+        self.valid_corrects = 0
+        self.valid_total = 0
+        self.valid_acc = 0
 
-        self.test_loss = 0.0
-        self.test_corrects = 0.0
-        self.test_total = 0.0
-        self.test_acc = 0.0
+        self.test_loss = 0
+        self.test_corrects = 0
+        self.test_total = 0
+        self.test_acc = 0
 
-    def set_zeros_for_next_epoch(self, set_value=0.0):
-        self.running_loss = set_value
-        self.running_corrects = set_value
-        self.running_total = set_value
+    def set_zeros_for_next_epoch(self, set_value=0):
+        self.train_loss = set_value
+        self.train_corrects = set_value
+        self.train_total = set_value
         self.valid_loss = set_value
         self.valid_corrects = set_value
         self.valid_total = set_value
@@ -361,13 +361,13 @@ class SingleModelTrainingProcess(Single_model):
         return self.earlystopper.end_flag
 
     def compute_epoch_results(self):
-        self.train_loss = self.running_loss / len(self.train_dataloader)
-        self.train_acc = self.running_corrects / self.running_total
+        self.train_loss /= len(self.train_dataloader)
+        self.train_acc = self.train_corrects / self.train_total
         if self.valid_dataloader != None:
-            self.valid_loss = self.valid_loss / len(self.valid_dataloader)
+            self.valid_loss /= len(self.valid_dataloader)
             self.valid_acc = self.valid_corrects / self.valid_total
         if self.test_dataloader != None:
-            self.test_loss = self.test_loss / len(self.test_dataloader)
+            self.test_loss /= len(self.test_dataloader)
             self.test_acc = self.test_corrects / self.test_total
 
         self.logs["train_loss"].append(self.train_loss)
@@ -379,24 +379,22 @@ class SingleModelTrainingProcess(Single_model):
         self.logs["lr_log"].append(self.optimizer.param_groups[0]["lr"])
 
     def forward_train(self, images, labels):
+        self.model.train()
         if self.scaler == None:
-            self.model.train()
-            """preprocessing"""
-            # _MyshortCut.preprocessing_train(images)
-            # 이거 상위 루프에서 작동.
-            self.optimizer.zero_grad()
-            outputs = self.model(images)
-            loss = self.criterion(outputs, labels)
+            outputs = self.model(images)  # A
+            loss = self.criterion(outputs, labels)  # B
 
-            loss.backward()
-            self.optimizer.step()
+            self.optimizer.zero_grad()  # C
+            loss.backward()  # D
+            self.optimizer.step()  # E
+
+            self.train_loss += loss.item()  # F
+            _, predicted = outputs.max(1)  # G
+            self.train_total += labels.size(0)  # H
+            self.train_corrects += predicted.eq(labels).sum().item()  # I
 
         else:
-            self.model.train()
             with torch.autocast(device_type="cuda", dtype=torch.float16, enabled=True):
-                """preprocessing"""
-                # _MyshortCut.preprocessing_train(images)
-
                 self.optimizer.zero_grad()
                 outputs = self.model(images)
                 loss = self.criterion(outputs, labels)
@@ -405,10 +403,10 @@ class SingleModelTrainingProcess(Single_model):
             self.scaler.step(self.optimizer)
             self.scaler.update()
 
-        self.running_loss += loss.item()
-        _, predicted = outputs.max(1)
-        self.running_total += labels.size(0)
-        self.running_corrects += predicted.eq(labels).sum().item()
+            self.train_loss += loss.item()  # F
+            _, predicted = outputs.max(1)  # G
+            self.train_total += labels.size(0)  # H
+            self.train_corrects += predicted.eq(labels).sum().item()  # I
 
     def forward_eval(self, images, labels, mode):
         self.model.eval()
@@ -416,18 +414,17 @@ class SingleModelTrainingProcess(Single_model):
             """preprocessing"""
             # _MyshortCut.preprocessing_valid(images)
 
-            outputs = self.model(images)
-            loss = self.criterion(outputs, labels)
+            outputs = self.model(images)  # A
 
             if mode == "valid":
-                self.valid_loss += loss.item()
-                _, predicted = outputs.max(1)
-                self.valid_total += labels.size(0)
-                self.valid_corrects += predicted.eq(labels).sum().item()
+                _, predicted = outputs.max(1)  # B
+                self.valid_total += labels.size(0)  # C
+                self.valid_loss += self.criterion(outputs, labels).item()  # E
+                self.valid_corrects += predicted.eq(labels).sum().item()  # D
             elif mode == "test":
-                self.test_loss += loss.item()
-                _, predicted = outputs.max(1)
-                self.test_total += labels.size(0)
-                self.test_corrects += predicted.eq(labels).sum().item()
+                _, predicted = outputs.max(1)  # B
+                self.test_total += labels.size(0)  # C
+                self.test_loss += self.criterion(outputs, labels).item()  # E
+                self.test_corrects += predicted.eq(labels).sum().item()  # D
             else:
                 raise NotImplementedError

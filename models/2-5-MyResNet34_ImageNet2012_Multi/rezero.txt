@@ -11,7 +11,7 @@ Transform: Compose(
                    ToDtype(scale=True)
              )
                  Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225], inplace=True)
-                 <__main__.PCAColorAugmentation object at 0x7f0657bf5390>
+                 <__main__.PCAColorAugmentation object at 0x7f27b1fd1450>
                  RandomHorizontalFlip(p=0.5)
            )
 --------------------------------------------------

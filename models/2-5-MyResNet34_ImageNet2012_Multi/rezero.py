@@ -214,7 +214,7 @@ for epoch in range(EPOCHS):
     valid_acc = valid_correct / valid_total
 
     print(
-        f"Epoch : {0} | Train_loss : {0:.4f} | Train_acc : {0*100:.2f}% | Valid_loss : {0:.4f} | Valid_acc : {0*100:.2f}%"
+        f"Epoch : {epoch} | Train_loss : {train_loss:.4f} | Train_acc : {train_acc*100:.2f}% | Valid_loss : {valid_loss:.4f} | Valid_acc : {valid_acc*100:.2f}%"
     )
 
     scheduler.step()

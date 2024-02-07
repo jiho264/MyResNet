@@ -15,7 +15,7 @@ class EarlyStopper:
         if eval_loss < self.best_eval_loss:
             self.best_eval_loss = eval_loss
             self.early_stop_counter = 0
-            print(f" └ Updated best eval loss : {self.best_eval_loss:.4f}")
+            print(f"  └ Updated best eval loss : {self.best_eval_loss:.4f}")
             torch.save(self.model.state_dict(), self.file_name + ".pth")
             return False
         else:

@@ -139,6 +139,8 @@ scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[30, 60], gamma
 file_name = "MyResNet34_ImageNet2012_rezero"
 earlystopper = EarlyStopper(patience=999, model=model, file_name=file_name)
 
+_now_epochs = 0
+
 """loading log file"""
 if os.path.exists(file_name + ".pth.tar"):
 
@@ -154,10 +156,13 @@ if os.path.exists(file_name + ".pth.tar"):
 
     print("Suceessfully loaded the All setting and Log file.")
     print(file_name)
-    print(f"Current epoch is {len(logs['train_loss'])}")
-    print(f"Current learning rate: {optimizer.param_groups[0]['lr']}")
-    print(f"Current best valid loss: {min(logs['valid_loss'])}")
-    print(f"Current best model loss: {earlystopper.best_eval_loss}")
+    print(f"- Current epoch : {len(logs['train_loss'])}")
+    print(f"- Current learning rate : {optimizer.param_groups[0]['lr']}")
+    print(f"┌ Current best valid loss : {min(logs['valid_loss'])}")
+    print(f"└ Current best model loss : {earlystopper.best_eval_loss}")
+
+    _now_epochs = len(logs["train_loss"])
+
 else:
     # Create a dictionary to store the variables
     train_loss = []
@@ -185,6 +190,7 @@ print("-" * 50)
 
 # %% Train the model
 for epoch in range(EPOCHS):
+    epoch = epoch + _now_epochs + 1
     model.train()
     running_loss = 0.0
     running_total = 0.0
@@ -206,7 +212,7 @@ for epoch in range(EPOCHS):
     train_loss = running_loss / len(train_dataloader)
     train_acc = running_correct / running_total
     print(
-        f"   epoch : {epoch+1} | train_loss : {train_loss:.4f} | train_acc : {train_acc*100:.2f}%"
+        f"Epoch : {epoch} | Train_loss : {train_loss:.4f} | Train_acc : {train_acc*100:.2f}%"
     )
 
     # Test the model
@@ -229,11 +235,11 @@ for epoch in range(EPOCHS):
     valid_loss = valid_loss / len(valid_dataloader)
     valid_acc = valid_correct / valid_total
     print(
-        f"   epoch : {epoch+1} |  valid_loss : {valid_loss:.4f} |  valid_acc : {valid_acc*100:.2f}%"
+        f"Epoch : {epoch} | Valid_loss : {valid_loss:.4f} | Valid_acc : {valid_acc*100:.2f}%"
     )
 
     scheduler.step()
-    earlystopper.check(train_loss)
+    earlystopper.check(valid_loss)
     logs["train_loss"].append(train_loss)
     logs["train_acc"].append(train_acc)
     logs["valid_loss"].append(valid_loss)
@@ -248,8 +254,8 @@ for epoch in range(EPOCHS):
     }
     torch.save(checkpoint, file_name + ".pth.tar")
     if epoch % 5 == 0:
-        torch.save(model.state_dict(), file_name + f"_{epoch}.pth")
-        print("Save the model at ", file_name + f"_{epoch}.pth")
+        torch.save(checkpoint, file_name + f"_{epoch}" + ".pth.tar")
+        print("Save the model at ", file_name + f"_{epoch}.pth.tar")
 
 
 print("Finished training")

@@ -7,7 +7,6 @@ sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname("src"))))
 # from src.Mydataloader import LoadDataset
 from src.utils import SingleModelTrainingProcess
 from src.Mydataloader import LoadDataset
-import torch.multiprocessing as mp
 
 # %% memo
 """

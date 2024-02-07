@@ -62,8 +62,8 @@ class PCAColorAugmentation(object):
         Output : torch.Tensor [C, H, W]
         """
         return _tensor + torch.matmul(
-            self.eigvec,
-            torch.mul(self.eigval, torch.normal(mean=0.0, std=0.1, size=[1, 3])).T,
+            self._eigvec,
+            torch.mul(self._eigval, torch.normal(mean=0.0, std=0.1, size=[1, 3])).T,
         ).reshape(3, 1, 1)
 
 
@@ -192,9 +192,6 @@ for epoch in range(EPOCHS):
 
     train_loss = running_loss / len(train_dataloader)
     train_acc = running_correct / running_total
-    print(
-        f"Epoch : {epoch} | Train_loss : {train_loss:.4f} | Train_acc : {train_acc*100:.2f}%"
-    )
 
     # Test the model
     model.eval()
@@ -215,8 +212,9 @@ for epoch in range(EPOCHS):
             valid_correct += predicted.eq(labels).sum().item()
     valid_loss = valid_loss / len(valid_dataloader)
     valid_acc = valid_correct / valid_total
+
     print(
-        f"Epoch : {epoch} | Valid_loss : {valid_loss:.4f} | Valid_acc : {valid_acc*100:.2f}%"
+        f"Epoch : {0} | Train_loss : {0:.4f} | Train_acc : {0*100:.2f}% | Valid_loss : {0:.4f} | Valid_acc : {0*100:.2f}%"
     )
 
     scheduler.step()

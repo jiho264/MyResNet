@@ -20,52 +20,37 @@ import numpy as np
 from sklearn.decomposition import PCA
 
 
-class PCAColorAugmentation_for_CIFAR10(object):
+class PCAColorAugmentation(object):
     """
-    Apply PCA color augmentation to the input image.
+    ResNet paper's say; The standard color augmentation in [21] is used.
+    - [21] : AlexNet paper.
+    - PCA Color Augmentation
 
-    Args:
-    - n_components (int): Number of principal components to keep for PCA transformation.
-
+    1. Get the eigenvalue and eigenvector of the covariance matrix of the image pixels. (ImageNet2012)
+    2. [r, g, b] = [r, g, b] + [p1, p2, p3] matmul [a1 * r1, a2 * r2, a3 * r3].T
     """
 
-    def __init__(self, n_components=3):
-        self.n_components = n_components
+    def __init__(self):
 
-    def __call__(self, image):
-        """
-        Apply PCA color augmentation to the input image.
-
-        Args:
-        - image (torch.Tensor): Input image tensor of shape (C, H, W) where C is the number of channels (e.g., 3 for RGB).
-
-        Returns:
-        - transformed_image (torch.Tensor): Transformed image tensor after applying PCA color augmentation.
-        """
-
-        # Ensure the image tensor is in the format (H, W, C)
-        image = image.permute(1, 2, 0)
-
-        # Flatten the image tensor
-        flattened_image = image.view(-1, image.shape[-1]).numpy()
-
-        # Apply PCA to the flattened image data
-        pca = PCA(n_components=self.n_components)
-        pca.fit(flattened_image)
-        transformed_flattened_image = pca.transform(flattened_image)
-
-        # Inverse transform to obtain the image in the original space
-        inverted_transformed_image = pca.inverse_transform(transformed_flattened_image)
-
-        # Reshape the inverted transformed image to the original shape
-        transformed_image = torch.tensor(
-            inverted_transformed_image.reshape(image.shape)
+        self._eigval = torch.tensor([55.46, 4.794, 1.148]).reshape(1, 3)
+        self._eigvec = torch.tensor(
+            [
+                [-0.5675, 0.7192, 0.4009],
+                [-0.5808, -0.0045, -0.8140],
+                [-0.5836, -0.6948, 0.4203],
+            ]
         )
 
-        # Ensure the transformed image tensor is in the format (C, H, W)
-        transformed_image = transformed_image.permute(2, 0, 1)
+    def __call__(self, _tensor: torch.Tensor):
+        """
+        Input : torch.Tensor [C, H, W]
 
-        return transformed_image
+        Output : torch.Tensor [C, H, W]
+        """
+        return _tensor + torch.matmul(
+            self.eigvec,
+            torch.mul(self.eigval, torch.normal(mean=0.0, std=0.1, size=[1, 3])).T,
+        ).reshape(3, 1, 1)
 
 
 class LoadDataset:
@@ -126,7 +111,7 @@ class LoadDataset:
                         std=[1, 1, 1],
                         inplace=True,
                     ),
-                    PCAColorAugmentation_for_CIFAR10(),
+                    PCAColorAugmentation(),
                     # AutoAugment(policy=AutoAugmentPolicy.CIFAR10),
                     # Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
                     RandomCrop(
@@ -210,7 +195,8 @@ class LoadDataset:
                         Normalize(
                             mean=[0.485, 0.456, 0.406], std=[1, 1, 1], inplace=True
                         ),
-                        AutoAugment(policy=AutoAugmentPolicy.IMAGENET),
+                        PCAColorAugmentation(),
+                        # AutoAugment(policy=AutoAugmentPolicy.IMAGENET),
                         RandomHorizontalFlip(self.Randp),
                     ]
                 ),

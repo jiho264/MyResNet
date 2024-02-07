@@ -1,13 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
-import torch
-import sys, os, tqdm, time
-
-sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname("src"))))
-
-from src.Earlystopper import EarlyStopper
-from src.Mymodel import MyResNet34
+import sys, os, tqdm
 from torchvision.transforms.v2 import (
     RandomHorizontalFlip,
     Compose,
@@ -19,64 +13,60 @@ from torchvision.transforms.v2 import (
     ToDtype,
 )
 from torchvision import datasets
-import torch
 from torch.utils.data import DataLoader
 
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname("src"))))
 
-from sklearn.decomposition import PCA
+from src.Earlystopper import EarlyStopper
+from src.Mymodel import MyResNet34
 
-
-class PCAColorAugmentation_for_CIFAR10(object):
-    """
-    Apply PCA color augmentation to the input image.
-
-    Args:
-    - n_components (int): Number of principal components to keep for PCA transformation.
-
-    """
-
-    def __init__(self, n_components=3):
-        self.n_components = n_components
-
-    def __call__(self, image):
-        """
-        Apply PCA color augmentation to the input image.
-
-        Args:
-        - image (torch.Tensor): Input image tensor of shape (C, H, W) where C is the number of channels (e.g., 3 for RGB).
-
-        Returns:
-        - transformed_image (torch.Tensor): Transformed image tensor after applying PCA color augmentation.
-        """
-
-        # Ensure the image tensor is in the format (H, W, C)
-        image = image.permute(1, 2, 0)
-
-        # Flatten the image tensor
-        flattened_image = image.view(-1, image.shape[-1]).numpy()
-
-        # Apply PCA to the flattened image data
-        pca = PCA(n_components=self.n_components)
-        pca.fit(flattened_image)
-        transformed_flattened_image = pca.transform(flattened_image)
-
-        # Inverse transform to obtain the image in the original space
-        inverted_transformed_image = pca.inverse_transform(transformed_flattened_image)
-
-        # Reshape the inverted transformed image to the original shape
-        transformed_image = torch.tensor(
-            inverted_transformed_image.reshape(image.shape)
-        )
-
-        # Ensure the transformed image tensor is in the format (C, H, W)
-        transformed_image = transformed_image.permute(2, 0, 1)
-
-        return transformed_image
-
+# %%
+# Load the ResNet model
+model = MyResNet34(num_classes=1000, Downsample_option="B").to("cuda")
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=1e-4)
+scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[30, 60], gamma=0.1)
+file_name = "MyResNet34_ImageNet2012_rezero"
+earlystopper = EarlyStopper(patience=999, model=model, file_name=file_name)
 
 BATCH = 256
 EPOCHS = 120
+
+
 # %%
+class PCAColorAugmentation(object):
+    """
+    ResNet paper's say; The standard color augmentation in [21] is used.
+    - [21] : AlexNet paper.
+    - PCA Color Augmentation
+
+    1. Get the eigenvalue and eigenvector of the covariance matrix of the image pixels. (ImageNet2012)
+    2. [r, g, b] = [r, g, b] + [p1, p2, p3] matmul [a1 * r1, a2 * r2, a3 * r3].T
+    """
+
+    def __init__(self):
+
+        self._eigval = torch.tensor([55.46, 4.794, 1.148]).reshape(1, 3)
+        self._eigvec = torch.tensor(
+            [
+                [-0.5675, 0.7192, 0.4009],
+                [-0.5808, -0.0045, -0.8140],
+                [-0.5836, -0.6948, 0.4203],
+            ]
+        )
+
+    def __call__(self, _tensor: torch.Tensor):
+        """
+        Input : torch.Tensor [C, H, W]
+
+        Output : torch.Tensor [C, H, W]
+        """
+        return _tensor + torch.matmul(
+            self.eigvec,
+            torch.mul(self.eigval, torch.normal(mean=0.0, std=0.1, size=[1, 3])).T,
+        ).reshape(3, 1, 1)
+
+
 train_dataloader = DataLoader(
     datasets.ImageFolder(
         root="../../data/ImageNet2012/train",
@@ -88,7 +78,7 @@ train_dataloader = DataLoader(
                 Normalize(
                     mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225], inplace=True
                 ),
-                PCAColorAugmentation_for_CIFAR10(),
+                PCAColorAugmentation(),
                 RandomHorizontalFlip(),
             ]
         ),
@@ -128,17 +118,8 @@ print("train_dataset : ", train_dataloader.dataset)
 print("-" * 50)
 print("valid_dataset : ", valid_dataloader.dataset)
 print("-" * 50)
-# Load the ResNet model
-model = MyResNet34(num_classes=1000, Downsample_option="B").to("cuda")
 
-
-# %% Define the loss function and optimizer
-criterion = nn.CrossEntropyLoss()
-optimizer = optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=1e-4)
-scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[30, 60], gamma=0.1)
-file_name = "MyResNet34_ImageNet2012_rezero"
-earlystopper = EarlyStopper(patience=999, model=model, file_name=file_name)
-
+# %%
 _now_epochs = 0
 
 """loading log file"""
@@ -179,8 +160,8 @@ else:
         "lr_log": lr_log,
     }
     print(file_name, "does not exist. Created a new log.")
+
 print("-" * 50)
-# %%
 print(f" - file_name : ", file_name)
 print(f" - optimizer : ", optimizer)
 print(f" - scheduler : ", scheduler.__class__.__name__)

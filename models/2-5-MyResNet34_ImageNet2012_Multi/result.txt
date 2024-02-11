@@ -14,3 +14,65 @@ Transform: Compose(
                  TenCrop(size=(224, 224), vertical_flip=False)
            )
 --------------------------------------------------
+Dataset 224: Loss: 1.282425, Top-1 Acc: 68.80%, Top-5 Acc: 88.47%
+Dataset ImageFolder
+    Number of datapoints: 50000
+    Root location: ../../data/ImageNet2012/val
+    StandardTransform
+Transform: Compose(
+                 RandomShortestSize(min_size=[257], interpolation=InterpolationMode.BILINEAR, antialias=True)
+                 Compose(
+                   ToImage()
+                   ToDtype(scale=True)
+             )
+                 Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225], inplace=True)
+                 TenCrop(size=(256, 256), vertical_flip=False)
+           )
+--------------------------------------------------
+Dataset 256: Loss: 1.183675, Top-1 Acc: 70.91%, Top-5 Acc: 89.78%
+Dataset ImageFolder
+    Number of datapoints: 50000
+    Root location: ../../data/ImageNet2012/val
+    StandardTransform
+Transform: Compose(
+                 RandomShortestSize(min_size=[385], interpolation=InterpolationMode.BILINEAR, antialias=True)
+                 Compose(
+                   ToImage()
+                   ToDtype(scale=True)
+             )
+                 Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225], inplace=True)
+                 TenCrop(size=(384, 384), vertical_flip=False)
+           )
+--------------------------------------------------
+Dataset 384: Loss: 1.306427, Top-1 Acc: 72.76%, Top-5 Acc: 91.09%
+Dataset ImageFolder
+    Number of datapoints: 50000
+    Root location: ../../data/ImageNet2012/val
+    StandardTransform
+Transform: Compose(
+                 RandomShortestSize(min_size=[481], interpolation=InterpolationMode.BILINEAR, antialias=True)
+                 Compose(
+                   ToImage()
+                   ToDtype(scale=True)
+             )
+                 Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225], inplace=True)
+                 TenCrop(size=(480, 480), vertical_flip=False)
+           )
+--------------------------------------------------
+Dataset 480: Loss: 1.581165, Top-1 Acc: 71.49%, Top-5 Acc: 90.47%
+Dataset ImageFolder
+    Number of datapoints: 50000
+    Root location: ../../data/ImageNet2012/val
+    StandardTransform
+Transform: Compose(
+                 RandomShortestSize(min_size=[641], interpolation=InterpolationMode.BILINEAR, antialias=True)
+                 Compose(
+                   ToImage()
+                   ToDtype(scale=True)
+             )
+                 Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225], inplace=True)
+                 TenCrop(size=(640, 640), vertical_flip=False)
+           )
+--------------------------------------------------
+Dataset 640: Loss: 2.098562, Top-1 Acc: 65.77%, Top-5 Acc: 87.33%
+Avg Loss: 1.490451, Avg Top-1 Acc: 69.95%, Avg Top-5 Acc: 89.43%

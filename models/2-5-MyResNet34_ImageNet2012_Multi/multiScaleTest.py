@@ -85,6 +85,7 @@ for i in range(5):
         persistent_workers=True,
         pin_memory_device="cuda",
     )
+    print(f"Dataset {scales[i]}: {len(test_dataloader.dataset)}")
     print(test_dataloader.dataset)
     print("-" * 50)
     with torch.no_grad():
@@ -121,7 +122,7 @@ for i in range(5):
         print(
             f"Dataset {scales[i]}: Loss: {test_loss:.6f}, Top-1 Acc: {test_top1_acc*100:.2f}%, Top-5 Acc: {test_top5_acc*100:.2f}%"
         )
-
+        print("-" * 50)
         avg_loss += test_loss
         avg_top1_acc += test_top1_acc
         avg_top5_acc += test_top5_acc

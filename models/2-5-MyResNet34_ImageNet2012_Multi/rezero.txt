@@ -48,3 +48,188 @@ Parameter Group 0
  - scheduler milestone :  Counter({30: 1, 60: 1})
  - scheduler gamma :  0.1
 --------------------------------------------------
+Epoch : 1 | Train_loss : 6.1210 | Train_acc : 2.99% | Valid_loss : 5.1607 | Valid_acc : 8.73%
+  └ Updated best eval loss : 5.1607
+Epoch : 2 | Train_loss : 4.2232 | Train_acc : 18.33% | Valid_loss : 3.8075 | Valid_acc : 26.08%
+  └ Updated best eval loss : 3.8075
+Epoch : 3 | Train_loss : 3.4637 | Train_acc : 28.76% | Valid_loss : 3.2644 | Valid_acc : 35.88%
+  └ Updated best eval loss : 3.2644
+Epoch : 4 | Train_loss : 3.1290 | Train_acc : 34.06% | Valid_loss : 3.1008 | Valid_acc : 38.36%
+  └ Updated best eval loss : 3.1008
+Epoch : 5 | Train_loss : 2.9470 | Train_acc : 37.06% | Valid_loss : 2.9454 | Valid_acc : 41.62%
+  └ Updated best eval loss : 2.9454
+Save the model at  MyResNet34_ImageNet2012_rezero_5.pth.tar
+Epoch : 6 | Train_loss : 2.8314 | Train_acc : 39.04% | Valid_loss : 2.9799 | Valid_acc : 40.55%
+Epoch : 7 | Train_loss : 2.7525 | Train_acc : 40.41% | Valid_loss : 2.8818 | Valid_acc : 42.36%
+  └ Updated best eval loss : 2.8818
+Epoch : 8 | Train_loss : 2.6989 | Train_acc : 41.33% | Valid_loss : 2.7126 | Valid_acc : 45.04%
+  └ Updated best eval loss : 2.7126
+Epoch : 9 | Train_loss : 2.6585 | Train_acc : 42.07% | Valid_loss : 2.6688 | Valid_acc : 46.32%
+  └ Updated best eval loss : 2.6688
+Epoch : 10 | Train_loss : 2.6259 | Train_acc : 42.65% | Valid_loss : 2.7376 | Valid_acc : 46.38%
+Save the model at  MyResNet34_ImageNet2012_rezero_10.pth.tar
+Epoch : 11 | Train_loss : 2.5973 | Train_acc : 43.16% | Valid_loss : 2.6583 | Valid_acc : 45.93%
+  └ Updated best eval loss : 2.6583
+Epoch : 12 | Train_loss : 2.5788 | Train_acc : 43.50% | Valid_loss : 2.6381 | Valid_acc : 47.44%
+  └ Updated best eval loss : 2.6381
+Epoch : 13 | Train_loss : 2.5611 | Train_acc : 43.84% | Valid_loss : 2.6517 | Valid_acc : 47.72%
+Epoch : 14 | Train_loss : 2.5464 | Train_acc : 44.00% | Valid_loss : 2.6363 | Valid_acc : 47.12%
+  └ Updated best eval loss : 2.6363
+Epoch : 15 | Train_loss : 2.5325 | Train_acc : 44.26% | Valid_loss : 2.5535 | Valid_acc : 48.32%
+  └ Updated best eval loss : 2.5535
+Save the model at  MyResNet34_ImageNet2012_rezero_15.pth.tar
+Epoch : 16 | Train_loss : 2.5189 | Train_acc : 44.51% | Valid_loss : 2.7687 | Valid_acc : 44.88%
+Epoch : 17 | Train_loss : 2.5089 | Train_acc : 44.74% | Valid_loss : 2.6078 | Valid_acc : 47.76%
+Epoch : 18 | Train_loss : 2.5004 | Train_acc : 44.90% | Valid_loss : 2.6401 | Valid_acc : 47.96%
+Epoch : 19 | Train_loss : 2.4936 | Train_acc : 45.03% | Valid_loss : 2.6136 | Valid_acc : 48.83%
+Epoch : 20 | Train_loss : 2.4846 | Train_acc : 45.16% | Valid_loss : 2.5232 | Valid_acc : 49.42%
+  └ Updated best eval loss : 2.5232
+Save the model at  MyResNet34_ImageNet2012_rezero_20.pth.tar
+Epoch : 21 | Train_loss : 2.4783 | Train_acc : 45.29% | Valid_loss : 2.7119 | Valid_acc : 47.21%
+Epoch : 22 | Train_loss : 2.4743 | Train_acc : 45.30% | Valid_loss : 2.5858 | Valid_acc : 48.40%
+Epoch : 23 | Train_loss : 2.4659 | Train_acc : 45.56% | Valid_loss : 2.5702 | Valid_acc : 48.36%
+Epoch : 24 | Train_loss : 2.4625 | Train_acc : 45.57% | Valid_loss : 2.6936 | Valid_acc : 47.04%
+Epoch : 25 | Train_loss : 2.4603 | Train_acc : 45.62% | Valid_loss : 2.5917 | Valid_acc : 50.31%
+Save the model at  MyResNet34_ImageNet2012_rezero_25.pth.tar
+Epoch : 26 | Train_loss : 2.4560 | Train_acc : 45.68% | Valid_loss : 2.4966 | Valid_acc : 49.53%
+  └ Updated best eval loss : 2.4966
+Epoch : 27 | Train_loss : 2.4496 | Train_acc : 45.80% | Valid_loss : 2.6847 | Valid_acc : 47.36%
+Epoch : 28 | Train_loss : 2.4475 | Train_acc : 45.78% | Valid_loss : 2.4816 | Valid_acc : 50.25%
+  └ Updated best eval loss : 2.4816
+Epoch : 29 | Train_loss : 2.4429 | Train_acc : 45.93% | Valid_loss : 2.4962 | Valid_acc : 49.99%
+Epoch : 30 | Train_loss : 2.4400 | Train_acc : 46.00% | Valid_loss : 2.4462 | Valid_acc : 49.79%
+  └ Updated best eval loss : 2.4462
+Save the model at  MyResNet34_ImageNet2012_rezero_30.pth.tar
+Epoch : 31 | Train_loss : 1.8856 | Train_acc : 56.94% | Valid_loss : 1.7742 | Valid_acc : 64.29%
+  └ Updated best eval loss : 1.7742
+Epoch : 32 | Train_loss : 1.7543 | Train_acc : 59.53% | Valid_loss : 1.6907 | Valid_acc : 65.74%
+  └ Updated best eval loss : 1.6907
+Epoch : 33 | Train_loss : 1.7034 | Train_acc : 60.52% | Valid_loss : 1.6601 | Valid_acc : 66.01%
+  └ Updated best eval loss : 1.6601
+Epoch : 34 | Train_loss : 1.6681 | Train_acc : 61.16% | Valid_loss : 1.6451 | Valid_acc : 66.77%
+  └ Updated best eval loss : 1.6451
+Epoch : 35 | Train_loss : 1.6458 | Train_acc : 61.68% | Valid_loss : 1.6729 | Valid_acc : 66.12%
+Save the model at  MyResNet34_ImageNet2012_rezero_35.pth.tar
+Epoch : 36 | Train_loss : 1.6277 | Train_acc : 61.98% | Valid_loss : 1.6331 | Valid_acc : 66.73%
+  └ Updated best eval loss : 1.6331
+Epoch : 37 | Train_loss : 1.6203 | Train_acc : 62.11% | Valid_loss : 1.6507 | Valid_acc : 66.82%
+Epoch : 38 | Train_loss : 1.6122 | Train_acc : 62.27% | Valid_loss : 1.6212 | Valid_acc : 67.19%
+  └ Updated best eval loss : 1.6212
+Epoch : 39 | Train_loss : 1.6075 | Train_acc : 62.41% | Valid_loss : 1.6537 | Valid_acc : 66.62%
+Epoch : 40 | Train_loss : 1.6062 | Train_acc : 62.40% | Valid_loss : 1.6100 | Valid_acc : 67.10%
+  └ Updated best eval loss : 1.6100
+Save the model at  MyResNet34_ImageNet2012_rezero_40.pth.tar
+Epoch : 41 | Train_loss : 1.6027 | Train_acc : 62.50% | Valid_loss : 1.6670 | Valid_acc : 66.69%
+Epoch : 42 | Train_loss : 1.6029 | Train_acc : 62.42% | Valid_loss : 1.6276 | Valid_acc : 66.75%
+Epoch : 43 | Train_loss : 1.6019 | Train_acc : 62.43% | Valid_loss : 1.6259 | Valid_acc : 66.91%
+Epoch : 44 | Train_loss : 1.6002 | Train_acc : 62.46% | Valid_loss : 1.7082 | Valid_acc : 65.90%
+Epoch : 45 | Train_loss : 1.6009 | Train_acc : 62.43% | Valid_loss : 1.6342 | Valid_acc : 66.35%
+Save the model at  MyResNet34_ImageNet2012_rezero_45.pth.tar
+Epoch : 46 | Train_loss : 1.6001 | Train_acc : 62.45% | Valid_loss : 1.6093 | Valid_acc : 67.15%
+  └ Updated best eval loss : 1.6093
+Epoch : 47 | Train_loss : 1.5992 | Train_acc : 62.49% | Valid_loss : 1.6217 | Valid_acc : 67.06%
+Epoch : 48 | Train_loss : 1.5967 | Train_acc : 62.52% | Valid_loss : 1.6138 | Valid_acc : 67.46%
+Epoch : 49 | Train_loss : 1.5955 | Train_acc : 62.55% | Valid_loss : 1.6537 | Valid_acc : 66.76%
+Epoch : 50 | Train_loss : 1.5929 | Train_acc : 62.55% | Valid_loss : 1.6175 | Valid_acc : 66.89%
+Save the model at  MyResNet34_ImageNet2012_rezero_50.pth.tar
+Epoch : 51 | Train_loss : 1.5896 | Train_acc : 62.64% | Valid_loss : 1.6398 | Valid_acc : 66.79%
+Epoch : 52 | Train_loss : 1.5870 | Train_acc : 62.74% | Valid_loss : 1.6594 | Valid_acc : 66.55%
+Epoch : 53 | Train_loss : 1.5864 | Train_acc : 62.73% | Valid_loss : 1.6518 | Valid_acc : 66.51%
+Epoch : 54 | Train_loss : 1.5828 | Train_acc : 62.80% | Valid_loss : 1.6178 | Valid_acc : 67.20%
+Epoch : 55 | Train_loss : 1.5812 | Train_acc : 62.87% | Valid_loss : 1.6330 | Valid_acc : 66.86%
+Save the model at  MyResNet34_ImageNet2012_rezero_55.pth.tar
+Epoch : 56 | Train_loss : 1.5799 | Train_acc : 62.83% | Valid_loss : 1.6475 | Valid_acc : 66.74%
+Epoch : 57 | Train_loss : 1.5771 | Train_acc : 62.84% | Valid_loss : 1.6323 | Valid_acc : 66.76%
+Epoch : 58 | Train_loss : 1.5736 | Train_acc : 62.94% | Valid_loss : 1.6698 | Valid_acc : 66.49%
+Epoch : 59 | Train_loss : 1.5715 | Train_acc : 63.01% | Valid_loss : 1.6557 | Valid_acc : 66.63%
+Epoch : 60 | Train_loss : 1.5691 | Train_acc : 62.99% | Valid_loss : 1.6647 | Valid_acc : 66.58%
+Save the model at  MyResNet34_ImageNet2012_rezero_60.pth.tar
+Epoch : 61 | Train_loss : 1.3635 | Train_acc : 67.65% | Valid_loss : 1.4388 | Valid_acc : 71.19%
+  └ Updated best eval loss : 1.4388
+Epoch : 62 | Train_loss : 1.3093 | Train_acc : 68.85% | Valid_loss : 1.4242 | Valid_acc : 71.51%
+  └ Updated best eval loss : 1.4242
+Epoch : 63 | Train_loss : 1.2885 | Train_acc : 69.29% | Valid_loss : 1.4086 | Valid_acc : 71.71%
+  └ Updated best eval loss : 1.4086
+Epoch : 64 | Train_loss : 1.2713 | Train_acc : 69.61% | Valid_loss : 1.3968 | Valid_acc : 71.90%
+  └ Updated best eval loss : 1.3968
+Epoch : 65 | Train_loss : 1.2575 | Train_acc : 69.91% | Valid_loss : 1.3873 | Valid_acc : 72.01%
+  └ Updated best eval loss : 1.3873
+Save the model at  MyResNet34_ImageNet2012_rezero_65.pth.tar
+Epoch : 66 | Train_loss : 1.2467 | Train_acc : 70.14% | Valid_loss : 1.3747 | Valid_acc : 72.21%
+  └ Updated best eval loss : 1.3747
+Epoch : 67 | Train_loss : 1.2397 | Train_acc : 70.29% | Valid_loss : 1.3841 | Valid_acc : 72.00%
+Epoch : 68 | Train_loss : 1.2302 | Train_acc : 70.48% | Valid_loss : 1.3789 | Valid_acc : 72.22%
+Epoch : 69 | Train_loss : 1.2267 | Train_acc : 70.57% | Valid_loss : 1.3829 | Valid_acc : 72.12%
+Epoch : 70 | Train_loss : 1.2183 | Train_acc : 70.74% | Valid_loss : 1.3749 | Valid_acc : 72.26%
+Save the model at  MyResNet34_ImageNet2012_rezero_70.pth.tar
+Epoch : 71 | Train_loss : 1.2129 | Train_acc : 70.82% | Valid_loss : 1.3658 | Valid_acc : 72.17%
+  └ Updated best eval loss : 1.3658
+Epoch : 72 | Train_loss : 1.2104 | Train_acc : 70.90% | Valid_loss : 1.3648 | Valid_acc : 72.20%
+  └ Updated best eval loss : 1.3648
+Epoch : 73 | Train_loss : 1.2039 | Train_acc : 71.04% | Valid_loss : 1.3598 | Valid_acc : 72.41%
+  └ Updated best eval loss : 1.3598
+Epoch : 74 | Train_loss : 1.1977 | Train_acc : 71.14% | Valid_loss : 1.3514 | Valid_acc : 72.42%
+  └ Updated best eval loss : 1.3514
+Epoch : 75 | Train_loss : 1.1955 | Train_acc : 71.23% | Valid_loss : 1.3460 | Valid_acc : 72.40%
+  └ Updated best eval loss : 1.3460
+Save the model at  MyResNet34_ImageNet2012_rezero_75.pth.tar
+Epoch : 76 | Train_loss : 1.1876 | Train_acc : 71.36% | Valid_loss : 1.3448 | Valid_acc : 72.49%
+  └ Updated best eval loss : 1.3448
+Epoch : 77 | Train_loss : 1.1855 | Train_acc : 71.44% | Valid_loss : 1.3420 | Valid_acc : 72.69%
+  └ Updated best eval loss : 1.3420
+Epoch : 78 | Train_loss : 1.1820 | Train_acc : 71.54% | Valid_loss : 1.3711 | Valid_acc : 72.45%
+Epoch : 79 | Train_loss : 1.1782 | Train_acc : 71.54% | Valid_loss : 1.3517 | Valid_acc : 72.44%
+Epoch : 80 | Train_loss : 1.1754 | Train_acc : 71.69% | Valid_loss : 1.3529 | Valid_acc : 72.79%
+Save the model at  MyResNet34_ImageNet2012_rezero_80.pth.tar
+Epoch : 81 | Train_loss : 1.1707 | Train_acc : 71.77% | Valid_loss : 1.3524 | Valid_acc : 72.77%
+Epoch : 82 | Train_loss : 1.1668 | Train_acc : 71.82% | Valid_loss : 1.3399 | Valid_acc : 72.58%
+  └ Updated best eval loss : 1.3399
+Epoch : 83 | Train_loss : 1.1647 | Train_acc : 71.84% | Valid_loss : 1.3602 | Valid_acc : 72.66%
+Epoch : 84 | Train_loss : 1.1629 | Train_acc : 71.94% | Valid_loss : 1.3512 | Valid_acc : 72.42%
+Epoch : 85 | Train_loss : 1.1602 | Train_acc : 71.94% | Valid_loss : 1.3477 | Valid_acc : 72.51%
+Save the model at  MyResNet34_ImageNet2012_rezero_85.pth.tar
+Epoch : 86 | Train_loss : 1.1577 | Train_acc : 72.01% | Valid_loss : 1.3523 | Valid_acc : 72.66%
+Epoch : 87 | Train_loss : 1.1529 | Train_acc : 72.10% | Valid_loss : 1.3524 | Valid_acc : 72.73%
+Epoch : 88 | Train_loss : 1.1527 | Train_acc : 72.13% | Valid_loss : 1.3520 | Valid_acc : 72.57%
+Epoch : 89 | Train_loss : 1.1494 | Train_acc : 72.17% | Valid_loss : 1.3285 | Valid_acc : 72.79%
+  └ Updated best eval loss : 1.3285
+Epoch : 90 | Train_loss : 1.1445 | Train_acc : 72.27% | Valid_loss : 1.3558 | Valid_acc : 72.53%
+Save the model at  MyResNet34_ImageNet2012_rezero_90.pth.tar
+Epoch : 91 | Train_loss : 1.1419 | Train_acc : 72.30% | Valid_loss : 1.3440 | Valid_acc : 72.48%
+Epoch : 92 | Train_loss : 1.1433 | Train_acc : 72.31% | Valid_loss : 1.3318 | Valid_acc : 72.81%
+Epoch : 93 | Train_loss : 1.1398 | Train_acc : 72.36% | Valid_loss : 1.3401 | Valid_acc : 72.67%
+Epoch : 94 | Train_loss : 1.1385 | Train_acc : 72.38% | Valid_loss : 1.3447 | Valid_acc : 72.53%
+Epoch : 95 | Train_loss : 1.1359 | Train_acc : 72.48% | Valid_loss : 1.3431 | Valid_acc : 72.62%
+Save the model at  MyResNet34_ImageNet2012_rezero_95.pth.tar
+Epoch : 96 | Train_loss : 1.1347 | Train_acc : 72.44% | Valid_loss : 1.3405 | Valid_acc : 72.72%
+Epoch : 97 | Train_loss : 1.1298 | Train_acc : 72.56% | Valid_loss : 1.3452 | Valid_acc : 72.43%
+Epoch : 98 | Train_loss : 1.1273 | Train_acc : 72.60% | Valid_loss : 1.3478 | Valid_acc : 72.77%
+Epoch : 99 | Train_loss : 1.1252 | Train_acc : 72.67% | Valid_loss : 1.3449 | Valid_acc : 72.74%
+Epoch : 100 | Train_loss : 1.1282 | Train_acc : 72.62% | Valid_loss : 1.3451 | Valid_acc : 72.95%
+Save the model at  MyResNet34_ImageNet2012_rezero_100.pth.tar
+Epoch : 101 | Train_loss : 1.1240 | Train_acc : 72.73% | Valid_loss : 1.3506 | Valid_acc : 72.55%
+Epoch : 102 | Train_loss : 1.1210 | Train_acc : 72.72% | Valid_loss : 1.3528 | Valid_acc : 72.67%
+Epoch : 103 | Train_loss : 1.1182 | Train_acc : 72.83% | Valid_loss : 1.3589 | Valid_acc : 72.44%
+Epoch : 104 | Train_loss : 1.1171 | Train_acc : 72.84% | Valid_loss : 1.3343 | Valid_acc : 72.62%
+Epoch : 105 | Train_loss : 1.1158 | Train_acc : 72.88% | Valid_loss : 1.3370 | Valid_acc : 72.96%
+Save the model at  MyResNet34_ImageNet2012_rezero_105.pth.tar
+Epoch : 106 | Train_loss : 1.1146 | Train_acc : 72.90% | Valid_loss : 1.3380 | Valid_acc : 72.69%
+Epoch : 107 | Train_loss : 1.1145 | Train_acc : 72.89% | Valid_loss : 1.3394 | Valid_acc : 72.53%
+Epoch : 108 | Train_loss : 1.1132 | Train_acc : 72.91% | Valid_loss : 1.3424 | Valid_acc : 72.72%
+Epoch : 109 | Train_loss : 1.1101 | Train_acc : 73.00% | Valid_loss : 1.3328 | Valid_acc : 72.37%
+Epoch : 110 | Train_loss : 1.1101 | Train_acc : 73.00% | Valid_loss : 1.3413 | Valid_acc : 72.57%
+Save the model at  MyResNet34_ImageNet2012_rezero_110.pth.tar
+Epoch : 111 | Train_loss : 1.1091 | Train_acc : 73.01% | Valid_loss : 1.3284 | Valid_acc : 72.73%
+  └ Updated best eval loss : 1.3284
+Epoch : 112 | Train_loss : 1.1088 | Train_acc : 73.04% | Valid_loss : 1.3357 | Valid_acc : 72.69%
+Epoch : 113 | Train_loss : 1.1059 | Train_acc : 73.10% | Valid_loss : 1.3500 | Valid_acc : 72.86%
+Epoch : 114 | Train_loss : 1.1031 | Train_acc : 73.13% | Valid_loss : 1.3419 | Valid_acc : 72.63%
+Epoch : 115 | Train_loss : 1.1029 | Train_acc : 73.16% | Valid_loss : 1.3395 | Valid_acc : 72.80%
+Save the model at  MyResNet34_ImageNet2012_rezero_115.pth.tar
+Epoch : 116 | Train_loss : 1.1006 | Train_acc : 73.20% | Valid_loss : 1.3462 | Valid_acc : 72.49%
+Epoch : 117 | Train_loss : 1.0986 | Train_acc : 73.24% | Valid_loss : 1.3483 | Valid_acc : 72.76%
+Epoch : 118 | Train_loss : 1.1005 | Train_acc : 73.21% | Valid_loss : 1.3520 | Valid_acc : 72.37%
+Epoch : 119 | Train_loss : 1.0987 | Train_acc : 73.24% | Valid_loss : 1.3428 | Valid_acc : 72.50%
+Epoch : 120 | Train_loss : 1.0967 | Train_acc : 73.25% | Valid_loss : 1.3499 | Valid_acc : 72.45%
+Save the model at  MyResNet34_ImageNet2012_rezero_120.pth.tar
+Finished training

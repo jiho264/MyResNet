@@ -1,0 +1,16 @@
+Model is loaded from MyResNet34_ImageNet2012_rezero.pth
+--------------------------------------------------
+Dataset ImageFolder
+    Number of datapoints: 50000
+    Root location: ../../data/ImageNet2012/val
+    StandardTransform
+Transform: Compose(
+                 RandomShortestSize(min_size=[225], interpolation=InterpolationMode.BILINEAR, antialias=True)
+                 Compose(
+                   ToImage()
+                   ToDtype(scale=True)
+             )
+                 Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225], inplace=True)
+                 TenCrop(size=(224, 224), vertical_flip=False)
+           )
+--------------------------------------------------

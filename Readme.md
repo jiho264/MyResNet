@@ -82,7 +82,7 @@ earlystopper = EarlyStopper(patience=999, model=model, file_name=file_name)
 - ```epochs = 120```
 - ```batch = 256```
 ```py
-# Training set
+# PCAColorAugmentation
 class PCAColorAugmentation(object):
     """
     ResNet paper's say; The standard color augmentation in [21] is used.
@@ -107,13 +107,13 @@ class PCAColorAugmentation(object):
     def __call__(self, _tensor: torch.Tensor):
         """
         Input : torch.Tensor [C, H, W]
-
         Output : torch.Tensor [C, H, W]
         """
         return _tensor + torch.matmul(
             self._eigvec,
             torch.mul(self._eigval, torch.normal(mean=0.0, std=0.1, size=[1, 3])).T,
         ).reshape(3, 1, 1)
+# Training set
 train = Compose(
    RandomShortestSize(min_size=range(256, 480), antialias=True),
    RandomCrop(size=224),
@@ -134,18 +134,6 @@ valid = Compose(
       mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225], inplace=True
    ),
 )
-# 10-croped valid set
-scales = [224, 256, 384, 480, 640]
-valid  = Compose(
-   RandomShortestSize(min_size=scales[i] + 1, antialias=True),
-   Compose(
-         [ToImage(), ToDtype(torch.float32, scale=True)]
-   ),
-   Normalize(
-         mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225], inplace=True
-   ),
-   TenCrop(size=scales[i]),
-)
 ```
 ### 2.2.2. Result
 - Training & Center Crop Validation
@@ -155,6 +143,20 @@ valid  = Compose(
     - 빨간 실선 (Center Crop valid)의 최저 수치는 약 25%가량으로, MyResNet34의 최저 error 27.27%과 비슷함.
 
 - 10-Crop Testing
+   ```py
+   # 10-croped valid set
+   scales = [224, 256, 384, 480, 640]
+   valid  = Compose(
+      RandomShortestSize(min_size=scales[i] + 1, antialias=True),
+      Compose(
+            [ToImage(), ToDtype(torch.float32, scale=True)]
+      ),
+      Normalize(
+            mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225], inplace=True
+      ),
+      TenCrop(size=scales[i]),
+   )
+   ```
    ```bash
    Model is loaded from MyResNet34_ImageNet2012_rezero.pth
    Dataset 224: Loss: 1.282425, Top-1 Acc: 68.80%, Top-5 Acc: 88.47%

@@ -143,29 +143,29 @@ valid = Compose(
     - 빨간 실선 (Center Crop valid)의 최저 수치는 약 25%가량으로, MyResNet34의 최저 error 27.27%과 비슷함.
 
 - 10-Crop Testing
-   ```py
-   # 10-croped valid set
-   scales = [224, 256, 384, 480, 640]
-   valid  = Compose(
-      RandomShortestSize(min_size=scales[i] + 1, antialias=True),
-      Compose(
-            [ToImage(), ToDtype(torch.float32, scale=True)]
-      ),
-      Normalize(
-            mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225], inplace=True
-      ),
-      TenCrop(size=scales[i]),
-   )
-   ```
-   ```bash
-   Model is loaded from MyResNet34_ImageNet2012_rezero.pth
-   Dataset 224: Loss: 1.282425, Top-1 Acc: 68.80%, Top-5 Acc: 88.47%
-   Dataset 256: Loss: 1.183675, Top-1 Acc: 70.91%, Top-5 Acc: 89.78%
-   Dataset 384: Loss: 1.306427, Top-1 Acc: 72.76%, Top-5 Acc: 91.09%
-   Dataset 480: Loss: 1.581165, Top-1 Acc: 71.49%, Top-5 Acc: 90.47%
-   Dataset 640: Loss: 2.098562, Top-1 Acc: 65.77%, Top-5 Acc: 87.33%
-   Avg Loss: 1.490451, Avg Top-1 Acc: 69.95%, Avg Top-5 Acc: 89.43%
-   ```
+  ```py
+  # 10-croped valid set
+  scales = [224, 256, 384, 480, 640]
+  valid  = Compose(
+    RandomShortestSize(min_size=scales[i] + 1, antialias=True),
+    Compose(
+          [ToImage(), ToDtype(torch.float32, scale=True)]
+    ),
+    Normalize(
+          mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225], inplace=True
+    ),
+    TenCrop(size=scales[i]),
+  )
+  ```
+  ```bash
+  Model is loaded from MyResNet34_ImageNet2012_rezero.pth
+  Dataset 224: Loss: 1.282425, Top-1 Acc: 68.80%, Top-5 Acc: 88.47%
+  Dataset 256: Loss: 1.183675, Top-1 Acc: 70.91%, Top-5 Acc: 89.78%
+  Dataset 384: Loss: 1.306427, Top-1 Acc: 72.76%, Top-5 Acc: 91.09%
+  Dataset 480: Loss: 1.581165, Top-1 Acc: 71.49%, Top-5 Acc: 90.47%
+  Dataset 640: Loss: 2.098562, Top-1 Acc: 65.77%, Top-5 Acc: 87.33%
+  Avg Loss: 1.490451, Avg Top-1 Acc: 69.95%, Avg Top-5 Acc: 89.43%
+  ```
   - MyResNet34 B : 
     - Top-1 acc : 69.95 % (me : 30.05 %)
     - Top-5 acc : 89.43 % (me : 10.57 %)

@@ -166,11 +166,18 @@ valid = Compose(
    Dataset 640: Loss: 2.098562, Top-1 Acc: 65.77%, Top-5 Acc: 87.33%
    Avg Loss: 1.490451, Avg Top-1 Acc: 69.95%, Avg Top-5 Acc: 89.43%
    ```
-   - Origin paper ResNet-34 B :  
-     - Top-1 error : 24.52 % (me : 30.05%)
-     - Top-5 error : 7.46 % (me : 10.57%)
-     - Center Crop Validation에서는 비슷한 수치를 나타냈는데, 10-Crop Testing에서는 완전한 성능을 내지 못함.
-
+  - MyResNet34 B : 
+    - Top-1 acc : 69.95 % (me : 30.05 %)
+    - Top-5 acc : 89.43 % (me : 10.57 %)
+  - Origin paper ResNet-34 B :  
+   - Top-1 error : 24.52 % 
+   - Top-5 error : 7.46 %  
+   - Center Crop Validation에서는 비슷한 수치를 나타냈는데, 10-Crop Testing에서는 완전한 성능을 내지 못함.
+  - Pytorch ResNet34 :
+    - https://pytorch.org/vision/main/models/generated/torchvision.models.resnet34.html#torchvision.models.resnet34
+    - Top-1 acc : 73.314 % (error : 26.686 %)
+    - Top-5 acc : 91.42 % (error : 8.58 %)
+    - 해당 코드의 구현과 비교해보면 차이가 줄어 듦.
 # 3. Conclusion
 - 논문의 수치에 다다르지 못해 아쉽지만, 어느 정도 구현해본 것에 의의를 둠.
 - 여러 폐기된 실험은 ```Readme_old.md```에서 확인 가능.
